@@ -6,9 +6,12 @@
 [ci-test-workflow]: https://github.com/cesium/cesium_cup/actions/workflows/test.yml
 [ci-style-status]: https://github.com/cesium/cesium_cup/actions/workflows/style.yml/badge.svg
 [ci-style-workflow]: https://github.com/cesium/cesium_cup/actions/workflows/style.yml
+[figma-logo]: https://img.shields.io/badge/figma-design-214A9D?style=flat&logo=figma&logoColor=FFFFFF
+[figma-design]: https://www.figma.com/file/nvBLLNlVbevaxtcw2ORey5/CeSIUM-Cup?node-id=0%3A1
 
 # CeSIUM Cup
 
+[![Design][figma-logo]][figma-design]
 [![CI test][ci-test-status]][ci-test-workflow]
 [![CI style][ci-style-status]][ci-style-workflow]
 
