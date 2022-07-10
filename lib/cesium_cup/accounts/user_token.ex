@@ -1,4 +1,7 @@
 defmodule CesiumCup.Accounts.UserToken do
+  @moduledoc """
+  An User Toker module providing functionality to generate auth tokens.
+  """
   use Ecto.Schema
   import Ecto.Query
   alias CesiumCup.Accounts.UserToken

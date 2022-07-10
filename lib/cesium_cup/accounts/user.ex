@@ -1,4 +1,7 @@
 defmodule CesiumCup.Accounts.User do
+  @moduledoc """
+  An User of the application.
+  """
   use Ecto.Schema
   import Ecto.Changeset
 

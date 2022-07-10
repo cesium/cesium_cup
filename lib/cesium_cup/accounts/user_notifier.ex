@@ -1,4 +1,7 @@
 defmodule CesiumCup.Accounts.UserNotifier do
+  @moduledoc """
+  An User Notifier module providing functionality to compose emails.
+  """
   import Swoosh.Email
 
   alias CesiumCup.Mailer

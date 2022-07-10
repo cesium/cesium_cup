@@ -6,7 +6,7 @@ defmodule CesiumCup.Accounts do
   import Ecto.Query, warn: false
   alias CesiumCup.Repo
 
-  alias CesiumCup.Accounts.{User, UserToken, UserNotifier}
+  alias CesiumCup.Accounts.{User, UserNotifier, UserToken}
 
   ## Database getters
 
