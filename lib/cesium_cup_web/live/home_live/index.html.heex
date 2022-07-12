@@ -1,0 +1,52 @@
+<div class="pt-20 px-60">
+    <div class="flex gap-x-2">
+        <%= for game <- @games do %>
+          <%# <tr id={"game-#{game.id}"}> %>
+            <%#= game.date %>
+            <%#= game.state %>
+            <%#= game.first_half %>
+            <%#= game.second_half %>
+            <%#= live_redirect "Show", to: Routes.game_show_path(@socket, :show, game) %>
+            <%#= live_patch "Edit", to: Routes.game_index_path(@socket, :edit, game) %>
+            <%#= link "Delete", to: "#", phx_click: "delete", phx_value_id: game.id, data: [confirm: "Are you sure?"] %>
+            <div class="w-72 rounded-xl bg-white">
+                <div class="px-5 py-5">
+                    <div class="flex items-center justify-between">
+                        <p class="text-gray-900">
+                            <%= game.stage %>
+                        </p>
+                        <span class="text-white bg-[#FF0046] rounded-lg px-2 font-bold">
+                            LIVE
+                        </span>
+                    </div>
+
+                    <%# Teams & Score %>
+                    <div class="pt-4 font-bold text-lg">
+                        <div class="flex items-center justify-between">
+                            <p class="text-gray-900">
+                                Equipa Vermelha    
+                            </p>
+                            <p class="text-gray-900">
+                                0   
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <p class="text-gray-900">
+                                Equipa Azul    
+                            </p>
+                            <p class="text-gray-900">
+                                0   
+                            </p>
+                        </div>
+                    </div>
+
+                    <%# Date and Venue %>
+                    <div class="pt-4 text-md">
+                        <%= "#{display_date(game.date)} - #{display_time(game.date)}" %>
+                    </div>
+
+                </div>
+            </div>
+        <% end %>
+    </div>
+</div>

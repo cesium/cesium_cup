@@ -1,0 +1,47 @@
+<h1>Listing Games</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={Routes.game_index_path(@socket, :index)}>
+    <.live_component
+      module={CesiumCupWeb.GameLive.FormComponent}
+      id={@game.id || :new}
+      title={@page_title}
+      action={@live_action}
+      game={@game}
+      return_to={Routes.game_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>State</th>
+      <th>Stage</th>
+      <th>First half</th>
+      <th>Second half</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="games">
+    <%= for game <- @games do %>
+      <tr id={"game-#{game.id}"}>
+        <td><%= game.date %></td>
+        <td><%= game.state %></td>
+        <td><%= game.stage %></td>
+        <td><%= game.first_half %></td>
+        <td><%= game.second_half %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.game_show_path(@socket, :show, game) %></span>
+          <span><%= live_patch "Edit", to: Routes.game_index_path(@socket, :edit, game) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: game.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Game", to: Routes.game_index_path(@socket, :new) %></span>
