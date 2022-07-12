@@ -19,8 +19,6 @@ defmodule CesiumCupWeb.Router do
 
   scope "/", CesiumCupWeb do
     pipe_through :browser
-
-    get "/", PageController, :index
   end
 
   # Other scopes may use custom stacks.
@@ -82,6 +80,15 @@ defmodule CesiumCupWeb.Router do
 
   scope "/", CesiumCupWeb do
     pipe_through [:browser]
+
+    live "/", HomeLive.Index, :index
+
+    live "/games", GameLive.Index, :index
+    live "/games/new", GameLive.Index, :new
+    live "/games/:id/edit", GameLive.Index, :edit
+
+    live "/games/:id", GameLive.Show, :show
+    live "/games/:id/show/edit", GameLive.Show, :edit
 
     delete "/users/log_out", UserSessionController, :delete
     get "/users/confirm", UserConfirmationController, :new

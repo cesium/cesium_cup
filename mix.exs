@@ -58,6 +58,7 @@ defmodule CesiumCup.MixProject do
 
       # utilities
       {:jason, "~> 1.2"},
+      {:timex, "~> 3.0"},
 
       # testing
       {:floki, ">= 0.30.0", only: :test},
