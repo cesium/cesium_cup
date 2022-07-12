@@ -1,27 +1,20 @@
-<div class="pt-20 px-60">
+<div class="pt-10 px-60">
     <div class="flex gap-x-2">
         <%= for game <- @games do %>
-          <%# <tr id={"game-#{game.id}"}> %>
-            <%#= game.date %>
-            <%#= game.state %>
-            <%#= game.first_half %>
-            <%#= game.second_half %>
-            <%#= live_redirect "Show", to: Routes.game_show_path(@socket, :show, game) %>
-            <%#= live_patch "Edit", to: Routes.game_index_path(@socket, :edit, game) %>
-            <%#= link "Delete", to: "#", phx_click: "delete", phx_value_id: game.id, data: [confirm: "Are you sure?"] %>
-            <div class="w-72 rounded-xl bg-white">
+            <%= live_redirect to: Routes.game_show_path(@socket, :show, game), class: "w-72 rounded-xl bg-[#F9FAFB] hover:bg-quinary" do %>
                 <div class="px-5 py-5">
-                    <div class="flex items-center justify-between">
+                    <div class="flex items-center justify-between text-sm">
                         <p class="text-gray-900">
                             <%= game.stage %>
                         </p>
+     
                         <span class="text-white bg-[#FF0046] rounded-lg px-2 font-bold">
                             LIVE
                         </span>
                     </div>
 
                     <%# Teams & Score %>
-                    <div class="pt-4 font-bold text-lg">
+                    <div class="pt-2 font-bold">
                         <div class="flex items-center justify-between">
                             <p class="text-gray-900">
                                 Equipa Vermelha    
@@ -41,12 +34,326 @@
                     </div>
 
                     <%# Date and Venue %>
-                    <div class="pt-4 text-md">
+                    <div class="pt-2 text-sm">
                         <%= "#{display_date(game.date)} - #{display_time(game.date)}" %>
                     </div>
 
                 </div>
-            </div>
+            <% end %>
         <% end %>
+
     </div>
+    
+    <div class="mt-5 bg-[#F9FAFB] rounded-lg w-full px-10 py-10">
+
+        <div class="xl:flex xl:gap-x-10">
+            
+            <img class="rounded-xl xl:w-2/3 h-[500px]" src={Routes.static_path(@socket, "/images/live.png")} />
+            
+            <div class="w-1/3 flex flex-col gap-y-5">
+                <div class="h-1/2 rounded-xl bg-white shadow-lg">
+                    <div class="px-10 py-5">
+                    
+                        <div class="flex items-center justify-between border-b-2 pb-4 border-quinary">
+                            
+                            <div class="flex">
+                                <p class="text-gray-900 font-bold text-lg">
+                                    Live
+                                </p>
+                                <span class="ml-2 relative flex h-3 w-3">
+                                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF0046] opacity-75"></span>
+                                  <span class="relative inline-flex rounded-full h-3 w-3 bg-[#FF0046]"></span>
+                                </span>
+                            </div>
+                        
+                            <p class="text-gray-900 font-bold text-lg">
+                                15'
+                            </p>
+                        </div>
+
+                        <div class="flex justify-around items-center gap-x-4 pt-8">
+                            <div class="text-gray-900 flex flex-col items-center">
+                                <p class="font-bold text-7xl">
+                                    1
+                                </p>
+                                <p class="text-lg">
+                                    Equipa Vermelha
+                                </p>
+                            </div>
+                            <div class="text-gray-900 font-bold text-7xl">
+                                -
+                            </div>
+                            <div class="text-gray-900 flex flex-col items-center">
+                                <p class="font-bold text-7xl">
+                                    2
+                                </p>
+                                <p class="text-lg">
+                                    Equipa Azul
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                
+                <div class="h-1/2 rounded-xl bg-white shadow-lg">
+                    <div class="px-10 py-5">
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+          <div class="pt-2">
+            <div class="border-b border-gray-200">
+              <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+        
+                <a href="#" class="border-quinary text-gray-900 whitespace-nowrap py-4 px-1 border-b-4 font-medium text-md" aria-current="page"> Group Stage </a>
+        
+                <a href="#" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-4 font-medium text-md"> Knockout  Stage </a>
+              </nav>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex mt-4 gap-x-10">
+            
+            <div class="w-2/3 grid grid-cols-2 gap-4">
+                
+                <div class="flex flex-col">
+                  <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                    <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                      <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                        <table class="min-w-full divide-y divide-gray-300">
+                          <thead class="bg-gray-50">
+                            <tr>
+                              <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-6">Group A</th>
+                              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Pld</th>
+                              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">GF</th>
+                              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">GA</th>
+                              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Pts</th>
+                            </tr>
+                          </thead>
+                          <tbody class="divide-y divide-gray-200 bg-white">
+                            <tr>
+                              <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">Equipa Vermelha</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                            </tr>
+
+                            <tr>
+                              <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">Equipa Azul</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                            </tr>
+
+
+                            <tr>
+                              <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">Equipa Verde</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                            </tr>
+
+                            <tr>
+                              <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">Equipa Roxa</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                            </tr>
+
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex flex-col">
+                  <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                    <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                      <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                        <table class="min-w-full divide-y divide-gray-300">
+                          <thead class="bg-gray-50">
+                            <tr>
+                              <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-6">Group B</th>
+                              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Pld</th>
+                              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">GF</th>
+                              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">GA</th>
+                              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Pts</th>
+                            </tr>
+                          </thead>
+                          <tbody class="divide-y divide-gray-200 bg-white">
+                            <tr>
+                              <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">Equipa Vermelha</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                            </tr>
+
+                            <tr>
+                              <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">Equipa Azul</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                            </tr>
+
+
+                            <tr>
+                              <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">Equipa Verde</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                            </tr>
+
+                            <tr>
+                              <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">Equipa Roxa</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                            </tr>
+
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex flex-col">
+                  <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                    <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                      <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                        <table class="min-w-full divide-y divide-gray-300">
+                          <thead class="bg-gray-50">
+                            <tr>
+                              <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-6">Group C</th>
+                              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Pld</th>
+                              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">GF</th>
+                              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">GA</th>
+                              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Pts</th>
+                            </tr>
+                          </thead>
+                          <tbody class="divide-y divide-gray-200 bg-white">
+                            <tr>
+                              <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">Equipa Vermelha</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                            </tr>
+
+                            <tr>
+                              <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">Equipa Azul</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                            </tr>
+
+
+                            <tr>
+                              <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">Equipa Verde</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                            </tr>
+
+                            <tr>
+                              <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">Equipa Roxa</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                            </tr>
+
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex flex-col">
+                  <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                    <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                      <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                        <table class="min-w-full divide-y divide-gray-300">
+                          <thead class="bg-gray-50">
+                            <tr>
+                              <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-6">Group D</th>
+                              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Pld</th>
+                              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">GF</th>
+                              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">GA</th>
+                              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Pts</th>
+                            </tr>
+                          </thead>
+                          <tbody class="divide-y divide-gray-200 bg-white">
+                            <tr>
+                              <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">Equipa Vermelha</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                            </tr>
+
+                            <tr>
+                              <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">Equipa Azul</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                            </tr>
+
+
+                            <tr>
+                              <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">Equipa Verde</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                            </tr>
+
+                            <tr>
+                              <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">Equipa Roxa</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                            </tr>
+
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+            </div>
+
+            <div class="w-1/3">
+                <div class="bg-white h-full rounded-lg shadow-lg">
+ 
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="h-20"/>
+
 </div>
