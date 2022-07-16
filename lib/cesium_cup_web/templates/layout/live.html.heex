@@ -1,31 +1,19 @@
 <main class="">
-  <p class="alert alert-info" role="alert"
-    phx-click="lv:clear-flash"
-    phx-value-key="info"><%= live_flash(@flash, :info) %></p>
+  <p class="alert alert-info" role="alert" phx-click="lv:clear-flash" phx-value-key="info"><%= live_flash(@flash, :info) %></p>
 
-  <p class="alert alert-danger" role="alert"
-    phx-click="lv:clear-flash"
-    phx-value-key="error"><%= live_flash(@flash, :error) %></p>
+  <p class="alert alert-danger" role="alert" phx-click="lv:clear-flash" phx-value-key="error"><%= live_flash(@flash, :error) %></p>
 
   <div class="min-h-screen bg-gradient-to-b from-tertiary to-primary">
-    
     <div class="pt-10 px-60 flex justify-between items-center">
       <%= live_redirect to: Routes.home_index_path(@socket, :index) do %>
         <img class="h-auto w-14" src={Routes.static_path(@socket, "/images/logo.svg")} />
       <% end %>
       <div class="flex gap-x-4 font-bold text-white text-lg">
-        <%#= if @current_user do %>
-          <%#= @current_user.email %>
-          <%#= link "Settings", to: Routes.user_settings_path(@conn, :edit) %>
-          <%#= link "Log out", to: Routes.user_session_path(@conn, :delete), method: :delete %>
-        <%# else %>
-          <%= link "Register", to: Routes.user_registration_path(@socket, :new), class: "opacity-80 hover:opacity-100 cursor-pointer" %>
-          <%= link "Log in", to: Routes.user_session_path(@socket, :new), class: "opacity-80 hover:opacity-100 cursor-pointer" %>
-        <%# end %>
+        <%= link("Register", to: Routes.user_registration_path(@socket, :new), class: "opacity-80 hover:opacity-100 cursor-pointer") %>
+        <%= link("Log in", to: Routes.user_session_path(@socket, :new), class: "opacity-80 hover:opacity-100 cursor-pointer") %>
       </div>
     </div>
 
     <%= @inner_content %>
   </div>
-
 </main>
