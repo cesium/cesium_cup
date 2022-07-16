@@ -11,15 +11,15 @@
       </.modal>
     <% end %>
 
-<div class="pt-10 pb-20 px-60">
+<div class="pt-10 pb-20 lg:px-60">
   <div class="mt-5 bg-[#F9FAFB] rounded-lg w-full px-10 py-5">
 
     <%# Bread crumbs %>
-    <div class="xl:flex xl:gap-x-10 border-b border-quinary">
+    <div class="border-b border-quinary">
 
         <div>
             <div>
-              <nav class="-mb-px flex space-x-1 pb-2 text-xs" aria-label="Tabs">
+              <nav class="-mb-px flex justify-between space-x-1 pb-2 text-xs" aria-label="Tabs">
                 <div>
                   <span href="#" class=" text-gray-500 hover:text-gray-700 whitespace-nowrap font-small" aria-current="page"> <%= live_patch "CeSIUM Cup", to: Routes.home_index_path(@socket, :index) %> </span>
                   <a class="text-gray-500 whitespace-nowrap font-small">></a>
@@ -27,8 +27,8 @@
                 </div>
 
                 <%# TO DO: only shows if mod %>
-                <div class="flex justify-end">
-                  <span class="align-right border-transparent text-indigo-300 hover:text-indigo-400 whitespace-nowrap border-b-4 font-small"><%= live_patch "Editar partida", to: Routes.game_show_path(@socket, :edit, @game), class: "button" %></span>
+                <div>
+                  <span class="border-transparent text-indigo-300 hover:text-indigo-400 whitespace-nowrap border-b-4 font-small"><%= live_patch "Editar partida", to: Routes.game_show_path(@socket, :edit, @game), class: "button" %></span>
                 </div>
 
               </nav>
@@ -93,26 +93,26 @@
             </div>
           </div>
         </div>
-      
-        <div class="pt-10 px-20">
+
+        <div class="pt-10 lg:px-20">
           <nav class="-mb-px space-x-2" aria-label="Tabs">
-        
+
             <a href="#" class="bg-blue-500 hover:bg-blue-200 text-white py-2 px-4 rounded-full whitespace-nowrap font-medium text-md" aria-current="page">Partida</a>
-    
+
             <a href="#" class="border border-blue-500 hover:border-transparent bg-transparent hover:bg-blue-200 text-blue-500 py-2 px-4 rounded-full whitespace-nowrap font-medium text-md">h2h</a>
-          
+
             <a href="#" class="border border-blue-500 hover:border-transparent bg-transparent hover:bg-blue-200 text-blue-500 py-2 px-4 rounded-full whitespace-nowrap font-medium text-md">Estatísticas</a>
-            
+
           </nav>
         </div>
 
       <%# Game log board %>
-      <div class="pt-8 pb-5 px-20">
+      <div class="pt-8 pb-5 lg:px-20">
 
                 <div class="flex flex-col">
-                  <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                  <div class="-my-2 -mx-4 overflow-x-auto -mx-6 lg:-mx-8">
                     <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                      <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                      <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 rounded-lg">
                         <table class="min-w-full divide-y border-quinary">
                           <thead class="bg-gray-50">
                             <tr>
