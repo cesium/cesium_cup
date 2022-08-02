@@ -9,10 +9,10 @@
   </div>
   <% end %>
 
-  <div class="flex grid space-y-4 opacity-80 font-bold">
+  <div class="space-y-4 opacity-80 font-bold">
     <div class="">
       <p class="text-center text-white"><%= label(f, :email) %></p>
-      <div class="text-black">
+      <div class="grid text-black">
         <%= email_input(f, :email, required: true, class: "rounded-md") %>
         <%= error_tag(f, :email) %>
       </div>
