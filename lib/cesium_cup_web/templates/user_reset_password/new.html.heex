@@ -1,14 +1,20 @@
-<h1>Forgot your password?</h1>
+<div class="flex flex-col space-y-4 w-screen h-screen bg-gradient-to-b from-tertiary to-primary grid h-screen place-items-center">
+  <h1 class="text-center text-5xl font-bold antialiased text-white opacity-80">Forgot your password?</h1>
 
-<.form let={f} for={:user} action={Routes.user_reset_password_path(@conn, :create)}>
-  <%= label(f, :email) %>
-  <%= email_input(f, :email, required: true) %>
-
-  <div>
-    <%= submit("Send instructions to reset password") %>
+  <div class="opacity-80 font-bold space-y-4">
+    <.form let={f} for={:user} action={Routes.user_reset_password_path(@conn, :create)}>
+      <p class="text-center text-white"><%= label(f, :email) %></p>
+      <div class=" grid text-black">
+        <%= email_input(f, :email, required: true, class: "rounded-md") %>
+      </div>
+      <div class="text-center text-white pt-6">
+        <%= submit("Reset password", class: "rounded-md bg-tertiary outline outline-2  hover:outline-offset-2 outline-2 p-2 font-bold") %>
+      </div>
+    </.form>
   </div>
-</.form>
 
-<p>
-  <%= link("Register", to: Routes.user_registration_path(@conn, :new)) %> | <%= link("Log in", to: Routes.user_session_path(@conn, :new)) %>
-</p>
+  <div class="flex flex-row text-white justify-center space-x-4 "> 
+    <div class="opacity-80 hover:opacity-100 cursor-pointer"><%= link("Log in", to: Routes.user_session_path(@conn, :new))%></div>
+    <div class="opacity-80 hover:opacity-100 cursor-pointer"><%= link("Forgot your password?", to: Routes.user_reset_password_path(@conn, :new)) %></div>
+</div>
+</div>
