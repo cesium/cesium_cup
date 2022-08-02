@@ -4,9 +4,9 @@
   <div class="items-center center-items opacity-80">
     <.form let={f} for={@conn} action={Routes.user_session_path(@conn, :create)} as={:user}>
       <%= if @error_message do %>
-        <div class="alert alert-danger">
-          <p><%= @error_message %></p>
-        </div>
+      <div class="alert alert-danger">
+        <p><%= @error_message %></p>
+      </div>
       <% end %>
       
       <div class="grid p-2">
