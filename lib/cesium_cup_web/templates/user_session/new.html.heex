@@ -4,11 +4,11 @@
   <div class="items-center center-items opacity-80">
     <.form let={f} for={@conn} action={Routes.user_session_path(@conn, :create)} as={:user}>
       <%= if @error_message do %>
-      <div class="alert alert-danger">
-        <p><%= @error_message %></p>
-      </div>
+        <div class="alert alert-danger">
+          <p><%= @error_message %></p>
+        </div>
       <% end %>
-      
+
       <div class="grid p-2">
         <%= label(f, :email, class: "text-center text-white font-bold") %>
         <%= email_input(f, :email, required: true, class: "rounded-md") %>
@@ -25,9 +25,8 @@
       </div>
 
       <div class="grid place-content-center p-4">
-        <%= submit("Log in", class: "text-white font-bold rounded-md bg-tertiary outline outline-2  hover:outline-offset-2 outline-2 p-2 font-bold") %> 
+        <%= submit("Log in", class: "text-white font-bold rounded-md bg-tertiary outline outline-2  hover:outline-offset-2 outline-2 p-2 font-bold") %>
       </div>
-
     </.form>
   </div>
 
@@ -35,5 +34,4 @@
     <div class="opacity-80 hover:opacity-100 cursor-pointer"><%= link("Register", to: Routes.user_registration_path(@conn, :new)) %></div>
     <div class="opacity-80 hover:opacity-100 cursor-pointer"><%= link("Forgot your password?", to: Routes.user_reset_password_path(@conn, :new)) %></div>
   </div>
-
 </div>

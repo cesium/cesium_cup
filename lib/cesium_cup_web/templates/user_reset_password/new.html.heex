@@ -13,8 +13,8 @@
     </.form>
   </div>
 
-  <div class="flex flex-row text-white justify-center space-x-4 "> 
-    <div class="opacity-80 hover:opacity-100 cursor-pointer"><%= link("Log in", to: Routes.user_session_path(@conn, :new))%></div>
+  <div class="flex flex-row text-white justify-center space-x-4 ">
+    <div class="opacity-80 hover:opacity-100 cursor-pointer"><%= link("Log in", to: Routes.user_session_path(@conn, :new)) %></div>
     <div class="opacity-80 hover:opacity-100 cursor-pointer"><%= link("Forgot your password?", to: Routes.user_reset_password_path(@conn, :new)) %></div>
   </div>
 </div>
