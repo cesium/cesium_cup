@@ -3,6 +3,15 @@ defmodule CesiumCupWeb.PlayerLive.FormComponent do
 
   alias CesiumCup.Teams
 
+  @extensions_whitelist ~w(.jpg .jpeg .gif .png)
+
+  @impl true
+  def mount(socket) do
+    {:ok,
+     socket
+     |> allow_upload(:picture, accept: @extensions_whitelist, max_entries: 1)}
+  end
+
   @impl true
   def update(%{player: player} = assigns, socket) do
     changeset = Teams.change_player(player)
@@ -31,7 +40,11 @@ defmodule CesiumCupWeb.PlayerLive.FormComponent do
   end
 
   defp save_player(socket, :edit, player_params) do
-    case Teams.update_player(socket.assigns.player, player_params) do
+    case Teams.update_player(
+           socket.assigns.player,
+           player_params,
+           &consume_picture_data(socket, &1)
+         ) do
       {:ok, _player} ->
         {:noreply,
          socket
@@ -44,7 +57,10 @@ defmodule CesiumCupWeb.PlayerLive.FormComponent do
   end
 
   defp save_player(socket, :new, player_params) do
-    case Teams.create_player(player_params) do
+    case Teams.create_player(
+           player_params,
+           &consume_picture_data(socket, &1)
+         ) do
       {:ok, _player} ->
         {:noreply,
          socket
@@ -53,6 +69,25 @@ defmodule CesiumCupWeb.PlayerLive.FormComponent do
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
+    end
+  end
+
+  defp consume_picture_data(socket, user) do
+    consume_uploaded_entries(socket, :picture, fn %{path: path}, entry ->
+      Teams.update_player_picture(user, %{
+        "picture" => %Plug.Upload{
+          content_type: entry.client_type,
+          filename: entry.client_name,
+          path: path
+        }
+      })
+    end)
+    |> case do
+      [{:ok, user}] ->
+        {:ok, user}
+
+      _errors ->
+        {:ok, user}
     end
   end
 end

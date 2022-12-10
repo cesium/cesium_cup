@@ -12,6 +12,11 @@ import Config
 config :cesium_cup, CesiumCupWeb.Endpoint,
   cache_static_manifest: "priv/static/cache_manifest.json"
 
+config :waffle,
+  storage: Waffle.Storage.S3,
+  bucket: {:system, "AWS_S3_BUCKET"},
+  asset_host: {:system, "ASSET_HOST"}
+
 # Do not print debug messages in production
 config :logger, level: :info
 

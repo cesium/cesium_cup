@@ -1,0 +1,75 @@
+<div class="pt-10 text-black">
+  <h2><%= @title %></h2>
+
+  <.form let={f} for={@changeset} id="match-form" phx-target={@myself} phx-change="validate" phx-submit="save">
+    <ul>
+      <li>
+        <%= label(f, :date) %>
+        <%= datetime_select(f, :date) %>
+        <%= error_tag(f, :date) %>
+      </li>
+
+      <li>
+        <%= label(f, :home_team_id) %>
+        <%= select(f, :home_team_id, Enum.map(@teams, &{&1.name, &1.id}), prompt: "Choose a Team", selected: f.data.home_team_id) %>
+        <%= error_tag(f, :home_team_id) %>
+      </li>
+
+      <li>
+        <%= label(f, :away_team_id) %>
+        <%= select(f, :away_team_id, Enum.map(@teams, &{&1.name, &1.id}), prompt: "Choose a Team", selected: f.data.away_team_id) %>
+        <%= error_tag(f, :away_team_id) %>
+      </li>
+
+      <li>
+        <%= label(f, :group_id) %>
+        <%= select(f, :group_id, Enum.map(@groups, &{&1.name, &1.id}), prompt: "Choose a Group", selected: f.data.group_id) %>
+        <%= error_tag(f, :group_id) %>
+      </li>
+
+      <li>
+        <%= label(f, :elimination_round_id) %>
+        <%= select(f, :elimination_round_id, Enum.map(@elimination_rounds, &{&1.name, &1.id}), prompt: "Choose a Elimination Round", selected: f.data.group_id) %>
+        <%= error_tag(f, :elimination_round_id) %>
+      </li>
+    </ul>
+
+    <ul class="flex space-x-20">
+      <%= if not is_nil(@match.home_team_id) do %>
+        <li>
+          <ul>
+            <li>
+              <a href="#" phx-click="add-event" phx-target={@myself}>
+                <%= "New Event" %>
+              </a>
+            </li>
+
+            <li>
+              <%= label(f, :events) %>
+              <%= inputs_for f, :events, fn fe -> %>
+                <li>
+                  <%= label(fe, :type) %>
+                  <%= select(fe, :type, @types, prompt: "Choose a Type", selected: fe.data.type) %>
+                  <%= error_tag(fe, :type) %>
+                </li>
+                <li>
+                  <%= label(fe, :player_id) %>
+                  <%= select(fe, :player_id, Enum.map(@players, &{&1.name, &1.id}), prompt: "Choose a Player", selected: fe.data.player_id) %>
+                  <%= error_tag(fe, :player_id) %>
+                </li>
+                <li>
+                  <%= label(fe, :delete) %>
+                  <%= checkbox(fe, :delete, id: fe.data.id) %>
+                </li>
+              <% end %>
+            </li>
+          </ul>
+        </li>
+      <% end %>
+    </ul>
+
+    <div>
+      <%= submit("Save", phx_disable_with: "Saving...") %>
+    </div>
+  </.form>
+</div>

@@ -5,8 +5,11 @@ defmodule CesiumCup.Teams.Player do
   use CesiumCup.Schema
 
   alias CesiumCup.Teams.Team
+  alias CesiumCup.Tournament.Event
 
-  @required_fields ~w(date_of_birth name course position height weight team_id)a
+  alias CesiumCup.Uploaders
+
+  @required_fields ~w(date_of_birth name course position height weight team_id captain)a
 
   @optional_fields []
 
@@ -17,8 +20,13 @@ defmodule CesiumCup.Teams.Player do
     field :position, :string
     field :height, :decimal
     field :weight, :decimal
+    field :captain, :boolean, default: false
 
     belongs_to :team, Team
+
+    has_many :events, Event
+
+    field :picture, Uploaders.PlayerPicture.Type
 
     timestamps()
   end
@@ -27,6 +35,16 @@ defmodule CesiumCup.Teams.Player do
   def changeset(player, attrs) do
     player
     |> cast(attrs, @required_fields ++ @optional_fields)
+    |> cast_assoc(:events,
+      required: false,
+      with: &Event.changeset/2
+    )
+    |> cast_attachments(attrs, [:picture])
     |> validate_required(@required_fields)
+  end
+
+  def picture_changeset(user, attrs) do
+    user
+    |> cast_attachments(attrs, [:picture])
   end
 end

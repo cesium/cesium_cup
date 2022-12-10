@@ -1,5 +1,4 @@
-defmodule CesiumCupWeb.GameLive.Show do
-  @moduledoc false
+defmodule CesiumCupWeb.EventLive.Show do
   use CesiumCupWeb, :live_view
 
   alias CesiumCup.Tournament
@@ -14,9 +13,9 @@ defmodule CesiumCupWeb.GameLive.Show do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:game, Tournament.get_game!(id))}
+     |> assign(:event, Tournament.get_event!(id))}
   end
 
-  defp page_title(:show), do: "Show Game"
-  defp page_title(:edit), do: "Edit Game"
+  defp page_title(:show), do: "Show Event"
+  defp page_title(:edit), do: "Edit Event"
 end

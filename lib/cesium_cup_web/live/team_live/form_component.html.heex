@@ -6,10 +6,6 @@
     <%= text_input(f, :name) %>
     <%= error_tag(f, :name) %>
 
-    <%= label(f, :establishment) %>
-    <%= date_select(f, :establishment) %>
-    <%= error_tag(f, :establishment) %>
-
     <%= label(f, :group_id) %>
     <%= select(f, :group_id, Enum.map(@groups, &{&1.name, &1.id}), prompt: "Choose a Group", selected: f.data.group_id, required: true) %>
     <%= error_tag(f, :group_id) %>

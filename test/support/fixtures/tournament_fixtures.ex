@@ -35,4 +35,32 @@ defmodule CesiumCup.TournamentFixtures do
 
     group
   end
+
+  @doc """
+  Generate a event.
+  """
+  def event_fixture(attrs \\ %{}) do
+    {:ok, event} =
+      attrs
+      |> Enum.into(%{
+        type: "some type"
+      })
+      |> CesiumCup.Tournament.create_event()
+
+    event
+  end
+
+  @doc """
+  Generate a elimination_round.
+  """
+  def elimination_round_fixture(attrs \\ %{}) do
+    {:ok, elimination_round} =
+      attrs
+      |> Enum.into(%{
+        name: "some name"
+      })
+      |> CesiumCup.Tournament.create_elimination_round()
+
+    elimination_round
+  end
 end

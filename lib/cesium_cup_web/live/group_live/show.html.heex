@@ -16,15 +16,21 @@
           <table class="min-w-full divide-y divide-gray-300">
             <thead class="bg-gray-50">
               <tr>
-                <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-6">Group <%= @group.name %></th>
+                <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-6">
+                  Group <%= @group.name %>
+                </th>
                 <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Pld</th>
+                <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">W</th>
+                <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">D</th>
+                <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">L</th>
                 <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">GF</th>
                 <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">GA</th>
+                <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">GD</th>
                 <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Pts</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 bg-white">
-              <%= for team <- @group.teams do %>
+              <%= for team <- @teams do %>
                 <tr>
                   <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                     <%= live_redirect to: Routes.team_show_path(@socket, :show, team) do %>
@@ -35,6 +41,59 @@
                   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
                   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
                   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    <%= get_team_group_goals_for(team.id) %>
+                  </td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    <%= get_team_group_goals_against(team.id) %>
+                  </td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    <%= get_team_group_goals_for(team.id) - get_team_group_goals_against(team.id) %>
+                  </td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex flex-col my-10">
+    <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+        <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+          <table class="min-w-full divide-y divide-gray-300">
+            <tbody class="divide-y divide-gray-200 bg-white">
+              <%= for match <- @matches do %>
+                <tr>
+                  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-gray-500 sm:pl-6">
+                    2022/11/20
+                  </td>
+                  <td class="whitespace-nowrap py-4 pl-20 text-sm font-medium text-gray-900 text-left">
+                    <%= if match.home_team_id do %>
+                      <%= live_redirect to: Routes.team_show_path(@socket, :show, get_team(match.home_team_id)) do %>
+                        <%= get_team(match.home_team_id).name %>
+                      <% end %>
+                    <% else %>
+                      TBD
+                    <% end %>
+                  </td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-center">
+                    <%= live_redirect to: Routes.match_show_path(@socket, :show, match) do %>
+                      <%= get_home_team_score(match.id) %> - <%= get_away_team_score(match.id) %>
+                    <% end %>
+                  </td>
+                  <td class="whitespace-nowrap py-4 pr-20 text-sm font-medium text-gray-900 text-right">
+                    <%= if match.away_team_id do %>
+                      <%= live_redirect to: Routes.team_show_path(@socket, :show, get_team(match.away_team_id)) do %>
+                        <%= get_team(match.away_team_id).name %>
+                      <% end %>
+                    <% else %>
+                      TBD
+                    <% end %>
+                  </td>
                 </tr>
               <% end %>
             </tbody>

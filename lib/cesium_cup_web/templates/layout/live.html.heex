@@ -11,8 +11,9 @@
       <div class="flex gap-x-4 font-bold text-white text-lg">
         <%= live_redirect("Players", to: Routes.player_index_path(@socket, :index), class: "opacity-80 hover:opacity-100 cursor-pointer") %>
         <%= live_redirect("Teams", to: Routes.team_index_path(@socket, :index), class: "opacity-80 hover:opacity-100 cursor-pointer") %>
-        <%= live_redirect("Games", to: Routes.game_index_path(@socket, :index), class: "opacity-80 hover:opacity-100 cursor-pointer") %>
+        <%= live_redirect("Matches", to: Routes.match_index_path(@socket, :index), class: "opacity-80 hover:opacity-100 cursor-pointer") %>
         <%= live_redirect("Groups", to: Routes.group_index_path(@socket, :index), class: "opacity-80 hover:opacity-100 cursor-pointer") %>
+        <%= live_redirect("Rounds", to: Routes.elimination_round_index_path(@socket, :index), class: "opacity-80 hover:opacity-100 cursor-pointer") %>
         <%= link("Register", to: Routes.user_registration_path(@socket, :new), class: "opacity-80 hover:opacity-100 cursor-pointer") %>
         <%= link("Log in", to: Routes.user_session_path(@socket, :new), class: "opacity-80 hover:opacity-100 cursor-pointer") %>
       </div>

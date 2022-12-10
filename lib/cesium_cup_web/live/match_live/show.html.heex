@@ -1,6 +1,6 @@
 <%= if @live_action in [:edit] do %>
-  <.modal return_to={Routes.game_show_path(@socket, :show, @game)}>
-    <.live_component module={CesiumCupWeb.GameLive.FormComponent} id={@game.id} title={@page_title} action={@live_action} game={@game} return_to={Routes.game_show_path(@socket, :show, @game)} />
+  <.modal return_to={Routes.match_show_path(@socket, :show, @match)}>
+    <.live_component module={CesiumCupWeb.MatchLive.FormComponent} id={@match.id} title={@page_title} action={@live_action} match={@match} return_to={Routes.match_show_path(@socket, :show, @match)} />
   </.modal>
 <% end %>
 
@@ -13,11 +13,11 @@
             <div>
               <span href="#" class=" text-gray-500 hover:text-gray-700 whitespace-nowrap font-small" aria-current="page"><%= live_patch("CeSIUM Cup", to: Routes.home_index_path(@socket, :index)) %></span>
               <a class="text-gray-500 whitespace-nowrap font-small">></a>
-              <span class="border-transparent text-gray-500 hover:text-gray-700 whitespace-nowrap border-b-4 font-small"><%= live_redirect("#{@game.stage}", to: Routes.game_index_path(@socket, :index)) %></span>
+              <span class="border-transparent text-gray-500 hover:text-gray-700 whitespace-nowrap border-b-4 font-small"><%= live_redirect("", to: Routes.match_index_path(@socket, :index)) %></span>
             </div>
 
             <div>
-              <span class="border-transparent text-indigo-300 hover:text-indigo-400 whitespace-nowrap border-b-4 font-small"><%= live_patch("Editar partida", to: Routes.game_show_path(@socket, :edit, @game), class: "button") %></span>
+              <span class="border-transparent text-indigo-300 hover:text-indigo-400 whitespace-nowrap border-b-4 font-small"><%= live_patch("Editar partida", to: Routes.match_show_path(@socket, :edit, @match), class: "button") %></span>
             </div>
           </nav>
         </div>
@@ -26,18 +26,32 @@
     <div class="pb-10 border-b">
       <div class="flex flex-row justify-around items-center gap-x-4 pt-8">
         <div>
-          <div class="h-1/2 rounded-xl bg-white hover:bg-slate-100 shadow-l">
-            <div class="px-20 py-20"></div>
-          </div>
-          <p class="font-medium text-xl text-center p-2">
-            Equipa Casa
+          <%= if @match.home_team_id do %>
+            <%= live_redirect to: Routes.team_show_path(@socket, :show, @match.home_team) do %>
+              <div class="h-1/2 rounded-xl bg-white  hover:bg-slate-100 shadow-l">
+                <div class="px-20 py-20"></div>
+              </div>
+            <% end %>
+          <% else %>
+            <div class="h-1/2 rounded-xl bg-white  hover:bg-slate-100 shadow-l">
+              <div class="px-20 py-20"></div>
+            </div>
+          <% end %>
+          <p class="font-medium text-xl text-center p-2 text-black">
+            <%= if @match.home_team_id do %>
+              <%= live_redirect to: Routes.team_show_path(@socket, :show, @match.home_team_id) do %>
+                <%= @match.home_team.name %>
+              <% end %>
+            <% else %>
+              TBD
+            <% end %>
           </p>
         </div>
 
         <div class="flex-col items-center">
           <div>
             <p class="font-regular text-xs text-center">
-              <%= "#{display_date(@game.date)} #{display_time(@game.date)}" %>
+              <%= "#{display_date(@match.date)} #{display_time(@match.date)}" %>
             </p>
           </div>
 
@@ -45,7 +59,7 @@
             <div class="flex font-semibold text-7xl items-center gap-x-4 text-center">
               <div class="text-gray-900 flex flex-col items-center">
                 <p>
-                  1
+                  <%= get_home_team_score(@match.id) %>
                 </p>
               </div>
               <div class="px-5 text-gray-900">
@@ -53,7 +67,7 @@
               </div>
               <div class="text-gray-900 flex flex-col items-center">
                 <p>
-                  2
+                  <%= get_away_team_score(@match.id) %>
                 </p>
               </div>
             </div>
@@ -61,17 +75,31 @@
 
           <div>
             <p class="font-medium text-xl text-center p-2">
-              <%= @game.state %> - tempo
+              - tempo
             </p>
           </div>
         </div>
 
         <div>
-          <div class="h-1/2 rounded-xl bg-white  hover:bg-slate-100 shadow-l">
-            <div class="px-20 py-20"></div>
-          </div>
-          <p class="font-medium text-xl text-center p-2">
-            Equipa Fora
+          <%= if @match.away_team_id do %>
+            <%= live_redirect to: Routes.team_show_path(@socket, :show, @match.away_team) do %>
+              <div class="h-1/2 rounded-xl bg-white  hover:bg-slate-100 shadow-l">
+                <div class="px-20 py-20"></div>
+              </div>
+            <% end %>
+          <% else %>
+            <div class="h-1/2 rounded-xl bg-white  hover:bg-slate-100 shadow-l">
+              <div class="px-20 py-20"></div>
+            </div>
+          <% end %>
+          <p class="font-medium text-xl text-center p-2 text-black">
+            <%= if @match.away_team_id do %>
+              <%= live_redirect to: Routes.team_show_path(@socket, :show, @match.away_team) do %>
+                <%= @match.away_team.name %>
+              <% end %>
+            <% else %>
+              TBD
+            <% end %>
           </p>
         </div>
       </div>
@@ -85,6 +113,20 @@
 
         <a href="#" class="border border-blue-500 hover:border-transparent bg-transparent hover:bg-blue-200 text-blue-500 py-2 px-4 rounded-full whitespace-nowrap font-medium text-md">Estatísticas</a>
       </nav>
+    </div>
+
+
+    <div class="flex justify-between pt-8 pb-5 lg:px-20">
+      <div class="text-black">
+        <%= for player <- @home_team_players do %>
+          <%= "#{player.name} #{player.captain && "(C)"}"  %>
+        <% end %>
+      </div>
+      <div class="text-black">
+        <%= for player <- @away_team_players do %>
+          <%= "#{player.captain && "(C)"} #{player.name}"  %>
+        <% end %>
+      </div>
     </div>
 
     <div class="pt-8 pb-5 lg:px-20">
@@ -101,15 +143,24 @@
                 </thead>
 
                 <tbody class="divide-y bg-white divide-none">
-                  <tr class="whitespace-nowrap text-sm font-medium text-gray-900">
-                    <td class="pt-3 pl-4 pr-3 sm:pl-6">evento equipa Casa</td>
-                    <td></td>
-                  </tr>
-
-                  <tr class="whitespace-nowrap text-sm font-medium text-gray-900">
-                    <td></td>
-                    <td class="pb-3 pl-3 pr-4 text-right sm:pr-6">evento equipa Fora</td>
-                  </tr>
+                  <%= for {event, index} <- Enum.with_index(@events) do %>
+                    <% player = get_player(event.player_id) %>
+                    <%= if player.team_id == @match.home_team_id do %>
+                        <tr class="whitespace-nowrap text-sm font-medium text-gray-900">
+                          <td class={"#{index == 0 && "pt-3"} pb-3 pl-4 pr-3 sm:pl-6"}>
+                            <%= "[#{event.type}] #{player.name}" %>
+                          </td>
+                          <td></td>
+                        </tr>
+                    <% else %>
+                      <tr class="whitespace-nowrap text-sm font-medium text-gray-900">
+                        <td></td>
+                        <td class="pb-3 pl-3 pr-4 text-right sm:pr-6">
+                            <%= "#{player.name} [#{event.type}]" %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  <% end %>
                 </tbody>
 
                 <thead class="bg-gray-50">

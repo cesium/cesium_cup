@@ -161,10 +161,11 @@ defmodule CesiumCup.Teams do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_player(attrs \\ %{}) do
+  def create_player(attrs \\ %{}, after_save \\ &{:ok, &1}) do
     %Player{}
     |> Player.changeset(attrs)
     |> Repo.insert()
+    |> after_save(after_save)
   end
 
   @doc """
@@ -179,10 +180,11 @@ defmodule CesiumCup.Teams do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_player(%Player{} = player, attrs) do
+  def update_player(%Player{} = player, attrs \\ %{}, after_save \\ &{:ok, &1}) do
     player
     |> Player.changeset(attrs)
     |> Repo.update()
+    |> after_save(after_save)
   end
 
   @doc """
@@ -212,5 +214,11 @@ defmodule CesiumCup.Teams do
   """
   def change_player(%Player{} = player, attrs \\ %{}) do
     Player.changeset(player, attrs)
+  end
+
+  def update_player_picture(%Player{} = player, attrs) do
+    player
+    |> Player.picture_changeset(attrs)
+    |> Repo.update()
   end
 end
