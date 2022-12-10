@@ -111,6 +111,8 @@ defmodule CesiumCup.Teams do
   end
 
   alias CesiumCup.Teams.Player
+  alias CesiumCup.Tournament.Event
+  alias CesiumCup.Tournament.Match
 
   @doc """
   Returns the list of players.
@@ -125,6 +127,36 @@ defmodule CesiumCup.Teams do
     Player
     |> apply_filters(opts)
     |> Repo.all()
+  end
+
+  def list_players_in_game(match_id, team_id) do
+    from(p in Player,
+      where: p.team_id == ^team_id
+    )
+    |> Repo.all()
+    |> Enum.filter(&(get_player_sub_in_match(&1.id, match_id) > get_player_sub_out_match(&1.id, match_id)))
+  end
+
+  def list_players_in_bench(match_id, team_id) do
+    from(p in Player,
+      where: p.team_id == ^team_id
+    )
+    |> Repo.all()
+    |> Enum.filter(&(get_player_sub_in_match(&1.id, match_id) <= get_player_sub_out_match(&1.id, match_id)))
+  end
+
+  def get_player_sub_in_match(player_id, match_id) do
+    from(e in Event,
+      where: e.player_id == ^player_id and e.match_id == ^match_id and e.type == :sub_in
+    )
+    |> Repo.aggregate(:count)
+  end
+
+  def get_player_sub_out_match(player_id, match_id) do
+    from(e in Event,
+      where: e.player_id == ^player_id and e.match_id == ^match_id and e.type == :sub_out
+    )
+    |> Repo.aggregate(:count)
   end
 
   @doc """
@@ -161,10 +193,11 @@ defmodule CesiumCup.Teams do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_player(attrs \\ %{}) do
+  def create_player(attrs \\ %{}, after_save \\ &{:ok, &1}) do
     %Player{}
     |> Player.changeset(attrs)
     |> Repo.insert()
+    |> after_save(after_save)
   end
 
   @doc """
@@ -179,10 +212,11 @@ defmodule CesiumCup.Teams do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_player(%Player{} = player, attrs) do
+  def update_player(%Player{} = player, attrs \\ %{}, after_save \\ &{:ok, &1}) do
     player
     |> Player.changeset(attrs)
     |> Repo.update()
+    |> after_save(after_save)
   end
 
   @doc """
@@ -212,5 +246,11 @@ defmodule CesiumCup.Teams do
   """
   def change_player(%Player{} = player, attrs \\ %{}) do
     Player.changeset(player, attrs)
+  end
+
+  def update_player_picture(%Player{} = player, attrs) do
+    player
+    |> Player.picture_changeset(attrs)
+    |> Repo.update()
   end
 end

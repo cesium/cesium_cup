@@ -11,8 +11,11 @@ defmodule CesiumCup.Repo.Migrations.CreatePlayers do
       add :position, :string
       add :height, :decimal
       add :weight, :decimal
+      add :captain, :boolean
 
       add :team_id, references(:teams, on_delete: :nothing, type: :binary_id)
+
+      add :picture, :string
 
       timestamps()
     end

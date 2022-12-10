@@ -83,12 +83,12 @@ defmodule CesiumCupWeb.Router do
 
     live "/", HomeLive.Index, :index
 
-    live "/games", GameLive.Index, :index
-    live "/games/new", GameLive.Index, :new
-    live "/games/:id/edit", GameLive.Index, :edit
+    live "/matches", MatchLive.Index, :index
+    live "/matches/new", MatchLive.Index, :new
+    live "/matches/:id/edit", MatchLive.Index, :edit
 
-    live "/games/:id", GameLive.Show, :show
-    live "/games/:id/show/edit", GameLive.Show, :edit
+    live "/matches/:id", MatchLive.Show, :show
+    live "/matches/:id/show/edit", MatchLive.Show, :edit
 
     live "/teams", TeamLive.Index, :index
     live "/teams/new", TeamLive.Index, :new
@@ -96,6 +96,13 @@ defmodule CesiumCupWeb.Router do
 
     live "/teams/:id", TeamLive.Show, :show
     live "/teams/:id/show/edit", TeamLive.Show, :edit
+
+    live "/events", EventLive.Index, :index
+    live "/events/new", EventLive.Index, :new
+    live "/events/:id/edit", EventLive.Index, :edit
+
+    live "/events/:id", EventLive.Show, :show
+    live "/events/:id/show/edit", EventLive.Show, :edit
 
     live "/players", PlayerLive.Index, :index
     live "/players/new", PlayerLive.Index, :new
@@ -110,6 +117,13 @@ defmodule CesiumCupWeb.Router do
 
     live "/groups/:id", GroupLive.Show, :show
     live "/groups/:id/show/edit", GroupLive.Show, :edit
+
+    live "/rounds", EliminationRoundLive.Index, :index
+    live "/rounds/new", EliminationRoundLive.Index, :new
+    live "/rounds/:id/edit", EliminationRoundLive.Index, :edit
+
+    live "/rounds/:id", EliminationRoundLive.Show, :show
+    live "/rounds/:id/show/edit", EliminationRoundLive.Show, :edit
 
     delete "/users/log_out", UserSessionController, :delete
     get "/users/confirm", UserConfirmationController, :new

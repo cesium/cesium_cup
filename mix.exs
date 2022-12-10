@@ -45,6 +45,10 @@ defmodule CesiumCup.MixProject do
       {:ecto_sql, "~> 3.6"},
       {:postgrex, ">= 0.0.0"},
 
+      # uploads
+      {:waffle, "~> 1.1"},
+      {:waffle_ecto, "~> 0.0"},
+
       # mailer
       {:swoosh, "~> 1.3"},
 

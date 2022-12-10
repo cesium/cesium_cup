@@ -1,31 +1,26 @@
-defmodule CesiumCup.Teams.Team do
+defmodule CesiumCup.Tournament.EliminationRound do
   @moduledoc """
-  A team.
+  A elimination round from a tournament
   """
   use CesiumCup.Schema
 
-  alias CesiumCup.Teams.Player
   alias CesiumCup.Tournament.Match
-  alias CesiumCup.Tournament.Group
 
-  @required_fields ~w(name group_id)a
+  @required_fields ~w(name)a
 
   @optional_fields []
 
-  schema "teams" do
+  schema "elimination_rounds" do
     field :name, :string
 
-    has_many :players, Player
     has_many :matches, Match
-
-    belongs_to :group, Group
 
     timestamps()
   end
 
   @doc false
-  def changeset(team, attrs) do
-    team
+  def changeset(elimination_round, attrs) do
+    elimination_round
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
   end

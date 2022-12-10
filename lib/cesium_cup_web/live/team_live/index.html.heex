@@ -11,7 +11,6 @@
     <thead>
       <tr>
         <th>Name</th>
-        <th>Establishment</th>
 
         <th></th>
       </tr>
@@ -20,7 +19,6 @@
       <%= for team <- @teams do %>
         <tr id={"team-#{team.id}"}>
           <td><%= team.name %></td>
-          <td><%= team.establishment %></td>
 
           <td>
             <span><%= live_redirect("Show", to: Routes.team_show_path(@socket, :show, team)) %></span>

@@ -1,39 +1,61 @@
 <div class="pt-10 px-60">
   <div class="flex gap-x-2">
-    <%= for game <- @games do %>
-      <%= live_redirect to: Routes.game_show_path(@socket, :show, game), class: "w-72 rounded-xl bg-[#F9FAFB] hover:bg-quinary" do %>
+    <%= for match <- @matches do %>
+      <%= live_redirect to: Routes.match_show_path(@socket, :show, match), class: "w-72 rounded-xl bg-[#F9FAFB] hover:bg-quinary" do %>
         <div class="px-5 py-5">
           <div class="flex items-center justify-between text-sm">
             <p class="text-gray-900">
-              <%= game.stage %>
+              <%= if match.group_id do %>
+                Group <%= get_group(match.group_id).name %>
+              <% else %>
+                <%= get_elimination_round(match.elimination_round_id).name %>
+              <% end %>
             </p>
 
-            <span class="text-white bg-[#FF0046] rounded-lg px-2 font-bold">
-              LIVE
-            </span>
+            <%= if match.state in [:first_half, :halftime, :second_half] do %>
+              <span class="text-white bg-[#FF0046] rounded-lg px-2 font-bold">
+                LIVE
+              </span>
+            <% end %>
           </div>
 
           <div class="pt-2 font-bold">
             <div class="flex items-center justify-between">
               <p class="text-gray-900">
-                Equipa Vermelha
+                <%= if match.home_team_id do %>
+                  <%= get_team(match.home_team_id).name %>
+                <% else %>
+                  TBD
+                <% end %>
               </p>
               <p class="text-gray-900">
-                0
+                <%= if match.home_team_id do %>
+                  <%= get_home_team_score(match.id) %>
+                <% else %>
+                  0
+                <% end %>
               </p>
             </div>
             <div class="flex items-center justify-between">
               <p class="text-gray-900">
-                Equipa Azul
+                <%= if match.away_team_id do %>
+                  <%= get_team(match.away_team_id).name %>
+                <% else %>
+                  TBD
+                <% end %>
               </p>
               <p class="text-gray-900">
-                0
+                <%= if match.away_team_id do %>
+                  <%= get_away_team_score(match.id) %>
+                <% else %>
+                  0
+                <% end %>
               </p>
             </div>
           </div>
 
-          <div class="pt-2 text-sm">
-            <%= "#{display_date(game.date)} - #{display_time(game.date)}" %>
+          <div class="pt-2 text-sm text-gray-900">
+            <%= "#{display_date(match.date)} - #{display_time(match.date)}" %>
           </div>
         </div>
       <% end %>
@@ -97,53 +119,116 @@
       <div class="pt-2">
         <div class="border-b border-gray-200">
           <nav class="-mb-px flex space-x-8" aria-label="Tabs">
-            <a href="#" class="border-quinary text-gray-900 whitespace-nowrap py-4 px-1 border-b-4 font-medium text-md" aria-current="page">Group Stage</a>
-
-            <a href="#" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-4 font-medium text-md">Knockout  Stage</a>
+            <%= live_patch("Group Stage", to: "?tab=group", class: "#{if @tab == "group" do
+              "border-quinary text-gray-900"
+            else
+              "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+            end}  whitespace-nowrap py-4 px-1 border-b-4 font-medium text-md") %>
+            <%= for round <- @elimination_rounds do %>
+              <%= live_patch(round.name, to: "?tab=#{round.name}", class: "#{if @tab == round.name do
+                "border-quinary text-gray-900"
+              else
+                "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+              end}  whitespace-nowrap py-4 px-1 border-b-4 font-medium text-md") %>
+            <% end %>
           </nav>
         </div>
       </div>
     </div>
 
-    <div class="flex mt-4 gap-x-10">
-      <div class="w-2/3 grid grid-cols-2 gap-4">
-        <%= for group <- @groups do %>
-          <div class="flex flex-col">
-            <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-              <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                  <table class="min-w-full divide-y divide-gray-300">
-                    <thead class="bg-gray-50">
-                      <tr>
-                        <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-6">Group <%= group.name %></th>
-                        <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Pld</th>
-                        <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">GF</th>
-                        <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">GA</th>
-                        <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Pts</th>
-                      </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200 bg-white">
-                      <%= for team <- group.teams do %>
+    <%= if @tab == "group" do %>
+      <div class="flex mt-4 gap-x-10">
+        <div class="w-2/3 grid grid-cols-2 gap-4">
+          <%= for group <- @groups do %>
+            <div class="flex flex-col">
+              <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                  <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                    <table class="min-w-full divide-y divide-gray-300">
+                      <thead class="bg-gray-50">
                         <tr>
-                          <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                            <%= live_redirect to: Routes.team_show_path(@socket, :show, team) do %>
-                              <%= team.name %>
+                          <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-6">
+                            <%= live_redirect to: Routes.group_show_path(@socket, :show, group) do %>
+                              Group <%= group.name %>
                             <% end %>
-                          </td>
-                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
-                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
-                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
-                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                          </th>
+                          <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Pld</th>
+                          <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">GF</th>
+                          <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">GA</th>
+                          <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Pts</th>
                         </tr>
-                      <% end %>
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody class="divide-y divide-gray-200 bg-white">
+                        <%= for team <- group.teams do %>
+                          <tr>
+                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                              <%= live_redirect to: Routes.team_show_path(@socket, :show, team) do %>
+                                <%= team.name %>
+                              <% end %>
+                            </td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                              <%= get_team_group_goals_for(team.id) %>
+                            </td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                              <%= get_team_group_goals_against(team.id) %>
+                            </td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                          </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
       </div>
-    </div>
+    <% else %>
+      <div class="flex flex-col my-10">
+        <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+            <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+              <table class="min-w-full divide-y divide-gray-300">
+                <tbody class="divide-y divide-gray-200 bg-white">
+                  <%= for match <- @selected_elimination_round.matches do %>
+                    <tr>
+                      <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-gray-500 sm:pl-6">
+                        <%= display_date(match.date) %>
+                      </td>
+                      <td class="whitespace-nowrap py-4 pl-20 text-sm font-medium text-gray-900 text-left">
+                        <%= if (get_team(match.home_team_id)) do %>
+                          <%= live_redirect to: Routes.team_show_path(@socket, :show, get_team(match.home_team_id)) do %>
+                            <%= get_team(match.home_team_id).name %>
+                          <% end %>
+                        <% end %>
+                      </td>
+                      <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-center">
+                        <%= live_redirect to: Routes.match_show_path(@socket, :show, match) do %>
+                          2-0
+                        <% end %>
+                      </td>
+                      <td class="whitespace-nowrap py-4 pr-20 text-sm font-medium text-gray-900 text-right">
+                        <%= if (get_team(match.home_team_id)) do %>
+                          <%= live_redirect to: Routes.team_show_path(@socket, :show, get_team(match.away_team_id)) do %>
+                            <%= get_team(match.away_team_id).name %>
+                          <% end %>
+                        <% end %>
+                      </td>
+                      <td>
+                        <span><%= live_redirect("Show", to: Routes.match_show_path(@socket, :show, match), class: "text-gray-900") %></span>
+                        <span><%= live_patch("Edit", to: Routes.match_index_path(@socket, :edit, match), class: "text-gray-900") %></span>
+                        <span><%= link("Delete", to: "#", phx_click: "delete", phx_value_id: match.id, data: [confirm: "Are you sure?"], class: "text-gray-900") %></span>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>

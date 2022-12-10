@@ -64,6 +64,11 @@ config :cesium_cup, CesiumCupWeb.Endpoint,
     ]
   ]
 
+config :waffle,
+  storage: Waffle.Storage.Local,
+  storage_dir_prefix: "priv",
+  asset_host: {:system, "ASSET_HOST"}
+
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
 

@@ -8,6 +8,7 @@ defmodule CesiumCup.Schema do
   defmacro __using__(_) do
     quote do
       use Ecto.Schema
+      use Waffle.Ecto.Schema
 
       import Ecto.Changeset
       import Ecto.Query
