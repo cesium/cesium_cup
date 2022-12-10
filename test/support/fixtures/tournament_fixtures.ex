@@ -21,4 +21,18 @@ defmodule CesiumCup.TournamentFixtures do
 
     game
   end
+
+  @doc """
+  Generate a group.
+  """
+  def group_fixture(attrs \\ %{}) do
+    {:ok, group} =
+      attrs
+      |> Enum.into(%{
+        name: "some name"
+      })
+      |> CesiumCup.Tournament.create_group()
+
+    group
+  end
 end

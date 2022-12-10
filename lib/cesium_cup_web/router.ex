@@ -90,6 +90,27 @@ defmodule CesiumCupWeb.Router do
     live "/games/:id", GameLive.Show, :show
     live "/games/:id/show/edit", GameLive.Show, :edit
 
+    live "/teams", TeamLive.Index, :index
+    live "/teams/new", TeamLive.Index, :new
+    live "/teams/:id/edit", TeamLive.Index, :edit
+
+    live "/teams/:id", TeamLive.Show, :show
+    live "/teams/:id/show/edit", TeamLive.Show, :edit
+
+    live "/players", PlayerLive.Index, :index
+    live "/players/new", PlayerLive.Index, :new
+    live "/players/:id/edit", PlayerLive.Index, :edit
+
+    live "/players/:id", PlayerLive.Show, :show
+    live "/players/:id/show/edit", PlayerLive.Show, :edit
+
+    live "/groups", GroupLive.Index, :index
+    live "/groups/new", GroupLive.Index, :new
+    live "/groups/:id/edit", GroupLive.Index, :edit
+
+    live "/groups/:id", GroupLive.Show, :show
+    live "/groups/:id/show/edit", GroupLive.Show, :edit
+
     delete "/users/log_out", UserSessionController, :delete
     get "/users/confirm", UserConfirmationController, :new
     post "/users/confirm", UserConfirmationController, :create

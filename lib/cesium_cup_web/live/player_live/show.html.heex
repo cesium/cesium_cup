@@ -1,0 +1,45 @@
+<div class="pt-10 px-60">
+  <h1>Show Player</h1>
+
+  <%= if @live_action in [:edit] do %>
+    <.modal return_to={Routes.player_show_path(@socket, :show, @player)}>
+      <.live_component module={CesiumCupWeb.PlayerLive.FormComponent} id={@player.id} title={@page_title} action={@live_action} player={@player} return_to={Routes.player_show_path(@socket, :show, @player)} />
+    </.modal>
+  <% end %>
+
+  <ul>
+    <li>
+      <strong>Name:</strong>
+      <%= @player.name %>
+    </li>
+
+    <li>
+      <strong>Date of birth:</strong>
+      <%= @player.date_of_birth %>
+    </li>
+
+    <li>
+      <strong>Position:</strong>
+      <%= @player.position %>
+    </li>
+
+    <li>
+      <strong>Height:</strong>
+      <%= @player.height %>
+    </li>
+
+    <li>
+      <strong>Weight:</strong>
+      <%= @player.weight %>
+    </li>
+
+    <li>
+      <strong>Team:</strong>
+      <%= live_redirect to: Routes.team_show_path(@socket, :show, @player.team) do %>
+        <%= @player.team.name %>
+      <% end %>
+    </li>
+  </ul>
+
+  <span><%= live_patch("Edit", to: Routes.player_show_path(@socket, :edit, @player), class: "button") %></span> | <span><%= live_redirect("Back", to: Routes.player_index_path(@socket, :index)) %></span>
+</div>

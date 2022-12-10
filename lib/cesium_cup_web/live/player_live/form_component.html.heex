@@ -1,0 +1,37 @@
+<div class="pt-10 text-black">
+  <h2><%= @title %></h2>
+
+  <.form let={f} for={@changeset} id="player-form" phx-target={@myself} phx-change="validate" phx-submit="save">
+    <%= label(f, :name) %>
+    <%= text_input(f, :name) %>
+    <%= error_tag(f, :name) %>
+
+    <%= label(f, :course) %>
+    <%= text_input(f, :course) %>
+    <%= error_tag(f, :course) %>
+
+    <%= label(f, :date_of_birth) %>
+    <%= date_select(f, :date_of_birth) %>
+    <%= error_tag(f, :date_of_birth) %>
+
+    <%= label(f, :position) %>
+    <%= text_input(f, :position) %>
+    <%= error_tag(f, :position) %>
+
+    <%= label(f, :height) %>
+    <%= number_input(f, :height, step: "any") %>
+    <%= error_tag(f, :height) %>
+
+    <%= label(f, :weight) %>
+    <%= number_input(f, :weight, step: "any") %>
+    <%= error_tag(f, :weight) %>
+
+    <%= label(f, :team_id) %>
+    <%= select(f, :team_id, Enum.map(@teams, &{&1.name, &1.id}), prompt: "Choose a Team", selected: f.data.team_id, required: true) %>
+    <%= error_tag(f, :team_id) %>
+
+    <div>
+      <%= submit("Save", phx_disable_with: "Saving...") %>
+    </div>
+  </.form>
+</div>

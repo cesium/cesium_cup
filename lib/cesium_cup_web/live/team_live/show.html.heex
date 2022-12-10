@@ -1,0 +1,40 @@
+<div class="pt-10 px-60">
+  <%= if @live_action in [:edit] do %>
+    <.modal return_to={Routes.team_show_path(@socket, :show, @team)}>
+      <.live_component module={CesiumCupWeb.TeamLive.FormComponent} id={@team.id} title={@page_title} action={@live_action} team={@team} return_to={Routes.team_show_path(@socket, :show, @team)} />
+    </.modal>
+  <% end %>
+
+  <div class="flex items-center space-x-10">
+    <div class="h-1/4 w-auto">
+      <img class="w-full" src={Routes.static_path(@socket, "/images/teams/portugal.png")} />
+    </div>
+    <div>
+      <div class="text-8xl font-bold">
+        <%= @team.name %>
+      </div>
+      <div class="text-sm">
+        EST <%= @team.establishment %>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex justify-center w-full mt-10">
+    <div class="grid w-[85%] grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 lg:w-full">
+      <%= for player <- @team.players do %>
+        <%= live_redirect to: Routes.player_show_path(@socket, :show, player), class: "overflow-hidden relative w-full h-auto group" do %>
+          <div class="absolute inset-0 z-40 bg-gradient-to-b from-transparent opacity-40 transition duration-200 ease-in group-hover:translate-y-20 via-[#254E9F] to-[#254E9F] group-hover:rounded-t-[50px]" />
+          <img class="w-full" src={Routes.static_path(@socket, "/images/players/ronaldo.png")} />
+          <p class="hidden absolute inset-x-0 bottom-8 z-40 text-sm font-medium text-center text-white sm:bottom-10 sm:text-lg sm:font-bold md:text-xl group-hover:block">
+            <%= player.name %>
+          </p>
+          <p class="hidden absolute inset-x-0 bottom-3 z-40 text-sm font-medium text-center text-white sm:bottom-4 sm:text-lg sm:font-bold md:text-xl group-hover:block">
+            <%= player.course %>
+          </p>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <span><%= live_patch("Edit", to: Routes.team_show_path(@socket, :edit, @team), class: "button") %></span> | <span><%= live_redirect("Back", to: Routes.team_index_path(@socket, :index)) %></span>
+</div>

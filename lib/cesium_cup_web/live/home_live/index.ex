@@ -13,6 +13,7 @@ defmodule CesiumCupWeb.HomeLive.Index do
   def handle_params(_params, _url, socket) do
     {:noreply,
      socket
+     |> assign(:groups, Tournament.list_groups(preloads: [:teams]))
      |> assign(:games, list_games())}
   end
 
