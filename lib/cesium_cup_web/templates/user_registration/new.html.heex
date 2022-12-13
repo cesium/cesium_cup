@@ -1,25 +1,35 @@
-<h1>Register</h1>
-
-<.form let={f} for={@changeset} action={Routes.user_registration_path(@conn, :create)}>
-  <%= if @changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
-    </div>
-  <% end %>
-
-  <%= label(f, :email) %>
-  <%= email_input(f, :email, required: true) %>
-  <%= error_tag(f, :email) %>
-
-  <%= label(f, :password) %>
-  <%= password_input(f, :password, required: true) %>
-  <%= error_tag(f, :password) %>
-
-  <div>
-    <%= submit("Register") %>
+<div class="flex flex-col space-y-4 w-screen h-screen bg-gradient-to-b from-tertiary to-primary grid h-screen place-items-center">
+  <div class="mt-6">
+    <h1 class="text-center text-5xl font-bold antialiased text-white opacity-80">Register</h1>
   </div>
-</.form>
+  <.form let={f} for={@changeset} action={Routes.user_registration_path(@conn, :create)}>
+    <%= if @changeset.action do %>
+      <div class="flex-col space-y-4 alert alert-danger">
+        <p class="center-text">Oops, something went wrong! Please check the errors below.</p>
+      </div>
+    <% end %>
 
-<p>
-  <%= link("Log in", to: Routes.user_session_path(@conn, :new)) %> | <%= link("Forgot your password?", to: Routes.user_reset_password_path(@conn, :new)) %>
-</p>
+    <div class="space-y-4 opacity-80 font-bold">
+      <div class="">
+        <p class="text-center text-white"><%= label(f, :email) %></p>
+        <div class="grid text-black">
+          <%= email_input(f, :email, required: true, class: "rounded-md") %>
+          <%= error_tag(f, :email) %>
+        </div>
+      </div>
+
+      <div class="">
+        <p class="text-center text-white"><%= label(f, :password) %></p>
+        <div class="">
+          <%= password_input(f, :password, required: true, class: "rounded-md") %>
+        </div>
+        <%= error_tag(f, :password) %>
+      </div>
+    </div>
+  </.form>
+
+  <div class="flex flex-row text-white justify-center space-x-4 ml-1">
+    <div class="opacity-80 hover:opacity-100 cursor-pointer"><%= link("Log in", to: Routes.user_session_path(@conn, :new)) %></div>
+    <div class="opacity-80 hover:opacity-100 cursor-pointer"><%= link("Forgot your password?", to: Routes.user_reset_password_path(@conn, :new)) %></div>
+  </div>
+</div>
