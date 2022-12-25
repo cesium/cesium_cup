@@ -31,168 +31,192 @@ defmodule CesiumCup.Repo.Seeds.Schedule do
             state: :upcoming,
             home_team_id: get_team_id("Portugal"),
             away_team_id: get_team_id("Argentina"),
-            group_id: get_group_id("A")
+            group_id: get_group_id("A"),
+            group_round: 1
           },
           %{
             date: ~N[2019-03-31 01:59:59.123],
             state: :upcoming,
             home_team_id: get_team_id("France"),
             away_team_id: get_team_id("Brazil"),
-            group_id: get_group_id("A")
+            group_id: get_group_id("A"),
+            group_round: 1
           },
           %{
             date: ~N[2019-03-31 01:59:59.123],
             state: :upcoming,
             home_team_id: get_team_id("Portugal"),
             away_team_id: get_team_id("Brazil"),
-            group_id: get_group_id("A")
+            group_id: get_group_id("A"),
+            group_round: 2
           },
           %{
             date: ~N[2019-03-31 01:59:59.123],
             state: :upcoming,
             home_team_id: get_team_id("Argentina"),
             away_team_id: get_team_id("France"),
-            group_id: get_group_id("A")
+            group_id: get_group_id("A"),
+            group_round: 2
           },
           %{
             date: ~N[2019-03-31 01:59:59.123],
             state: :upcoming,
             home_team_id: get_team_id("France"),
             away_team_id: get_team_id("Portugal"),
-            group_id: get_group_id("A")
+            group_id: get_group_id("A"),
+            group_round: 3
           },
           %{
             date: ~N[2019-03-31 01:59:59.123],
             state: :upcoming,
             home_team_id: get_team_id("Brazil"),
             away_team_id: get_team_id("Argentina"),
-            group_id: get_group_id("A")
+            group_id: get_group_id("A"),
+            group_round: 3
           },
           %{
             date: ~N[2019-03-31 01:59:59.123],
             state: :upcoming,
             home_team_id: get_team_id("Germany"),
             away_team_id: get_team_id("Spain"),
-            group_id: get_group_id("B")
+            group_id: get_group_id("B"),
+            group_round: 1
           },
           %{
             date: ~N[2019-03-31 01:59:59.123],
             state: :upcoming,
             home_team_id: get_team_id("Japan"),
             away_team_id: get_team_id("Uruguai"),
-            group_id: get_group_id("B")
+            group_id: get_group_id("B"),
+            group_round: 1
           },
           %{
             date: ~N[2019-03-31 01:59:59.123],
             state: :upcoming,
             home_team_id: get_team_id("Germany"),
             away_team_id: get_team_id("Japan"),
-            group_id: get_group_id("B")
+            group_id: get_group_id("B"),
+            group_round: 2
           },
           %{
             date: ~N[2019-03-31 01:59:59.123],
             state: :upcoming,
             home_team_id: get_team_id("Uruguai"),
             away_team_id: get_team_id("Spain"),
-            group_id: get_group_id("B")
+            group_id: get_group_id("B"),
+            group_round: 2
           },
           %{
             date: ~N[2019-03-31 01:59:59.123],
             state: :upcoming,
             home_team_id: get_team_id("Spain"),
             away_team_id: get_team_id("Japan"),
-            group_id: get_group_id("B")
+            group_id: get_group_id("B"),
+            group_round: 3
           },
           %{
             date: ~N[2019-03-31 01:59:59.123],
             state: :upcoming,
             home_team_id: get_team_id("Germany"),
             away_team_id: get_team_id("Uruguai"),
-            group_id: get_group_id("B")
+            group_id: get_group_id("B"),
+            group_round: 3
           },
           %{
             date: ~N[2019-03-31 01:59:59.123],
             state: :upcoming,
             home_team_id: get_team_id("Netherlands"),
             away_team_id: get_team_id("Italy"),
-            group_id: get_group_id("C")
+            group_id: get_group_id("C"),
+            group_round: 1
           },
           %{
             date: ~N[2019-03-31 01:59:59.123],
             state: :upcoming,
             home_team_id: get_team_id("Morroco"),
             away_team_id: get_team_id("South Korea"),
-            group_id: get_group_id("C")
+            group_id: get_group_id("C"),
+            group_round: 1
           },
           %{
             date: ~N[2019-03-31 01:59:59.123],
             state: :upcoming,
             home_team_id: get_team_id("Italy"),
             away_team_id: get_team_id("Morroco"),
-            group_id: get_group_id("C")
+            group_id: get_group_id("C"),
+            group_round: 2
           },
           %{
             date: ~N[2019-03-31 01:59:59.123],
             state: :upcoming,
             home_team_id: get_team_id("South Korea"),
             away_team_id: get_team_id("Netherlands"),
-            group_id: get_group_id("C")
+            group_id: get_group_id("C"),
+            group_round: 2
           },
           %{
             date: ~N[2019-03-31 01:59:59.123],
             state: :upcoming,
             home_team_id: get_team_id("Italy"),
             away_team_id: get_team_id("South Korea"),
-            group_id: get_group_id("C")
+            group_id: get_group_id("C"),
+            group_round: 3
           },
           %{
             date: ~N[2019-03-31 01:59:59.123],
             state: :upcoming,
             home_team_id: get_team_id("Netherlands"),
             away_team_id: get_team_id("Morroco"),
-            group_id: get_group_id("C")
+            group_id: get_group_id("C"),
+            group_round: 3
           },
           %{
             date: ~N[2019-03-31 01:59:59.123],
             state: :upcoming,
             home_team_id: get_team_id("England"),
             away_team_id: get_team_id("Belgium"),
-            group_id: get_group_id("D")
+            group_id: get_group_id("D"),
+            group_round: 1
           },
           %{
             date: ~N[2019-03-31 01:59:59.123],
             state: :upcoming,
             home_team_id: get_team_id("Croatia"),
             away_team_id: get_team_id("USA"),
-            group_id: get_group_id("D")
+            group_id: get_group_id("D"),
+            group_round: 1
           },
           %{
             date: ~N[2019-03-31 01:59:59.123],
             state: :upcoming,
             home_team_id: get_team_id("USA"),
             away_team_id: get_team_id("England"),
-            group_id: get_group_id("D")
+            group_id: get_group_id("D"),
+            group_round: 2
           },
           %{
             date: ~N[2019-03-31 01:59:59.123],
             state: :upcoming,
             home_team_id: get_team_id("Belgium"),
             away_team_id: get_team_id("Croatia"),
-            group_id: get_group_id("D")
+            group_id: get_group_id("D"),
+            group_round: 2
           },
           %{
             date: ~N[2019-03-31 01:59:59.123],
             state: :upcoming,
             home_team_id: get_team_id("England"),
             away_team_id: get_team_id("Croatia"),
-            group_id: get_group_id("D")
+            group_id: get_group_id("D"),
+            group_round: 3
           },
           %{
             date: ~N[2019-03-31 01:59:59.123],
             state: :upcoming,
             home_team_id: get_team_id("USA"),
             away_team_id: get_team_id("Belgium"),
-            group_id: get_group_id("D")
+            group_id: get_group_id("D"),
+            group_round: 3
           },
           %{
             date: ~N[2019-03-31 01:59:59.123],

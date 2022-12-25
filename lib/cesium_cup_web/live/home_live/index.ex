@@ -16,6 +16,7 @@ defmodule CesiumCupWeb.HomeLive.Index do
      socket
      |> assign(:tab, params["tab"] || "group")
      |> assign(:matches, list_matches())
+     |> assign(:group_round, 1)
      |> assign(:groups, list_groups())
      |> assign(
        :selected_elimination_round,
@@ -26,6 +27,14 @@ defmodule CesiumCupWeb.HomeLive.Index do
 
   defp list_matches do
     Tournament.list_matches(preloads: [:home_team, :away_team, :events])
+    |> Enum.take(6)
+  end
+
+  defp list_group_round_matches(group_round) do
+    Tournament.list_matches(
+      preloads: [:home_team, :away_team, :events],
+      where: [group_round: group_round]
+    )
   end
 
   defp list_groups do
@@ -66,5 +75,19 @@ defmodule CesiumCupWeb.HomeLive.Index do
 
   defp get_team_group_goals_against(team_id) do
     Tournament.get_team_group_goals_against(team_id)
+  end
+
+  defp get_group_round_max do
+    Tournament.get_group_round_max()
+  end
+
+  @impl true
+  def handle_event("increase_group_round", _, socket) do
+    {:noreply, assign(socket, :group_round, socket.assigns.group_round + 1)}
+  end
+
+  @impl true
+  def handle_event("decrease_group_round", _, socket) do
+    {:noreply, assign(socket, :group_round, socket.assigns.group_round - 1)}
   end
 end
