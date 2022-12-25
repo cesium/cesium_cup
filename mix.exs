@@ -7,7 +7,7 @@ defmodule CesiumCup.MixProject do
       version: "0.1.0",
       elixir: "~> 1.13",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:gettext] ++ Mix.compilers(),
+      compilers: Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
@@ -44,6 +44,10 @@ defmodule CesiumCup.MixProject do
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.6"},
       {:postgrex, ">= 0.0.0"},
+
+      # uploads
+      {:waffle, "~> 1.1"},
+      {:waffle_ecto, "~> 0.0"},
 
       # mailer
       {:swoosh, "~> 1.3"},

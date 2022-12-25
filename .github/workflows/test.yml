@@ -39,4 +39,4 @@ jobs:
           build-flags: --all-warnings --warnings-as-errors
 
       - name: 🔬 Run the tests
-        run: mix test --warnings-as-errors
+        run: mix test

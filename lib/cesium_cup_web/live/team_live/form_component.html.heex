@@ -1,0 +1,17 @@
+<div class="pt-10 text-black">
+  <h2><%= @title %></h2>
+
+  <.form let={f} for={@changeset} id="team-form" phx-target={@myself} phx-change="validate" phx-submit="save">
+    <%= label(f, :name) %>
+    <%= text_input(f, :name) %>
+    <%= error_tag(f, :name) %>
+
+    <%= label(f, :group_id) %>
+    <%= select(f, :group_id, Enum.map(@groups, &{&1.name, &1.id}), prompt: "Choose a Group", selected: f.data.group_id, required: true) %>
+    <%= error_tag(f, :group_id) %>
+
+    <div>
+      <%= submit("Save", phx_disable_with: "Saving...") %>
+    </div>
+  </.form>
+</div>

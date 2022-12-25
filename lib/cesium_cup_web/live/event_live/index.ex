@@ -1,13 +1,13 @@
-defmodule CesiumCupWeb.GameLive.Index do
+defmodule CesiumCupWeb.EventLive.Index do
   @moduledoc false
   use CesiumCupWeb, :live_view
 
   alias CesiumCup.Tournament
-  alias CesiumCup.Tournament.Game
+  alias CesiumCup.Tournament.Event
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, :games, list_games())}
+    {:ok, assign(socket, :events, list_events())}
   end
 
   @impl true
@@ -17,31 +17,31 @@ defmodule CesiumCupWeb.GameLive.Index do
 
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
-    |> assign(:page_title, "Edit Game")
-    |> assign(:game, Tournament.get_game!(id))
+    |> assign(:page_title, "Edit Event")
+    |> assign(:event, Tournament.get_event!(id))
   end
 
   defp apply_action(socket, :new, _params) do
     socket
-    |> assign(:page_title, "New Game")
-    |> assign(:game, %Game{})
+    |> assign(:page_title, "New Event")
+    |> assign(:event, %Event{})
   end
 
   defp apply_action(socket, :index, _params) do
     socket
-    |> assign(:page_title, "Listing Games")
-    |> assign(:game, nil)
+    |> assign(:page_title, "Listing Events")
+    |> assign(:event, nil)
   end
 
   @impl true
   def handle_event("delete", %{"id" => id}, socket) do
-    game = Tournament.get_game!(id)
-    {:ok, _} = Tournament.delete_game(game)
+    event = Tournament.get_event!(id)
+    {:ok, _} = Tournament.delete_event(event)
 
-    {:noreply, assign(socket, :games, list_games())}
+    {:noreply, assign(socket, :events, list_events())}
   end
 
-  defp list_games do
-    Tournament.list_games()
+  defp list_events do
+    Tournament.list_events()
   end
 end

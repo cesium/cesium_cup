@@ -1,0 +1,18 @@
+<div class="pt-10 px-60">
+  <h1>Show Elimination round</h1>
+
+  <%= if @live_action in [:edit] do %>
+    <.modal return_to={Routes.elimination_round_show_path(@socket, :show, @elimination_round)}>
+      <.live_component module={CesiumCupWeb.EliminationRoundLive.FormComponent} id={@elimination_round.id} title={@page_title} action={@live_action} elimination_round={@elimination_round} return_to={Routes.elimination_round_show_path(@socket, :show, @elimination_round)} />
+    </.modal>
+  <% end %>
+
+  <ul>
+    <li>
+      <strong>Name:</strong>
+      <%= @elimination_round.name %>
+    </li>
+  </ul>
+
+  <span><%= live_patch("Edit", to: Routes.elimination_round_show_path(@socket, :edit, @elimination_round), class: "button") %></span> | <span><%= live_redirect("Back", to: Routes.elimination_round_index_path(@socket, :index)) %></span>
+</div>

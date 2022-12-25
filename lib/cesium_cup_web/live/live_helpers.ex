@@ -13,14 +13,14 @@ defmodule CesiumCupWeb.LiveHelpers do
 
   ## Examples
 
-      <.modal return_to={Routes.game_index_path(@socket, :index)}>
+      <.modal return_to={Routes.match_index_path(@socket, :index)}>
         <.live_component
-          module={CesiumCupWeb.GameLive.FormComponent}
-          id={@game.id || :new}
+          module={CesiumCupWeb.MatchLive.FormComponent}
+          id={@match.id || :new}
           title={@page_title}
           action={@live_action}
-          return_to={Routes.game_index_path(@socket, :index)}
-          game: @game
+          return_to={Routes.match_index_path(@socket, :index)}
+          match: @match
         />
       </.modal>
   """

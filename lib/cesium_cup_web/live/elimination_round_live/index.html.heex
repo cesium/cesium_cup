@@ -1,0 +1,34 @@
+<div class="pt-10 px-60">
+  <h1>Listing Elimination Rounds</h1>
+
+  <%= if @live_action in [:new, :edit] do %>
+    <.modal return_to={Routes.elimination_round_index_path(@socket, :index)}>
+      <.live_component module={CesiumCupWeb.EliminationRoundLive.FormComponent} id={@elimination_round.id || :new} title={@page_title} action={@live_action} elimination_round={@elimination_round} return_to={Routes.elimination_round_index_path(@socket, :index)} />
+    </.modal>
+  <% end %>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="elimination_rounds">
+      <%= for elimination_round <- @elimination_rounds do %>
+        <tr id={"elimination_round-#{elimination_round.id}"}>
+          <td><%= elimination_round.name %></td>
+
+          <td>
+            <span><%= live_redirect("Show", to: Routes.elimination_round_show_path(@socket, :show, elimination_round)) %></span>
+            <span><%= live_patch("Edit", to: Routes.elimination_round_index_path(@socket, :edit, elimination_round)) %></span>
+            <span><%= link("Delete", to: "#", phx_click: "delete", phx_value_id: elimination_round.id, data: [confirm: "Are you sure?"]) %></span>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <span><%= live_patch("New Elimination round", to: Routes.elimination_round_index_path(@socket, :new)) %></span>
+</div>
