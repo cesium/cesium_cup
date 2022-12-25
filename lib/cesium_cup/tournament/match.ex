@@ -5,9 +5,9 @@ defmodule CesiumCup.Tournament.Match do
   use CesiumCup.Schema
 
   alias CesiumCup.Teams.Team
-  alias CesiumCup.Tourmanent.EliminationRound
+  alias CesiumCup.Tournament.EliminationRound
   alias CesiumCup.Tournament.Event
-  alias CesiumCup.Tourmanent.Group
+  alias CesiumCup.Tournament.Group
 
   @required_fields ~w(date)a
 

@@ -3,7 +3,7 @@ defmodule CesiumCup.Tournament.Event do
   A match event
   """
   use CesiumCup.Schema
-
+  alias CesiumCup.Teams.Player
   alias CesiumCup.Tournament.Match
 
   @required_fields ~w(type player_id match_id)a

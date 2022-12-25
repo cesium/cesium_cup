@@ -30,10 +30,10 @@ defmodule CesiumCupWeb.MatchLive.FormComponent do
   end
 
   defp get_team_players(team_id) do
-    if not is_nil(team_id) do
-      Teams.list_players(where: [team_id: team_id])
-    else
+    if is_nil(team_id) do
       []
+    else
+      Teams.list_players(where: [team_id: team_id])
     end
   end
 

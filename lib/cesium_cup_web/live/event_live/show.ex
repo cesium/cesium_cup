@@ -1,4 +1,5 @@
 defmodule CesiumCupWeb.EventLive.Show do
+  @moduledoc false
   use CesiumCupWeb, :live_view
 
   alias CesiumCup.Tournament

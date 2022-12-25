@@ -112,7 +112,6 @@ defmodule CesiumCup.Teams do
 
   alias CesiumCup.Teams.Player
   alias CesiumCup.Tournament.Event
-  alias CesiumCup.Tournament.Match
 
   @doc """
   Returns the list of players.

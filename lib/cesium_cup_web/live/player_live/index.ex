@@ -1,4 +1,5 @@
 defmodule CesiumCupWeb.PlayerLive.Index do
+  @moduledoc false
   use CesiumCupWeb, :live_view
 
   alias CesiumCup.Teams

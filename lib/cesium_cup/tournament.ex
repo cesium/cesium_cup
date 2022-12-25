@@ -3,9 +3,9 @@ defmodule CesiumCup.Tournament do
   The Tournament context.
   """
   use CesiumCup.Context
-
   import Ecto.Query, warn: false
-
+  alias CesiumCup.Teams.Player
+  alias CesiumCup.Teams.Team
   alias CesiumCup.Tournament.Match
 
   @doc """
@@ -309,9 +309,6 @@ defmodule CesiumCup.Tournament do
   def change_event(%Event{} = event, attrs \\ %{}) do
     Event.changeset(event, attrs)
   end
-
-  alias CesiumCup.Teams.Team
-  alias CesiumCup.Teams.Player
 
   def get_home_team_score(match_id) do
     from(e in Event,

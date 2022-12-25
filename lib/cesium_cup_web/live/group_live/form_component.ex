@@ -1,4 +1,5 @@
 defmodule CesiumCupWeb.GroupLive.FormComponent do
+  @moduledoc false
   use CesiumCupWeb, :live_component
 
   alias CesiumCup.Tournament

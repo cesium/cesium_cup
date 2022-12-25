@@ -1,8 +1,9 @@
 defmodule CesiumCupWeb.GroupLive.Show do
+  @moduledoc false
   use CesiumCupWeb, :live_view
 
-  alias CesiumCup.Tournament
   alias CesiumCup.Teams
+  alias CesiumCup.Tournament
 
   @impl true
   def mount(_params, _session, socket) do

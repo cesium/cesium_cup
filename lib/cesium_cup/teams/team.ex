@@ -5,8 +5,8 @@ defmodule CesiumCup.Teams.Team do
   use CesiumCup.Schema
 
   alias CesiumCup.Teams.Player
-  alias CesiumCup.Tournament.Match
   alias CesiumCup.Tournament.Group
+  alias CesiumCup.Tournament.Match
 
   @required_fields ~w(name group_id)a
 
@@ -16,7 +16,7 @@ defmodule CesiumCup.Teams.Team do
     field :name, :string
 
     has_many :players, Player
-    has_many :matches, Match
+    has_many :matches, Match, foreign_key: :home_team_id
 
     belongs_to :group, Group
 
