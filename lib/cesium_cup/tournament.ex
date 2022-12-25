@@ -310,8 +310,8 @@ defmodule CesiumCup.Tournament do
     Event.changeset(event, attrs)
   end
 
-  alias CesiumCup.Teams.Team
   alias CesiumCup.Teams.Player
+  alias CesiumCup.Teams.Team
 
   def get_home_team_first_half_score(match_id) do
     from(e in Event,
@@ -319,7 +319,9 @@ defmodule CesiumCup.Tournament do
       on: e.player_id == p.id,
       join: m in Match,
       on: e.match_id == m.id,
-      where: e.match_id == ^match_id and p.team_id == m.home_team_id and e.type == :goal and e.half == :first_half
+      where:
+        e.match_id == ^match_id and p.team_id == m.home_team_id and e.type == :goal and
+          e.half == :first_half
     )
     |> Repo.aggregate(:count)
   end
@@ -330,7 +332,9 @@ defmodule CesiumCup.Tournament do
       on: e.player_id == p.id,
       join: m in Match,
       on: e.match_id == m.id,
-      where: e.match_id == ^match_id and p.team_id == m.away_team_id and e.type == :goal and e.half == :first_half
+      where:
+        e.match_id == ^match_id and p.team_id == m.away_team_id and e.type == :goal and
+          e.half == :first_half
     )
     |> Repo.aggregate(:count)
   end
