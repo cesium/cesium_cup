@@ -161,12 +161,25 @@
                       <tbody class="divide-y divide-gray-200 bg-white">
                         <%= for team <- group.teams do %>
                           <tr>
-                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                            <td class="flex justify-between items-center whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                               <%= live_redirect to: Routes.team_show_path(@socket, :show, team) do %>
                                 <%= team.name %>
                               <% end %>
+                              <%= if is_team_live(team.id) do %>
+                                <% bg_color =
+                                  case(team_live_state(team.id)) do
+                                    :win -> "bg-green-500"
+                                    :loss -> "bg-red-500"
+                                    _ -> "bg-yellow-500"
+                                  end %>
+                                <%= live_redirect to: Routes.match_show_path(@socket, :show, get_team_live_match(team.id)), class: "rounded-md #{bg_color} text-white px-1 py-0.5" do %>
+                                  <%= get_team_live_result(team.id) %>
+                                <% end %>
+                              <% end %>
                             </td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">0</td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                              <%= get_team_group_games_played(team.id) %>
+                            </td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                               <%= get_team_group_goals_for(team.id) %>
                             </td>
@@ -267,11 +280,6 @@
                         <% else %>
                           TBD
                         <% end %>
-                      </td>
-                      <td>
-                        <span><%= live_redirect("Show", to: Routes.match_show_path(@socket, :show, match), class: "text-gray-900") %></span>
-                        <span><%= live_patch("Edit", to: Routes.match_index_path(@socket, :edit, match), class: "text-gray-900") %></span>
-                        <span><%= link("Delete", to: "#", phx_click: "delete", phx_value_id: match.id, data: [confirm: "Are you sure?"], class: "text-gray-900") %></span>
                       </td>
                     </tr>
                   <% end %>

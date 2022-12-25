@@ -382,9 +382,87 @@ defmodule CesiumCup.Tournament do
       on: e.player_id == p.id,
       join: m in Match,
       on: e.match_id == m.id,
-      where: p.team_id != ^team_id and m.group_id == ^group_id and e.type == :goal
+      where:
+        p.team_id != ^team_id and m.group_id == ^group_id and e.type == :goal and
+          (m.away_team_id == ^team_id or m.home_team_id == ^team_id)
     )
     |> Repo.aggregate(:count)
+  end
+
+  def get_team_group_games_played(team_id) do
+    group_id = Repo.get!(Team, team_id).group_id
+
+    from(m in Match,
+      where:
+        m.group_id == ^group_id and m.state == :finished and
+          (m.away_team_id == ^team_id or m.home_team_id == ^team_id)
+    )
+    |> Repo.aggregate(:count)
+  end
+
+  def get_team_live_match(team_id) do
+    from(m in Match,
+      where:
+        (m.home_team_id == ^team_id or m.away_team_id == ^team_id) and
+          m.state in [:first_half, :halftime, :second_half]
+    )
+    |> Repo.one()
+  end
+
+  def get_team_live_result(team_id) do
+    match =
+      from(m in Match,
+        where:
+          (m.home_team_id == ^team_id or m.away_team_id == ^team_id) and
+            m.state in [:first_half, :halftime, :second_half]
+      )
+      |> Repo.one()
+
+    "#{get_home_team_score(match.id)}-#{get_away_team_score(match.id)}"
+  end
+
+  def is_team_live(team_id) do
+    match =
+      from(m in Match,
+        where:
+          (m.home_team_id == ^team_id or m.away_team_id == ^team_id) and
+            m.state in [:first_half, :halftime, :second_half]
+      )
+      |> Repo.one()
+
+    match != nil
+  end
+
+  def team_live_state(team_id) do
+    match =
+      from(m in Match,
+        where:
+          (m.home_team_id == ^team_id or m.away_team_id == ^team_id) and
+            m.state in [:first_half, :halftime, :second_half]
+      )
+      |> Repo.one()
+
+    if team_id == match.home_team_id do
+      get_home_team_state(match)
+    else
+      get_away_team_state(match)
+    end
+  end
+
+  defp get_home_team_state(match) do
+    cond do
+      get_home_team_score(match.id) > get_away_team_score(match.id) -> :win
+      get_home_team_score(match.id) < get_away_team_score(match.id) -> :loss
+      true -> :tie
+    end
+  end
+
+  defp get_away_team_state(match) do
+    cond do
+      get_home_team_score(match.id) > get_away_team_score(match.id) -> :loss
+      get_home_team_score(match.id) < get_away_team_score(match.id) -> :win
+      true -> :tie
+    end
   end
 
   def get_group_round_max do
