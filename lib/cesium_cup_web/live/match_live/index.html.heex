@@ -1,6 +1,5 @@
 <div class="pt-10 px-60">
   <h1>Listing Matches</h1>
-
   <%= if @live_action in [:new, :edit] do %>
     <.modal return_to={Routes.match_index_path(@socket, :index)}>
       <.live_component module={CesiumCupWeb.MatchLive.FormComponent} id={@match.id || :new} title={@page_title} action={@live_action} match={@match} return_to={Routes.match_index_path(@socket, :index)} />

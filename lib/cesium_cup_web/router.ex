@@ -97,6 +97,13 @@ defmodule CesiumCupWeb.Router do
     live "/teams/:id", TeamLive.Show, :show
     live "/teams/:id/show/edit", TeamLive.Show, :edit
 
+    live "/events", EventLive.Index, :index
+    live "/events/new", EventLive.Index, :new
+    live "/events/:id/edit", EventLive.Index, :edit
+
+    live "/events/:id", EventLive.Show, :show
+    live "/events/:id/show/edit", EventLive.Show, :edit
+
     live "/players", PlayerLive.Index, :index
     live "/players/new", PlayerLive.Index, :new
     live "/players/:id/edit", PlayerLive.Index, :edit

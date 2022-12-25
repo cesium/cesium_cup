@@ -111,6 +111,8 @@ defmodule CesiumCup.Teams do
   end
 
   alias CesiumCup.Teams.Player
+  alias CesiumCup.Tournament.Event
+  alias CesiumCup.Tournament.Match
 
   @doc """
   Returns the list of players.
@@ -125,6 +127,40 @@ defmodule CesiumCup.Teams do
     Player
     |> apply_filters(opts)
     |> Repo.all()
+  end
+
+  def list_players_in_game(match_id, team_id) do
+    from(p in Player,
+      where: p.team_id == ^team_id
+    )
+    |> Repo.all()
+    |> Enum.filter(
+      &(get_player_sub_in_match(&1.id, match_id) > get_player_sub_out_match(&1.id, match_id))
+    )
+  end
+
+  def list_players_in_bench(match_id, team_id) do
+    from(p in Player,
+      where: p.team_id == ^team_id
+    )
+    |> Repo.all()
+    |> Enum.filter(
+      &(get_player_sub_in_match(&1.id, match_id) <= get_player_sub_out_match(&1.id, match_id))
+    )
+  end
+
+  def get_player_sub_in_match(player_id, match_id) do
+    from(e in Event,
+      where: e.player_id == ^player_id and e.match_id == ^match_id and e.type == :sub_in
+    )
+    |> Repo.aggregate(:count)
+  end
+
+  def get_player_sub_out_match(player_id, match_id) do
+    from(e in Event,
+      where: e.player_id == ^player_id and e.match_id == ^match_id and e.type == :sub_out
+    )
+    |> Repo.aggregate(:count)
   end
 
   @doc """

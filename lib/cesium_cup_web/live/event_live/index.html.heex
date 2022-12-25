@@ -22,7 +22,7 @@
         <td>
           <span><%= live_redirect("Show", to: Routes.event_show_path(@socket, :show, event)) %></span>
           <span><%= live_patch("Edit", to: Routes.event_index_path(@socket, :edit, event)) %></span>
-          <span><%= link("Delete", to: "#", phx_click: "delete", phx_value_id: event.id, data: [confirm: "Are you sure?"]) %></span>
+          <span><%= link("Delete", to: "#", phx_click: "delete", phx_value_id: event.id) %></span>
         </td>
       </tr>
     <% end %>

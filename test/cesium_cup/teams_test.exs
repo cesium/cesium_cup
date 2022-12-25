@@ -5,7 +5,7 @@ defmodule CesiumCup.TeamsTest do
 
   describe "teams" do
     alias CesiumCup.Teams.Team
-
+    alias CesiumCup.TournamentFixtures
     import CesiumCup.TeamsFixtures
 
     @invalid_attrs %{establishment: nil, name: nil}
@@ -21,10 +21,9 @@ defmodule CesiumCup.TeamsTest do
     end
 
     test "create_team/1 with valid data creates a team" do
-      valid_attrs = %{establishment: ~D[2022-12-08], name: "some name"}
+      valid_attrs = %{name: "some name", group_id: TournamentFixtures.group_fixture().id}
 
       assert {:ok, %Team{} = team} = Teams.create_team(valid_attrs)
-      assert team.establishment == ~D[2022-12-08]
       assert team.name == "some name"
     end
 
@@ -34,10 +33,9 @@ defmodule CesiumCup.TeamsTest do
 
     test "update_team/2 with valid data updates the team" do
       team = team_fixture()
-      update_attrs = %{establishment: ~D[2022-12-09], name: "some updated name"}
+      update_attrs = %{name: "some updated name"}
 
       assert {:ok, %Team{} = team} = Teams.update_team(team, update_attrs)
-      assert team.establishment == ~D[2022-12-09]
       assert team.name == "some updated name"
     end
 
@@ -61,7 +59,7 @@ defmodule CesiumCup.TeamsTest do
 
   describe "players" do
     alias CesiumCup.Teams.Player
-
+    alias CesiumCup.TournamentFixtures
     import CesiumCup.TeamsFixtures
 
     @invalid_attrs %{date_of_birth: nil, height: nil, name: nil, position: nil, weight: nil}
@@ -82,7 +80,10 @@ defmodule CesiumCup.TeamsTest do
         height: "120.5",
         name: "some name",
         position: "some position",
-        weight: "120.5"
+        weight: "120.5",
+        course: "abc",
+        team_id: team_fixture().id,
+        group_id: TournamentFixtures.group_fixture().id
       }
 
       assert {:ok, %Player{} = player} = Teams.create_player(valid_attrs)

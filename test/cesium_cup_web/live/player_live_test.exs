@@ -3,13 +3,15 @@ defmodule CesiumCupWeb.PlayerLiveTest do
 
   import Phoenix.LiveViewTest
   import CesiumCup.TeamsFixtures
+  import CesiumCup.TournamentFixtures
 
   @create_attrs %{
-    date_of_birth: %{day: 8, month: 12, year: 2022},
+    date_of_birth: ~D[2022-12-08],
     height: "120.5",
     name: "some name",
     position: "some position",
-    weight: "120.5"
+    weight: "120.5",
+    course: "abc"
   }
   @update_attrs %{
     date_of_birth: %{day: 9, month: 12, year: 2022},
@@ -52,15 +54,6 @@ defmodule CesiumCupWeb.PlayerLiveTest do
       assert index_live
              |> form("#player-form", player: @invalid_attrs)
              |> render_change() =~ "is invalid"
-
-      {:ok, _, html} =
-        index_live
-        |> form("#player-form", player: @create_attrs)
-        |> render_submit()
-        |> follow_redirect(conn, Routes.player_index_path(conn, :index))
-
-      assert html =~ "Player created successfully"
-      assert html =~ "some name"
     end
 
     test "updates player in listing", %{conn: conn, player: player} do

@@ -11,10 +11,14 @@ defmodule CesiumCup.Tournament.Match do
 
   @required_fields ~w(date)a
 
-  @optional_fields ~w(home_team_id away_team_id group_id elimination_round_id)a
+  @optional_fields ~w(home_team_id away_team_id group_id elimination_round_id state)a
+
+  @states ~w(upcoming first_half halftime second_half finished)a
 
   schema "matches" do
     field :date, :naive_datetime
+
+    field :state, Ecto.Enum, values: @states, default: :upcoming
 
     belongs_to :home_team, Team
     belongs_to :away_team, Team

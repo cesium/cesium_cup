@@ -4,6 +4,8 @@ defmodule CesiumCup.TeamsFixtures do
   entities via the `CesiumCup.Teams` context.
   """
 
+  alias CesiumCup.TournamentFixtures
+
   @doc """
   Generate a team.
   """
@@ -12,7 +14,9 @@ defmodule CesiumCup.TeamsFixtures do
       attrs
       |> Enum.into(%{
         establishment: ~D[2022-12-08],
-        name: "some name"
+        name: "some name",
+        course: "abc",
+        group_id: TournamentFixtures.group_fixture().id
       })
       |> CesiumCup.Teams.create_team()
 
@@ -30,7 +34,10 @@ defmodule CesiumCup.TeamsFixtures do
         height: "120.5",
         name: "some name",
         position: "some position",
-        weight: "120.5"
+        weight: "120.5",
+        course: "abc",
+        team_id: team_fixture().id,
+        group_id: TournamentFixtures.group_fixture().id
       })
       |> CesiumCup.Teams.create_player()
 

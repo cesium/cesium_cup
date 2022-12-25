@@ -7,6 +7,8 @@ defmodule CesiumCup.Repo.Migrations.CreateMatches do
 
       add :date, :naive_datetime
 
+      add :state, :string
+
       add :home_team_id, references(:teams, on_delete: :nothing, type: :binary_id)
       add :away_team_id, references(:teams, on_delete: :nothing, type: :binary_id)
 

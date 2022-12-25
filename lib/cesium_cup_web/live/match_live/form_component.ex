@@ -16,7 +16,7 @@ defmodule CesiumCupWeb.MatchLive.FormComponent do
     home_team_players = get_team_players(match.home_team_id)
     away_team_players = get_team_players(match.away_team_id)
     players = Enum.concat(home_team_players, away_team_players)
-    types = ~w(goal assist injury foul yellow_card red_card)a
+    types = ~w(goal assist injury foul yellow_card red_card sub_in sub_out)a
 
     {:ok,
      socket

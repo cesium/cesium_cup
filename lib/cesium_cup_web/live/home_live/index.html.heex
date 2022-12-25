@@ -12,9 +12,11 @@
               <% end %>
             </p>
 
-            <span class="text-white bg-[#FF0046] rounded-lg px-2 font-bold">
-              LIVE
-            </span>
+            <%= if match.state in [:first_half, :halftime, :second_half] do %>
+              <span class="text-white bg-[#FF0046] rounded-lg px-2 font-bold">
+                LIVE
+              </span>
+            <% end %>
           </div>
 
           <div class="pt-2 font-bold">

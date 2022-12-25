@@ -54,7 +54,7 @@ defmodule CesiumCupWeb.EliminationRoundLiveTest do
       assert index_live
              |> element("#elimination_round-#{elimination_round.id} a", "Edit")
              |> render_click() =~
-               "Edit Elimination round"
+               "Edit Elimination Round"
 
       assert_patch(
         index_live,

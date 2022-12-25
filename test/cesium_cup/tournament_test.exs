@@ -3,84 +3,68 @@ defmodule CesiumCup.TournamentTest do
 
   alias CesiumCup.Tournament
 
-  describe "games" do
-    alias CesiumCup.Tournament.Game
+  describe "matchs" do
+    alias CesiumCup.Tournament.Match
 
     import CesiumCup.TournamentFixtures
 
-    @invalid_attrs %{date: nil, first_half: nil, second_half: nil, stage: nil, state: nil}
+    @invalid_attrs %{date: nil, second_half: nil, stage: nil, state: nil}
 
-    test "list_games/0 returns all games" do
-      game = game_fixture()
-      assert Tournament.list_games() == [game]
+    test "list_matches/0 returns all matchs" do
+      match = match_fixture()
+      assert Tournament.list_matches() == [match]
     end
 
-    test "get_game!/1 returns the game with given id" do
-      game = game_fixture()
-      assert Tournament.get_game!(game.id) == game
+    test "get_match!/1 returns the match with given id" do
+      match = match_fixture()
+      assert Tournament.get_match!(match.id) == match
     end
 
-    test "create_game/1 with valid data creates a game" do
+    test "create_match/1 with valid data creates a match" do
       valid_attrs = %{
-        date: ~N[2022-07-11 11:19:00],
-        first_half: ~D[2022-07-11],
-        second_half: ~D[2022-07-11],
-        stage: "some stage",
-        state: "some state"
+        date: ~N[2022-07-11 11:19:00]
       }
 
-      assert {:ok, %Game{} = game} = Tournament.create_game(valid_attrs)
-      assert game.date == ~N[2022-07-11 11:19:00]
-      assert game.first_half == ~D[2022-07-11]
-      assert game.second_half == ~D[2022-07-11]
-      assert game.stage == "some stage"
-      assert game.state == "some state"
+      assert {:ok, %Match{} = match} = Tournament.create_match(valid_attrs)
+      assert match.date == ~N[2022-07-11 11:19:00]
     end
 
-    test "create_game/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Tournament.create_game(@invalid_attrs)
+    test "create_match/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Tournament.create_match(@invalid_attrs)
     end
 
-    test "update_game/2 with valid data updates the game" do
-      game = game_fixture()
+    test "update_match/2 with valid data updates the match" do
+      match = match_fixture()
 
       update_attrs = %{
-        date: ~N[2022-07-12 11:19:00],
-        first_half: ~D[2022-07-12],
-        second_half: ~D[2022-07-12],
-        stage: "some updated stage",
-        state: "some updated state"
+        date: ~N[2022-07-12 11:19:00]
       }
 
-      assert {:ok, %Game{} = game} = Tournament.update_game(game, update_attrs)
-      assert game.date == ~N[2022-07-12 11:19:00]
-      assert game.first_half == ~D[2022-07-12]
-      assert game.second_half == ~D[2022-07-12]
-      assert game.stage == "some updated stage"
-      assert game.state == "some updated state"
+      assert {:ok, %Match{} = match} = Tournament.update_match(match, update_attrs)
+      assert match.date == ~N[2022-07-12 11:19:00]
     end
 
-    test "update_game/2 with invalid data returns error changeset" do
-      game = game_fixture()
-      assert {:error, %Ecto.Changeset{}} = Tournament.update_game(game, @invalid_attrs)
-      assert game == Tournament.get_game!(game.id)
+    test "update_match/2 with invalid data returns error changeset" do
+      match = match_fixture()
+      assert {:error, %Ecto.Changeset{}} = Tournament.update_match(match, @invalid_attrs)
+      assert match == Tournament.get_match!(match.id)
     end
 
-    test "delete_game/1 deletes the game" do
-      game = game_fixture()
-      assert {:ok, %Game{}} = Tournament.delete_game(game)
-      assert_raise Ecto.NoResultsError, fn -> Tournament.get_game!(game.id) end
+    test "delete_match/1 deletes the match" do
+      match = match_fixture()
+      assert {:ok, %Match{}} = Tournament.delete_match(match)
+      assert_raise Ecto.NoResultsError, fn -> Tournament.get_match!(match.id) end
     end
 
-    test "change_game/1 returns a game changeset" do
-      game = game_fixture()
-      assert %Ecto.Changeset{} = Tournament.change_game(game)
+    test "change_match/1 returns a match changeset" do
+      match = match_fixture()
+      assert %Ecto.Changeset{} = Tournament.change_match(match)
     end
   end
 
   describe "groups" do
     alias CesiumCup.Tournament.Group
-
+    import CesiumCup.AccountsFixtures
     import CesiumCup.TournamentFixtures
 
     @invalid_attrs %{name: nil}
@@ -134,7 +118,7 @@ defmodule CesiumCup.TournamentTest do
 
   describe "events" do
     alias CesiumCup.Tournament.Event
-
+    import CesiumCup.TeamsFixtures
     import CesiumCup.TournamentFixtures
 
     @invalid_attrs %{type: nil}
@@ -150,10 +134,15 @@ defmodule CesiumCup.TournamentTest do
     end
 
     test "create_event/1 with valid data creates a event" do
-      valid_attrs = %{type: "some type"}
+      valid_attrs = %{
+        type: "goal",
+        player_id: player_fixture().id,
+        match_id: match_fixture().id,
+        state: "upcoming"
+      }
 
       assert {:ok, %Event{} = event} = Tournament.create_event(valid_attrs)
-      assert event.type == "some type"
+      assert event.type == :goal
     end
 
     test "create_event/1 with invalid data returns error changeset" do
@@ -162,10 +151,10 @@ defmodule CesiumCup.TournamentTest do
 
     test "update_event/2 with valid data updates the event" do
       event = event_fixture()
-      update_attrs = %{type: "some updated type"}
+      update_attrs = %{type: "yellow_card"}
 
       assert {:ok, %Event{} = event} = Tournament.update_event(event, update_attrs)
-      assert event.type == "some updated type"
+      assert event.type == :yellow_card
     end
 
     test "update_event/2 with invalid data returns error changeset" do

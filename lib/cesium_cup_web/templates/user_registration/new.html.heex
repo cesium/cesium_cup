@@ -20,10 +20,12 @@
 
       <div class="">
         <p class="text-center text-white"><%= label(f, :password) %></p>
-        <div class="">
+        <div class="grid text-black">
           <%= password_input(f, :password, required: true, class: "rounded-md") %>
         </div>
-        <%= error_tag(f, :password) %>
+        <div class="grid place-content-center p-4">
+          <%= submit("Register", class: "text-white font-bold rounded-md bg-tertiary outline outline-2  hover:outline-offset-2 outline-2 p-2 font-bold") %>
+        </div>
       </div>
     </div>
   </.form>
