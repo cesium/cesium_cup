@@ -6,13 +6,15 @@ defmodule CesiumCup.Tournament.Event do
   alias CesiumCup.Teams.Player
   alias CesiumCup.Tournament.Match
 
-  @required_fields ~w(type player_id match_id)a
+  @required_fields ~w(type half player_id match_id)a
   @optional_fields ~w(delete)a
 
   @types ~w(goal assist injury foul yellow_card red_card sub_in sub_out)a
 
   schema "events" do
     field :type, Ecto.Enum, values: @types
+
+    field :half, Ecto.Enum, values: [:first_half, :second_half]
 
     belongs_to :match, Match
     belongs_to :player, Player
