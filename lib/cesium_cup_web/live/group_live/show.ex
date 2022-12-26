@@ -52,4 +52,20 @@ defmodule CesiumCupWeb.GroupLive.Show do
   defp get_away_team_score(match_id) do
     Tournament.get_away_team_score(match_id)
   end
+
+  defp get_team_live_match(team_id) do
+    Tournament.get_team_live_match(team_id)
+  end
+
+  defp get_team_live_result(team_id) do
+    Tournament.get_team_live_result(team_id)
+  end
+
+  defp is_team_live(team_id) do
+    Tournament.is_team_live(team_id)
+  end
+
+  defp team_live_state(team_id) do
+    Tournament.team_live_state(team_id)
+  end
 end
