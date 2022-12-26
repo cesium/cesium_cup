@@ -387,6 +387,13 @@ defmodule CesiumCup.Tournament do
     |> Repo.aggregate(:count)
   end
 
+  def get_group_round_max do
+    from(m in Match,
+      select: max(m.group_round)
+    )
+    |> Repo.one()
+  end
+
   def add_event(match_id, player_id, type, half) do
     %Event{}
     |> Event.changeset(%{

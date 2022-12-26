@@ -17,6 +17,8 @@ defmodule CesiumCup.Repo.Migrations.CreateMatches do
 
       add :group_id, references(:groups, on_delete: :nothing, type: :binary_id)
 
+      add :group_round, :integer
+
       timestamps()
     end
   end
