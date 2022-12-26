@@ -77,8 +77,16 @@ defmodule CesiumCupWeb.HomeLive.Index do
     Tournament.get_team_group_goals_against(team_id)
   end
 
+  defp get_team_group_goals_difference(team_id) do
+    get_team_group_goals_for(team_id) - get_team_group_goals_against(team_id)
+  end
+
   defp get_team_group_games_played(team_id) do
     Tournament.get_team_group_games_played(team_id)
+  end
+
+  defp get_team_group_points(team_id) do
+    Tournament.get_team_group_points(team_id)
   end
 
   defp get_team_live_match(team_id) do
@@ -99,6 +107,40 @@ defmodule CesiumCupWeb.HomeLive.Index do
 
   defp get_group_round_max do
     Tournament.get_group_round_max()
+  end
+
+  defp sort_group_teams(teams) do
+    teams
+    |> Enum.sort(fn a, b ->
+      a_points = get_team_group_points(a.id)
+      b_points = get_team_group_points(b.id)
+
+      if a_points == b_points do
+        direct_result = Tournament.direct_group_result(a.id, b.id)
+
+        if direct_result == :tie do
+          a_gd = get_team_group_goals_difference(a.id)
+          b_gd = get_team_group_goals_difference(b.id)
+
+          if a_gd == b_gd do
+            a_gf = get_team_group_goals_for(a.id)
+            b_gf = get_team_group_goals_for(b.id)
+
+            if a_gf == b_gf do
+              true
+            else
+              a_gf > b_gf
+            end
+          else
+            a_gd > b_gd
+          end
+        else
+          direct_result == :win
+        end
+      else
+        a_points > b_points
+      end
+    end)
   end
 
   @impl true

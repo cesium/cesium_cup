@@ -361,6 +361,76 @@ defmodule CesiumCup.Tournament do
     |> Repo.aggregate(:count)
   end
 
+  def get_team_group_points(team_id) do
+    group_id = Repo.get!(Team, team_id).group_id
+
+    from(m in Match,
+      where:
+        (m.home_team_id == ^team_id or m.away_team_id == ^team_id) and
+          m.state in [:first_half, :halftime, :second_half, :finished] and
+          m.group_id == ^group_id
+    )
+    |> Repo.all()
+    |> Enum.reduce(0, fn match, acc ->
+      if team_id == match.home_team_id do
+        get_home_team_points(acc, match)
+      else
+        get_away_team_points(acc, match)
+      end
+    end)
+  end
+
+  def get_home_team_points(acc, match) do
+    cond do
+      get_home_team_score(match.id) > get_away_team_score(match.id) -> acc + 3
+      get_home_team_score(match.id) < get_away_team_score(match.id) -> acc
+      true -> acc + 1
+    end
+  end
+
+  def get_away_team_points(acc, match) do
+    cond do
+      get_home_team_score(match.id) > get_away_team_score(match.id) -> acc
+      get_home_team_score(match.id) < get_away_team_score(match.id) -> acc + 3
+      true -> acc + 1
+    end
+  end
+
+  def direct_group_result(team_a_id, team_b_id) do
+    group_id = Repo.get!(Team, team_a_id).group_id
+
+    match =
+      from(m in Match,
+        where:
+          ((m.home_team_id == ^team_a_id and m.away_team_id == ^team_b_id) or
+             (m.home_team_id == ^team_b_id and m.away_team_id == ^team_a_id)) and
+            m.group_id == ^group_id
+      )
+      |> Repo.one()
+
+    if team_a_id == match.home_team_id do
+      get_home_team_result(match)
+    else
+      get_away_team_result(match)
+    end
+  end
+
+  defp get_home_team_result(match) do
+    cond do
+      get_home_team_score(match.id) > get_away_team_score(match.id) -> :win
+      get_home_team_score(match.id) < get_away_team_score(match.id) -> :loss
+      true -> :tie
+    end
+  end
+
+  defp get_away_team_result(match) do
+    cond do
+      get_home_team_score(match.id) > get_away_team_score(match.id) -> :loss
+      get_home_team_score(match.id) < get_away_team_score(match.id) -> :win
+      true -> :tie
+    end
+  end
+
   def get_team_group_goals_for(team_id) do
     group_id = Repo.get!(Team, team_id).group_id
 
@@ -394,10 +464,99 @@ defmodule CesiumCup.Tournament do
 
     from(m in Match,
       where:
-        m.group_id == ^group_id and m.state == :finished and
+        m.group_id == ^group_id and m.state in [:first_half, :halftime, :second_half, :finished] and
           (m.away_team_id == ^team_id or m.home_team_id == ^team_id)
     )
     |> Repo.aggregate(:count)
+  end
+
+  def get_team_group_wins(team_id) do
+    group_id = Repo.get!(Team, team_id).group_id
+
+    from(m in Match,
+      where:
+        (m.home_team_id == ^team_id or m.away_team_id == ^team_id) and
+          m.state in [:first_half, :halftime, :second_half, :finished] and
+          m.group_id == ^group_id
+    )
+    |> Repo.all()
+    |> Enum.reduce(0, fn match, acc ->
+      if team_id == match.home_team_id do
+        increment_home_wins(match, acc)
+      else
+        increment_away_wins(match, acc)
+      end
+    end)
+  end
+
+  defp increment_home_wins(match, acc) do
+    if get_home_team_score(match.id) > get_away_team_score(match.id) do
+      acc + 1
+    else
+      acc
+    end
+  end
+
+  defp increment_away_wins(match, acc) do
+    if get_home_team_score(match.id) < get_away_team_score(match.id) do
+      acc + 1
+    else
+      acc
+    end
+  end
+
+  def get_team_group_losses(team_id) do
+    group_id = Repo.get!(Team, team_id).group_id
+
+    from(m in Match,
+      where:
+        (m.home_team_id == ^team_id or m.away_team_id == ^team_id) and
+          m.state in [:first_half, :halftime, :second_half, :finished] and
+          m.group_id == ^group_id
+    )
+    |> Repo.all()
+    |> Enum.reduce(0, fn match, acc ->
+      if team_id == match.home_team_id do
+        increment_home_losses(match, acc)
+      else
+        increment_away_losses(match, acc)
+      end
+    end)
+  end
+
+  defp increment_home_losses(match, acc) do
+    if get_home_team_score(match.id) > get_away_team_score(match.id) do
+      acc + 1
+    else
+      acc
+    end
+  end
+
+  defp increment_away_losses(match, acc) do
+    if get_home_team_score(match.id) < get_away_team_score(match.id) do
+      acc + 1
+    else
+      acc
+    end
+  end
+
+  def get_team_group_ties(team_id) do
+    group_id = Repo.get!(Team, team_id).group_id
+
+    from(m in Match,
+      where:
+        (m.home_team_id == ^team_id or m.away_team_id == ^team_id) and
+          m.state in [:first_half, :halftime, :second_half, :finished] and
+          m.group_id == ^group_id
+    )
+    |> Repo.all()
+    |> Enum.reduce(0, fn match, acc ->
+      if get_home_team_score(match.id) == get_away_team_score(match.id) do
+        acc + 1
+      else
+        acc
+      end
+    end)
   end
 
   def get_team_live_match(team_id) do
