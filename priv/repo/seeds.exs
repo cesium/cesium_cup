@@ -1,11 +1,20 @@
-# Script for populating the database. You can run it as:
-#
-#     mix run priv/repo/seeds.exs
-#
-# Inside the script, you can read and write to any of your
-# repositories directly:
-#
-#     CesiumCup.Repo.insert!(%CesiumCup.SomeSchema{})
-#
-# We recommend using the bang functions (`insert!`, `update!`
-# and so on) as they will fail if something goes wrong.
+defmodule CesiumCup.Repo.Seeds do
+  @moduledoc """
+  Script for populating the database. You can run it as:
+    $ mix run priv/repo/seeds.exs # or mix ecto.seed
+  """
+  @seeds_dir "priv/repo/seeds"
+
+  def run do
+    [
+      "tournament.exs",
+      "teams.exs",
+      "schedule.exs"
+    ]
+    |> Enum.each(fn file ->
+      Code.require_file("#{@seeds_dir}/#{file}")
+    end)
+  end
+end
+
+CesiumCup.Repo.Seeds.run()

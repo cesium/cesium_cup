@@ -13,14 +13,17 @@ defmodule CesiumCup.Teams.Player do
 
   @optional_fields []
 
+  @positions ~w(goalkeeper fixed wing target)a
+
   schema "players" do
     field :date_of_birth, :date
     field :name, :string
     field :course, :string
-    field :position, :string
     field :height, :decimal
     field :weight, :decimal
     field :captain, :boolean, default: false
+
+    field :position, Ecto.Enum, values: @positions
 
     belongs_to :team, Team
 
