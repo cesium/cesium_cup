@@ -29,10 +29,8 @@
                 <% end %>
               </p>
               <p class="text-gray-900">
-                <%= if match.home_team_id do %>
+                <%= if not is_nil(match.home_team_id) and match.state != :upcoming do %>
                   <%= get_home_team_score(match.id) %>
-                <% else %>
-                  0
                 <% end %>
               </p>
             </div>
@@ -45,10 +43,8 @@
                 <% end %>
               </p>
               <p class="text-gray-900">
-                <%= if match.away_team_id do %>
+                <%= if not is_nil(match.away_team_id) and match.state != :upcoming do %>
                   <%= get_away_team_score(match.id) %>
-                <% else %>
-                  0
                 <% end %>
               </p>
             </div>
@@ -232,7 +228,11 @@
                   </td>
                   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-center">
                     <%= live_redirect to: Routes.match_show_path(@socket, :show, match) do %>
-                      <%= get_home_team_score(match.id) %> - <%= get_away_team_score(match.id) %>
+                      <%= if match.state != :upcoming do %>
+                        <%= get_home_team_score(match.id) %> - <%= get_away_team_score(match.id) %>
+                      <% else %>
+                        <%= display_time(match.date) %>
+                      <% end %>
                     <% end %>
                   </td>
                   <td class="whitespace-nowrap py-4 pr-20 text-sm font-medium text-gray-900 text-right">
@@ -271,7 +271,11 @@
                       </td>
                       <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-center">
                         <%= live_redirect to: Routes.match_show_path(@socket, :show, match) do %>
-                          <%= get_home_team_score(match.id) %> - <%= get_away_team_score(match.id) %>
+                          <%= if match.state != :upcoming do %>
+                            <%= get_home_team_score(match.id) %> - <%= get_away_team_score(match.id) %>
+                          <% else %>
+                            <%= display_time(match.date) %>
+                          <% end %>
                         <% end %>
                       </td>
                       <td class="whitespace-nowrap py-4 pr-20 text-sm font-medium text-gray-900 text-right">

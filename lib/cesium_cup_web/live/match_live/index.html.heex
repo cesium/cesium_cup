@@ -20,7 +20,6 @@
                 <tr>
                   <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-gray-500 sm:pl-6">
                     <%= display_date(match.date) %>
-                    <%= display_time(match.date) %>
                   </td>
                   <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-gray-500 sm:pl-6">
                     <%= if match.group_id do %>
@@ -34,11 +33,17 @@
                       <%= live_redirect to: Routes.team_show_path(@socket, :show, match.home_team) do %>
                         <%= match.home_team.name %>
                       <% end %>
+                    <% else %>
+                      TBD
                     <% end %>
                   </td>
                   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-center">
                     <%= live_redirect to: Routes.match_show_path(@socket, :show, match) do %>
-                      <%= get_home_team_score(match.id) %> - <%= get_away_team_score(match.id) %>
+                      <%= if match.state != :upcoming do %>
+                        <%= get_home_team_score(match.id) %> - <%= get_away_team_score(match.id) %>
+                      <% else %>
+                        <%= display_time(match.date) %>
+                      <% end %>
                     <% end %>
                   </td>
                   <td class="whitespace-nowrap py-4 pr-20 text-sm font-medium text-gray-900 text-right">
@@ -46,6 +51,8 @@
                       <%= live_redirect to: Routes.team_show_path(@socket, :show, match.away_team) do %>
                         <%= match.away_team.name %>
                       <% end %>
+                    <% else %>
+                      TBD
                     <% end %>
                   </td>
                   <td>
