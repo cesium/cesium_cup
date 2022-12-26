@@ -27,7 +27,7 @@ defmodule CesiumCup.Repo.Seeds.Schedule do
       [] ->
         [
           %{
-            date: ~N[2019-03-31 01:59:59.123],
+            date: ~N[2023-11-20 16:00:00],
             state: :upcoming,
             home_team_id: get_team_id("Portugal"),
             away_team_id: get_team_id("Argentina"),
@@ -35,7 +35,7 @@ defmodule CesiumCup.Repo.Seeds.Schedule do
             group_round: 1
           },
           %{
-            date: ~N[2019-03-31 01:59:59.123],
+            date: ~N[2023-11-20 16:00:00],
             state: :upcoming,
             home_team_id: get_team_id("France"),
             away_team_id: get_team_id("Brazil"),
@@ -43,7 +43,7 @@ defmodule CesiumCup.Repo.Seeds.Schedule do
             group_round: 1
           },
           %{
-            date: ~N[2019-03-31 01:59:59.123],
+            date: ~N[2023-11-24 13:00:00],
             state: :upcoming,
             home_team_id: get_team_id("Portugal"),
             away_team_id: get_team_id("Brazil"),
@@ -51,7 +51,7 @@ defmodule CesiumCup.Repo.Seeds.Schedule do
             group_round: 2
           },
           %{
-            date: ~N[2019-03-31 01:59:59.123],
+            date: ~N[2023-11-24 13:00:00],
             state: :upcoming,
             home_team_id: get_team_id("Argentina"),
             away_team_id: get_team_id("France"),
@@ -59,7 +59,7 @@ defmodule CesiumCup.Repo.Seeds.Schedule do
             group_round: 2
           },
           %{
-            date: ~N[2019-03-31 01:59:59.123],
+            date: ~N[2023-11-28 17:00:00],
             state: :upcoming,
             home_team_id: get_team_id("France"),
             away_team_id: get_team_id("Portugal"),
@@ -67,7 +67,7 @@ defmodule CesiumCup.Repo.Seeds.Schedule do
             group_round: 3
           },
           %{
-            date: ~N[2019-03-31 01:59:59.123],
+            date: ~N[2023-11-28 18:00:00],
             state: :upcoming,
             home_team_id: get_team_id("Brazil"),
             away_team_id: get_team_id("Argentina"),
@@ -75,7 +75,7 @@ defmodule CesiumCup.Repo.Seeds.Schedule do
             group_round: 3
           },
           %{
-            date: ~N[2019-03-31 01:59:59.123],
+            date: ~N[2023-11-21 18:00:00],
             state: :upcoming,
             home_team_id: get_team_id("Germany"),
             away_team_id: get_team_id("Spain"),
@@ -83,7 +83,7 @@ defmodule CesiumCup.Repo.Seeds.Schedule do
             group_round: 1
           },
           %{
-            date: ~N[2019-03-31 01:59:59.123],
+            date: ~N[2023-11-21 21:00:00],
             state: :upcoming,
             home_team_id: get_team_id("Japan"),
             away_team_id: get_team_id("Uruguai"),
@@ -91,7 +91,7 @@ defmodule CesiumCup.Repo.Seeds.Schedule do
             group_round: 1
           },
           %{
-            date: ~N[2019-03-31 01:59:59.123],
+            date: ~N[2023-11-25 21:00:00],
             state: :upcoming,
             home_team_id: get_team_id("Germany"),
             away_team_id: get_team_id("Japan"),
@@ -99,7 +99,7 @@ defmodule CesiumCup.Repo.Seeds.Schedule do
             group_round: 2
           },
           %{
-            date: ~N[2019-03-31 01:59:59.123],
+            date: ~N[2023-11-25 20:00:00],
             state: :upcoming,
             home_team_id: get_team_id("Uruguai"),
             away_team_id: get_team_id("Spain"),
@@ -107,7 +107,7 @@ defmodule CesiumCup.Repo.Seeds.Schedule do
             group_round: 2
           },
           %{
-            date: ~N[2019-03-31 01:59:59.123],
+            date: ~N[2023-11-29 20:00:00],
             state: :upcoming,
             home_team_id: get_team_id("Spain"),
             away_team_id: get_team_id("Japan"),
@@ -115,7 +115,7 @@ defmodule CesiumCup.Repo.Seeds.Schedule do
             group_round: 3
           },
           %{
-            date: ~N[2019-03-31 01:59:59.123],
+            date: ~N[2023-11-29 19:00:00],
             state: :upcoming,
             home_team_id: get_team_id("Germany"),
             away_team_id: get_team_id("Uruguai"),
@@ -123,7 +123,7 @@ defmodule CesiumCup.Repo.Seeds.Schedule do
             group_round: 3
           },
           %{
-            date: ~N[2019-03-31 01:59:59.123],
+            date: ~N[2023-11-22 19:00:00],
             state: :upcoming,
             home_team_id: get_team_id("Netherlands"),
             away_team_id: get_team_id("Italy"),
@@ -131,7 +131,7 @@ defmodule CesiumCup.Repo.Seeds.Schedule do
             group_round: 1
           },
           %{
-            date: ~N[2019-03-31 01:59:59.123],
+            date: ~N[2023-11-22 18:00:00],
             state: :upcoming,
             home_team_id: get_team_id("Morroco"),
             away_team_id: get_team_id("South Korea"),
@@ -139,7 +139,7 @@ defmodule CesiumCup.Repo.Seeds.Schedule do
             group_round: 1
           },
           %{
-            date: ~N[2019-03-31 01:59:59.123],
+            date: ~N[2023-11-26 18:00:00],
             state: :upcoming,
             home_team_id: get_team_id("Italy"),
             away_team_id: get_team_id("Morroco"),
@@ -147,7 +147,7 @@ defmodule CesiumCup.Repo.Seeds.Schedule do
             group_round: 2
           },
           %{
-            date: ~N[2019-03-31 01:59:59.123],
+            date: ~N[2023-11-26 17:00:00],
             state: :upcoming,
             home_team_id: get_team_id("South Korea"),
             away_team_id: get_team_id("Netherlands"),
@@ -155,7 +155,7 @@ defmodule CesiumCup.Repo.Seeds.Schedule do
             group_round: 2
           },
           %{
-            date: ~N[2019-03-31 01:59:59.123],
+            date: ~N[2023-11-30 17:00:00],
             state: :upcoming,
             home_team_id: get_team_id("Italy"),
             away_team_id: get_team_id("South Korea"),
@@ -163,7 +163,7 @@ defmodule CesiumCup.Repo.Seeds.Schedule do
             group_round: 3
           },
           %{
-            date: ~N[2019-03-31 01:59:59.123],
+            date: ~N[2023-11-30 14:00:00],
             state: :upcoming,
             home_team_id: get_team_id("Netherlands"),
             away_team_id: get_team_id("Morroco"),
@@ -171,7 +171,7 @@ defmodule CesiumCup.Repo.Seeds.Schedule do
             group_round: 3
           },
           %{
-            date: ~N[2019-03-31 01:59:59.123],
+            date: ~N[2023-11-23 14:00:00],
             state: :upcoming,
             home_team_id: get_team_id("England"),
             away_team_id: get_team_id("Belgium"),
@@ -179,7 +179,7 @@ defmodule CesiumCup.Repo.Seeds.Schedule do
             group_round: 1
           },
           %{
-            date: ~N[2019-03-31 01:59:59.123],
+            date: ~N[2023-11-23 14:00:00],
             state: :upcoming,
             home_team_id: get_team_id("Croatia"),
             away_team_id: get_team_id("USA"),
@@ -187,7 +187,7 @@ defmodule CesiumCup.Repo.Seeds.Schedule do
             group_round: 1
           },
           %{
-            date: ~N[2019-03-31 01:59:59.123],
+            date: ~N[2023-11-27 16:00:00],
             state: :upcoming,
             home_team_id: get_team_id("USA"),
             away_team_id: get_team_id("England"),
@@ -195,7 +195,7 @@ defmodule CesiumCup.Repo.Seeds.Schedule do
             group_round: 2
           },
           %{
-            date: ~N[2019-03-31 01:59:59.123],
+            date: ~N[2023-11-27 16:00:00],
             state: :upcoming,
             home_team_id: get_team_id("Belgium"),
             away_team_id: get_team_id("Croatia"),
@@ -203,7 +203,7 @@ defmodule CesiumCup.Repo.Seeds.Schedule do
             group_round: 2
           },
           %{
-            date: ~N[2019-03-31 01:59:59.123],
+            date: ~N[2023-12-01 16:00:00],
             state: :upcoming,
             home_team_id: get_team_id("England"),
             away_team_id: get_team_id("Croatia"),
@@ -211,7 +211,7 @@ defmodule CesiumCup.Repo.Seeds.Schedule do
             group_round: 3
           },
           %{
-            date: ~N[2019-03-31 01:59:59.123],
+            date: ~N[2023-12-01 16:00:00],
             state: :upcoming,
             home_team_id: get_team_id("USA"),
             away_team_id: get_team_id("Belgium"),
@@ -219,37 +219,37 @@ defmodule CesiumCup.Repo.Seeds.Schedule do
             group_round: 3
           },
           %{
-            date: ~N[2019-03-31 01:59:59.123],
+            date: ~N[2023-12-02 15:00:00],
             state: :upcoming,
             elimination_round_id: get_elimination_round_id("Quarter-Finals")
           },
           %{
-            date: ~N[2019-03-31 01:59:59.123],
+            date: ~N[2023-12-03 15:00:00],
             state: :upcoming,
             elimination_round_id: get_elimination_round_id("Quarter-Finals")
           },
           %{
-            date: ~N[2019-03-31 01:59:59.123],
+            date: ~N[2023-12-04 15:00:00],
             state: :upcoming,
             elimination_round_id: get_elimination_round_id("Quarter-Finals")
           },
           %{
-            date: ~N[2019-03-31 01:59:59.123],
+            date: ~N[2023-12-05 15:00:00],
             state: :upcoming,
             elimination_round_id: get_elimination_round_id("Quarter-Finals")
           },
           %{
-            date: ~N[2019-03-31 01:59:59.123],
+            date: ~N[2023-12-06 16:00:00],
             state: :upcoming,
             elimination_round_id: get_elimination_round_id("Semi-Finals")
           },
           %{
-            date: ~N[2019-03-31 01:59:59.123],
+            date: ~N[2023-12-07 16:00:00],
             state: :upcoming,
             elimination_round_id: get_elimination_round_id("Semi-Finals")
           },
           %{
-            date: ~N[2019-03-31 01:59:59.123],
+            date: ~N[2023-12-10 20:00:00],
             state: :upcoming,
             elimination_round_id: get_elimination_round_id("Final")
           }

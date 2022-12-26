@@ -27,6 +27,9 @@ defmodule CesiumCupWeb.HomeLive.Index do
 
   defp list_matches do
     Tournament.list_matches(preloads: [:home_team, :away_team, :events])
+    |> Enum.sort(
+      &(Date.diff(&1.date, DateTime.utc_now()) < Date.diff(&2.date, DateTime.utc_now()))
+    )
     |> Enum.take(6)
   end
 
@@ -35,6 +38,7 @@ defmodule CesiumCupWeb.HomeLive.Index do
       preloads: [:home_team, :away_team, :events],
       where: [group_round: group_round]
     )
+    |> Enum.sort(&(Date.compare(&1.date, &2.date) in [:lt, :eq]))
   end
 
   defp list_groups do

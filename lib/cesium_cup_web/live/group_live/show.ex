@@ -17,13 +17,15 @@ defmodule CesiumCupWeb.GroupLive.Show do
      |> assign(:page_title, page_title(socket.assigns.live_action))
      |> assign(:group, Tournament.get_group!(id))
      |> assign(:teams, list_teams(id))
-     |> assign(
-       :matches,
-       Tournament.list_matches(
-         where: [group_id: id],
-         preloads: [:home_team, :away_team, :events]
-       )
-     )}
+     |> assign(:matches, list_matches(id))}
+  end
+
+  defp list_matches(group_id) do
+    Tournament.list_matches(
+      where: [group_id: group_id],
+      preloads: [:home_team, :away_team, :events]
+    )
+    |> Enum.sort(&(Date.compare(&1.date, &2.date) in [:lt, :eq]))
   end
 
   defp get_team(id) do
