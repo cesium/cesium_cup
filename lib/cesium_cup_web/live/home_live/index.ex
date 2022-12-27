@@ -143,6 +143,14 @@ defmodule CesiumCupWeb.HomeLive.Index do
     end)
   end
 
+  defp list_top_players(rank, event_types) do
+    Tournament.list_top_players(rank, event_types)
+  end
+
+  def get_player(id) do
+    Teams.get_player!(id)
+  end
+
   @impl true
   def handle_event("increase_group_round", _, socket) do
     {:noreply, assign(socket, :group_round, socket.assigns.group_round + 1)}
