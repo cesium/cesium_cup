@@ -7,7 +7,11 @@ defmodule CesiumCupWeb.MatchLive.Show do
 
   @impl true
   def mount(_params, _session, socket) do
-    if connected?(socket), do: Tournament.subscribe("update_match")
+    if connected?(socket) do
+      Tournament.subscribe("update_match")
+      Tournament.subscribe("update_match_state")
+    end
+
     {:ok, socket}
   end
 
@@ -119,6 +123,16 @@ defmodule CesiumCupWeb.MatchLive.Show do
      |> assign(:away_team_game_players, away_team_game_players)
      |> assign(:home_team_bench_players, home_team_bench_players)
      |> assign(:away_team_bench_players, away_team_bench_players)}
+  end
+
+  @impl true
+  def handle_info({event, _}, socket) when event in [:update_match_state] do
+    match =
+      Tournament.get_match!(socket.assigns.match.id,
+        preloads: [:home_team, :away_team, :events]
+      )
+
+    {:noreply, assign(socket, :match, match)}
   end
 
   defp page_title(:show), do: "Show Match"
