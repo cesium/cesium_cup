@@ -58,61 +58,9 @@
     <% end %>
   </div>
 
-  <div class="mt-5 bg-[#F9FAFB] rounded-lg w-full px-10 py-10">
-    <div class="xl:flex xl:gap-x-10">
-      <img class="rounded-xl xl:w-2/3 h-[500px]" src={Routes.static_path(@socket, "/images/live.png")} />
-
-      <div class="w-1/3 flex flex-col gap-y-5">
-        <div class="h-1/2 rounded-xl bg-white shadow-lg">
-          <div class="px-10 py-5">
-            <div class="flex items-center justify-between border-b-2 pb-4 border-quinary">
-              <div class="flex">
-                <p class="text-gray-900 font-bold text-lg">
-                  Live
-                </p>
-                <span class="ml-2 relative flex h-3 w-3">
-                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF0046] opacity-75"></span>
-                  <span class="relative inline-flex rounded-full h-3 w-3 bg-[#FF0046]"></span>
-                </span>
-              </div>
-
-              <p class="text-gray-900 font-bold text-lg">
-                15'
-              </p>
-            </div>
-
-            <div class="flex justify-around items-center gap-x-4 pt-8">
-              <div class="text-gray-900 flex flex-col items-center">
-                <p class="font-bold text-7xl">
-                  1
-                </p>
-                <p class="text-lg">
-                  Equipa Vermelha
-                </p>
-              </div>
-              <div class="text-gray-900 font-bold text-7xl">
-                -
-              </div>
-              <div class="text-gray-900 flex flex-col items-center">
-                <p class="font-bold text-7xl">
-                  2
-                </p>
-                <p class="text-lg">
-                  Equipa Azul
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="h-1/2 rounded-xl bg-white shadow-lg">
-          <div class="px-10 py-5"></div>
-        </div>
-      </div>
-    </div>
-
+  <div class="mt-5 bg-[#F9FAFB] rounded-lg w-full px-10 py-5 pb-10">
     <div>
-      <div class="pt-2">
+      <div>
         <div class="border-b border-gray-200">
           <nav class="-mb-px flex space-x-8" aria-label="Tabs">
             <%= live_patch("Group Stage", to: "?tab=group", class: "#{if @tab == "group" do
@@ -296,5 +244,97 @@
         </div>
       </div>
     <% end %>
+
+    <div>
+      <div>
+        <div class="border-b border-gray-200">
+          <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+            <div class="border-quinary text-gray-900 whitespace-nowrap py-4 px-1 border-b-4 font-medium text-md">
+              Player Stats
+            </div>
+          </nav>
+        </div>
+        <div class="mt-4 pt-2 grid grid-cols-3 gap-4">
+          <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+            <table class="w-full h-full divide-y divide-gray-300">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th scope="col" class="flex items-center pl-10 space-x-2 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500">
+                    <p>Top Goal Scorer</p>
+                  </th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200 bg-white">
+                <%= for player <- list_top_players(5, [:goal]) do %>
+                  <tr>
+                    <td class="whitespace-nowrap py-4 pl-10 text-sm font-medium text-gray-900 text-left">
+                      <%= live_redirect to: Routes.player_show_path(@socket, :show, get_player(player.id)) do %>
+                        <%= player.name %>
+                      <% end %>
+                    </td>
+                    <td class="whitespace-nowrap py-4 pr-10 text-sm font-medium text-gray-900 text-right">
+                      <%= player.count %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+          <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+            <table class="w-full h-full divide-y divide-gray-300">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th scope="col" class="flex items-center pl-10 space-x-2 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500">
+                    <p>Most Assists</p>
+                  </th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200 bg-white">
+                <%= for player <- list_top_players(5, [:assist]) do %>
+                  <tr>
+                    <td class="whitespace-nowrap py-4 pl-10 text-sm font-medium text-gray-900 text-left">
+                      <%= live_redirect to: Routes.player_show_path(@socket, :show, get_player(player.id)) do %>
+                        <%= player.name %>
+                      <% end %>
+                    </td>
+                    <td class="whitespace-nowrap py-4 pr-10 text-sm font-medium text-gray-900 text-right">
+                      <%= player.count %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+          <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+            <table class="w-full h-full divide-y divide-gray-300">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th scope="col" class="flex items-center pl-10 space-x-2 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500">
+                    <p>Most Bookings</p>
+                  </th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200 bg-white">
+                <%= for player <- list_top_players(5, [:yellow_card, :red_card]) do %>
+                  <tr>
+                    <td class="whitespace-nowrap py-4 pl-10 text-sm font-medium text-gray-900 text-left">
+                      <%= live_redirect to: Routes.player_show_path(@socket, :show, get_player(player.id)) do %>
+                        <%= player.name %>
+                      <% end %>
+                    </td>
+                    <td class="whitespace-nowrap py-4 pr-10 text-sm font-medium text-gray-900 text-right">
+                      <%= player.count %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
