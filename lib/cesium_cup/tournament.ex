@@ -650,7 +650,7 @@ defmodule CesiumCup.Tournament do
 
     Match.changeset(match, changes)
     |> Repo.update()
-    |> broadcast(:update_match)
+    |> broadcast(:update_match_state)
   end
 
   alias CesiumCup.Tournament.EliminationRound
@@ -759,7 +759,7 @@ defmodule CesiumCup.Tournament do
     EliminationRound.changeset(elimination_round, attrs)
   end
 
-  def subscribe(topic) when topic in ["update_match"] do
+  def subscribe(topic) when topic in ["update_match", "update_match_state"] do
     Phoenix.PubSub.subscribe(CesiumCup.PubSub, topic)
   end
 
@@ -771,5 +771,11 @@ defmodule CesiumCup.Tournament do
        when event in [:update_match] do
     Phoenix.PubSub.broadcast!(CesiumCup.PubSub, "update_match", {event, match_event})
     {:ok, match_event}
+  end
+
+  defp broadcast({:ok, match_state}, event)
+       when event in [:update_match_state] do
+    Phoenix.PubSub.broadcast!(CesiumCup.PubSub, "update_match_state", {event, match_state})
+    {:ok, match_state}
   end
 end
