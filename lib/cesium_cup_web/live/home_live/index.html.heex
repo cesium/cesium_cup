@@ -211,7 +211,7 @@
                       <td class="whitespace-nowrap py-4 pl-20 text-sm font-medium text-gray-900 text-left">
                         <%= if match.home_team_id do %>
                           <%= live_redirect to: Routes.team_show_path(@socket, :show, get_team(match.home_team_id)) do %>
-                            <%= get_team(match.away_team_id).name %>
+                            <%= get_team(match.home_team_id).name %>
                           <% end %>
                         <% else %>
                           TBD
