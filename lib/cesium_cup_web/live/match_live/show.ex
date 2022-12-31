@@ -22,10 +22,10 @@ defmodule CesiumCupWeb.MatchLive.Show do
         preloads: [:home_team, :away_team, :events]
       )
 
-    home_team_game_players = Teams.list_players_in_game(id, match.home_team_id)
-    home_team_bench_players = Teams.list_players_in_bench(id, match.home_team_id)
-    away_team_game_players = Teams.list_players_in_game(id, match.away_team_id)
-    away_team_bench_players = Teams.list_players_in_bench(id, match.away_team_id)
+    home_team_game_players = Teams.list_players_in_game!(id, match.home_team_id)
+    home_team_bench_players = Teams.list_players_in_bench!(id, match.home_team_id)
+    away_team_game_players = Teams.list_players_in_game!(id, match.away_team_id)
+    away_team_bench_players = Teams.list_players_in_bench!(id, match.away_team_id)
 
     first_half_events = Tournament.list_events(where: [match_id: match.id, half: :first_half])
     second_half_events = Tournament.list_events(where: [match_id: match.id, half: :second_half])
@@ -87,18 +87,22 @@ defmodule CesiumCupWeb.MatchLive.Show do
     match_id = socket.assigns.match.id
     match = Tournament.get_match!(match_id)
 
-    if (Tournament.is_team_live(match.home_team_id) &&
-          Tournament.team_live_match_id(match.home_team_id) != match_id) ||
-         (Tournament.is_team_live(match.away_team_id) &&
-            Tournament.team_live_match_id(match.away_team_id) != match_id) do
-      {:noreply, put_flash(socket, :error, "One of the teams is already playing")}
+    if is_nil(match.home_team_id) || is_nil(match.away_team_id) do
+      {:noreply, put_flash(socket, :error, "You need to select two teams to play")}
     else
-      case Tournament.update_match_state(match_id, String.to_atom(state)) do
-        {:ok, _} ->
-          {:noreply, socket}
+      if (Tournament.is_team_live(match.home_team_id) &&
+            Tournament.team_live_match_id(match.home_team_id) != match_id) ||
+           (Tournament.is_team_live(match.away_team_id) &&
+              Tournament.team_live_match_id(match.away_team_id) != match_id) do
+        {:noreply, put_flash(socket, :error, "One of the teams is already playing")}
+      else
+        case Tournament.update_match_state(match_id, String.to_atom(state)) do
+          {:ok, _} ->
+            {:noreply, socket}
 
-        {:error, _} ->
-          {:noreply, socket}
+          {:error, _} ->
+            {:noreply, socket}
+        end
       end
     end
   end
@@ -113,10 +117,10 @@ defmodule CesiumCupWeb.MatchLive.Show do
     first_half_events = Tournament.list_events(where: [match_id: match.id, half: :first_half])
     second_half_events = Tournament.list_events(where: [match_id: match.id, half: :second_half])
 
-    home_team_game_players = Teams.list_players_in_game(match.id, match.home_team_id)
-    home_team_bench_players = Teams.list_players_in_bench(match.id, match.home_team_id)
-    away_team_game_players = Teams.list_players_in_game(match.id, match.away_team_id)
-    away_team_bench_players = Teams.list_players_in_bench(match.id, match.away_team_id)
+    home_team_game_players = Teams.list_players_in_game!(match.id, match.home_team_id)
+    home_team_bench_players = Teams.list_players_in_bench!(match.id, match.home_team_id)
+    away_team_game_players = Teams.list_players_in_game!(match.id, match.away_team_id)
+    away_team_bench_players = Teams.list_players_in_bench!(match.id, match.away_team_id)
 
     {:noreply,
      socket

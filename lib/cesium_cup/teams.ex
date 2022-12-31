@@ -128,6 +128,14 @@ defmodule CesiumCup.Teams do
     |> Repo.all()
   end
 
+  def list_players_in_game!(match_id, team_id) do
+    if is_nil(team_id) do
+      []
+    else
+      list_players_in_game(match_id, team_id)
+    end
+  end
+
   def list_players_in_game(match_id, team_id) do
     from(p in Player,
       where: p.team_id == ^team_id
@@ -136,6 +144,14 @@ defmodule CesiumCup.Teams do
     |> Enum.filter(
       &(get_player_sub_in_match(&1.id, match_id) > get_player_sub_out_match(&1.id, match_id))
     )
+  end
+
+  def list_players_in_bench!(match_id, team_id) do
+    if is_nil(team_id) do
+      []
+    else
+      list_players_in_bench(match_id, team_id)
+    end
   end
 
   def list_players_in_bench(match_id, team_id) do
