@@ -87,7 +87,10 @@ defmodule CesiumCupWeb.MatchLive.Show do
     match_id = socket.assigns.match.id
     match = Tournament.get_match!(match_id)
 
-    if Tournament.is_team_live(match.home_team_id) || Tournament.is_team_live(match.away_team_id) do
+    if (Tournament.is_team_live(match.home_team_id) &&
+          Tournament.team_live_match_id(match.home_team_id) != match_id) ||
+         (Tournament.is_team_live(match.away_team_id) &&
+            Tournament.team_live_match_id(match.away_team_id) != match_id) do
       {:noreply, put_flash(socket, :error, "One of the teams is already playing")}
     else
       case Tournament.update_match_state(match_id, String.to_atom(state)) do
