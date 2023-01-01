@@ -109,7 +109,7 @@
                               <%= live_redirect to: Routes.team_show_path(@socket, :show, team) do %>
                                 <%= team.name %>
                               <% end %>
-                              <%= if is_team_live(team.id) do %>
+                              <%= if is_team_live_group(team.id, group.id) do %>
                                 <% bg_color =
                                   case(team_live_state(team.id)) do
                                     :win -> "bg-green-500"

@@ -592,6 +592,18 @@ defmodule CesiumCup.Tournament do
     match != nil
   end
 
+  def is_team_live_group(team_id, group_id) do
+    match =
+      from(m in Match,
+        where:
+          (m.home_team_id == ^team_id or m.away_team_id == ^team_id) and
+            m.state in [:first_half, :halftime, :second_half] and m.group_id == ^group_id
+      )
+      |> Repo.one()
+
+    match != nil
+  end
+
   def team_live_match_id(team_id) do
     match =
       from(m in Match,
