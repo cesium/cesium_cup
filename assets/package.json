@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "rustywind": "^0.15.0"
+  }
+}

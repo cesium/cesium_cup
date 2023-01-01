@@ -128,4 +128,12 @@ defmodule CesiumCupWeb.GroupLive.Show do
       end
     end)
   end
+
+  defp list_top_players_group(rank, event_types, group_id) do
+    Tournament.list_top_players_group(rank, event_types, group_id)
+  end
+
+  def get_player(id) do
+    Teams.get_player!(id)
+  end
 end
