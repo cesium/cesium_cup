@@ -83,8 +83,8 @@ defmodule CesiumCupWeb.GroupLive.Show do
     Tournament.get_team_live_result(team_id)
   end
 
-  defp is_team_live(team_id) do
-    Tournament.is_team_live(team_id)
+  defp is_team_live_group(team_id, group_id) do
+    Tournament.is_team_live_group(team_id, group_id)
   end
 
   defp team_live_state(team_id) do
