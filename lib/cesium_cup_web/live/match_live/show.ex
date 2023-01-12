@@ -79,6 +79,9 @@ defmodule CesiumCupWeb.MatchLive.Show do
         {:error, _} ->
           {:noreply, socket}
       end
+    else
+      {:noreply,
+       put_flash(socket, :error, "You can't add events to a match that is not in progress")}
     end
   end
 
