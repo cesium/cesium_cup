@@ -76,7 +76,10 @@
                       <%= get_team_group_goals_against(team.id) %>
                     </td>
                     <td class="whitespace-nowrap px-3 py-4 text-center text-sm text-gray-500">
-                      <%= get_team_group_goals_difference(team.id) %>
+                      <% goals_difference = get_team_group_goals_difference(team.id) %>
+                      <%= "#{if goals_difference > 0 do
+                        "+"
+                      end}#{goals_difference}" %>
                     </td>
                     <td class="whitespace-nowrap px-3 py-4 text-center text-sm text-gray-500">
                       <%= get_team_group_points(team.id) %>
