@@ -175,14 +175,24 @@
         <div class="mt-3 flex flex-col space-y-2 text-black">
           <%= for player <- @home_team_game_players do %>
             <div class="flex flex-row space-x-2">
-              <a href="#" phx-click="focus-player" phx-value-player_id={player.id}>
-                <%= "#{player.name} #{if player.captain do
-                  "(C)"
-                end}" %>
-              </a>
-              <a href="#" phx-click="add-event" phx-value-player_id={player.id} phx-value-type="sub_out" class="text-red-500">
-                <%= "<-" %>
-              </a>
+              <%= if @match.state in [:first_half, :second_half] do %>
+                <a href="#" phx-click="focus-player" phx-value-player_id={player.id}>
+                  <%= "#{player.name} #{if player.captain do
+                    "(C)"
+                  end}" %>
+                </a>
+              <% else %>
+                <%= live_redirect to: Routes.player_show_path(@socket, :show, player) do %>
+                  <%= "#{if player.captain do
+                    "(C)"
+                  end} #{player.name}" %>
+                <% end %>
+              <% end %>
+              <%= if @match.state in [:first_half, :second_half] do %>
+                <a href="#" phx-click="add-event" phx-value-player_id={player.id} phx-value-type="sub_out" class="text-red-500">
+                  <%= "<-" %>
+                </a>
+              <% end %>
             </div>
           <% end %>
         </div>
@@ -197,9 +207,11 @@
                   "(C)"
                 end}" %>
               <% end %>
-              <a href="#" phx-click="add-event" phx-value-player_id={player.id} phx-value-type="sub_in" class="text-green-500">
-                <%= "->" %>
-              </a>
+              <%= if @match.state in [:first_half, :second_half] do %>
+                <a href="#" phx-click="add-event" phx-value-player_id={player.id} phx-value-type="sub_in" class="text-green-500">
+                  <%= "->" %>
+                </a>
+              <% end %>
             </div>
           <% end %>
         </div>
@@ -217,14 +229,24 @@
         <div class="mt-3 flex flex-col space-y-2 text-black">
           <%= for player <- @away_team_game_players do %>
             <div class="flex flex-row space-x-2">
-              <a href="#" phx-click="add-event" phx-value-player_id={player.id} phx-value-type="sub_out" class="text-red-500">
-                <%= "->" %>
-              </a>
-              <a href="#" phx-click="focus-player" phx-value-player_id={player.id}>
-                <%= "#{if player.captain do
-                  "(C)"
-                end} #{player.name}" %>
-              </a>
+              <%= if @match.state in [:first_half, :second_half] do %>
+                <a href="#" phx-click="add-event" phx-value-player_id={player.id} phx-value-type="sub_out" class="text-red-500">
+                  <%= "->" %>
+                </a>
+              <% end %>
+              <%= if @match.state in [:first_half, :seconf_half] do %>
+                <a href="#" phx-click="focus-player" phx-value-player_id={player.id}>
+                  <%= "#{if player.captain do
+                    "(C)"
+                  end} #{player.name}" %>
+                </a>
+              <% else %>
+                <%= live_redirect to: Routes.player_show_path(@socket, :show, player) do %>
+                  <%= "#{if player.captain do
+                    "(C)"
+                  end} #{player.name}" %>
+                <% end %>
+              <% end %>
             </div>
           <% end %>
         </div>
@@ -234,9 +256,11 @@
         <div class="mt-3 flex flex-col space-y-2 text-gray-400">
           <%= for player <- @away_team_bench_players do %>
             <div class="flex flex-row space-x-2">
-              <a href="#" phx-click="add-event" phx-value-player_id={player.id} phx-value-type="sub_in" class="text-green-500">
-                <%= "<-" %>
-              </a>
+              <%= if @match.state in [:first_half, :second_half] do %>
+                <a href="#" phx-click="add-event" phx-value-player_id={player.id} phx-value-type="sub_in" class="text-green-500">
+                  <%= "<-" %>
+                </a>
+              <% end %>
               <%= live_redirect to: Routes.player_show_path(@socket, :show, player) do %>
                 <%= "#{if player.captain do
                   "(C)"
