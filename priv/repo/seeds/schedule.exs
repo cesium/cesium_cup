@@ -86,7 +86,7 @@ defmodule CesiumCup.Repo.Seeds.Schedule do
             date: ~N[2023-11-21 21:00:00],
             state: :upcoming,
             home_team_id: get_team_id("Japan"),
-            away_team_id: get_team_id("Uruguai"),
+            away_team_id: get_team_id("Uruguay"),
             group_id: get_group_id("B"),
             group_round: 1
           },
@@ -101,7 +101,7 @@ defmodule CesiumCup.Repo.Seeds.Schedule do
           %{
             date: ~N[2023-11-25 20:00:00],
             state: :upcoming,
-            home_team_id: get_team_id("Uruguai"),
+            home_team_id: get_team_id("Uruguay"),
             away_team_id: get_team_id("Spain"),
             group_id: get_group_id("B"),
             group_round: 2
@@ -118,7 +118,7 @@ defmodule CesiumCup.Repo.Seeds.Schedule do
             date: ~N[2023-11-29 19:00:00],
             state: :upcoming,
             home_team_id: get_team_id("Germany"),
-            away_team_id: get_team_id("Uruguai"),
+            away_team_id: get_team_id("Uruguay"),
             group_id: get_group_id("B"),
             group_round: 3
           },
@@ -133,7 +133,7 @@ defmodule CesiumCup.Repo.Seeds.Schedule do
           %{
             date: ~N[2023-11-22 18:00:00],
             state: :upcoming,
-            home_team_id: get_team_id("Morroco"),
+            home_team_id: get_team_id("Morocco"),
             away_team_id: get_team_id("South Korea"),
             group_id: get_group_id("C"),
             group_round: 1
@@ -142,7 +142,7 @@ defmodule CesiumCup.Repo.Seeds.Schedule do
             date: ~N[2023-11-26 18:00:00],
             state: :upcoming,
             home_team_id: get_team_id("Italy"),
-            away_team_id: get_team_id("Morroco"),
+            away_team_id: get_team_id("Morocco"),
             group_id: get_group_id("C"),
             group_round: 2
           },
@@ -166,7 +166,7 @@ defmodule CesiumCup.Repo.Seeds.Schedule do
             date: ~N[2023-11-30 14:00:00],
             state: :upcoming,
             home_team_id: get_team_id("Netherlands"),
-            away_team_id: get_team_id("Morroco"),
+            away_team_id: get_team_id("Morocco"),
             group_id: get_group_id("C"),
             group_round: 3
           },
