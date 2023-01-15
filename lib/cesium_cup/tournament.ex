@@ -686,11 +686,34 @@ defmodule CesiumCup.Tournament do
         ),
       on: e.player_id == p.id,
       group_by: p.id,
+      order_by: [desc: :count],
+      limit: ^rank,
       select: %{id: p.id, name: p.name, count: count(e.id)}
     )
     |> Repo.all()
-    |> Enum.sort(&(&1.count > &2.count))
-    |> Enum.take(rank)
+  end
+
+  def list_top_players_group(rank, event_types, group_id) do
+    from(p in Player,
+      join: t in Team,
+      on: p.team_id == t.id,
+      where: t.group_id == ^group_id,
+      left_join:
+        e in subquery(
+          from e in Event,
+            join: m in Match,
+            on: e.match_id == m.id,
+            where:
+              e.type in ^event_types and
+                m.group_id == ^group_id
+        ),
+      on: e.player_id == p.id,
+      group_by: p.id,
+      order_by: [desc: :count],
+      limit: ^rank,
+      select: %{id: p.id, name: p.name, count: count(e.id)}
+    )
+    |> Repo.all()
   end
 
   alias CesiumCup.Tournament.EliminationRound
