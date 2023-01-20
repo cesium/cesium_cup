@@ -1,48 +1,50 @@
-<div class="relative bg-white text-secondary sm:mx-auto sm:max-w-4xl sm:rounded-lg sm:px-10">
-  <%= if @live_action in [:edit] do %>
-    <.modal return_to={Routes.player_show_path(@socket, :show, @player)}>
-      <.live_component module={CesiumCupWeb.PlayerLive.FormComponent} id={@player.id} title={@page_title} action={@live_action} player={@player} return_to={Routes.player_show_path(@socket, :show, @player)} />
-    </.modal>
-  <% end %>
+<div class="relative flex min-h-full flex-col justify-center overflow-hidden">
+  <div class="relative bg-white mt-16 text-secondary sm:mx-auto max-w-5xl sm:rounded-lg sm:px-10">
+    <%= if @live_action in [:edit] do %>
+      <.modal return_to={Routes.player_show_path(@socket, :show, @player)}>
+        <.live_component module={CesiumCupWeb.PlayerLive.FormComponent} id={@player.id} title={@page_title} action={@live_action} player={@player} return_to={Routes.player_show_path(@socket, :show, @player)} />
+      </.modal>
+    <% end %>
 
-  <div class="py-4 px-4 font-medium text-xs divide-x-4">
-    <p>CeSIUM Cup 2023 > <%= @player.team.name %> > <%= @player.name %></p>
-  </div>
+    <div class="py-4 px-4 font-medium text-xs divide-x-4">
+      <p>CeSIUM Cup 2023 > <%= @player.team.name %> > <%= @player.name %></p>
+    </div>
 
-  <div class="mx-2" style="padding-top:1px; background-color:rgb(230,230,230)"></div>
+    <div class="mx-2" style="padding-top:1px; background-color:rgb(230,230,230)"></div>
 
-  <div class="px-11 my-8">
-    <div class="grid grid-cols-2 gap-0">
-      <div class="text-center rounded-lg h-48  overflow-hidden mx-auto bg-indigo-300">
-        <img class="object-cover h-48 " src={Routes.static_path(@socket, "/images/players/ronaldo.png")} />
-      </div>
-      <div class="uppercase">
-        <div class="font-bold text-4xl">
-          <p><%= @player.name %></p>
+    <div class="px-11 my-8">
+      <div class="grid sm:grid-cols-2 gap-0">
+        <div class="text-center rounded-lg h-48  overflow-hidden mx-auto bg-indigo-300">
+          <img class="object-cover h-48 " src={Routes.static_path(@socket, "/images/players/ronaldo.png")} />
         </div>
-        <div class="font-light text-2xl">
-          <%= live_redirect to: Routes.team_show_path(@socket, :show, @player.team) do %>
-            <%= @player.team.name %>
-          <% end %>
-        </div>
-        <div class="mt-2 grid grid-cols-2 gap-0">
-          <div>
-            <p>Position</p>
-            <p>Birthdate</p>
-            <p>Height</p>
-            <p>Weight</p>
+        <div class="uppercase mt-4 flex flex-col items-center	sm:mt-0 sm:block">
+          <div class="font-bold text-4xl">
+            <p><%= @player.name %></p>
           </div>
-          <div class="font-semibold">
-            <p><%= @player.position %></p>
-            <p><%= @player.date_of_birth %></p>
-            <p><%= @player.height %> CM</p>
-            <p><%= @player.weight %> KG</p>
+          <div class="font-light text-2xl">
+            <%= live_redirect to: Routes.team_show_path(@socket, :show, @player.team) do %>
+              <%= @player.team.name %>
+            <% end %>
+          </div>
+          <div class="mt-2 grid-cols-2 gap-10 inline-grid	">
+            <div>
+              <p>Position</p>
+              <p>Birthdate</p>
+              <p>Height</p>
+              <p>Weight</p>
+            </div>
+            <div class="font-semibold">
+              <p><%= @player.position %></p>
+              <p><%= @player.date_of_birth %></p>
+              <p><%= @player.height %> CM</p>
+              <p><%= @player.weight %> KG</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="mx-2" style="padding-top:1px; background-color:rgb(230,230,230)"></div>
-  <!-- <span><%= live_patch("Edit", to: Routes.player_show_path(@socket, :edit, @player), class: "button") %></span> | <span><%= live_redirect("Back", to: Routes.player_index_path(@socket, :index)) %></span> -->
+    <div class="mx-2" style="padding-top:1px; background-color:rgb(230,230,230)"></div>
+    <!-- <span><%= live_patch("Edit", to: Routes.player_show_path(@socket, :edit, @player), class: "button") %></span> | <span><%= live_redirect("Back", to: Routes.player_index_path(@socket, :index)) %></span> -->
+  </div>
 </div>
