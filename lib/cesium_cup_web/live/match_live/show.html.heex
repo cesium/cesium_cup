@@ -223,6 +223,12 @@
                 <a href="#" phx-click="add-event" phx-value-player_id={player.id} phx-value-type="sub_in" class="text-green-500">
                   <%= "->" %>
                 </a>
+              <% else %>
+                <%= if @match.state in [:upcoming] do %>
+                  <a href="#" phx-click="start-player" phx-value-player_id={player.id} class="text-green-500">
+                    <%= "start" %>
+                  </a>
+                <% end %>
               <% end %>
             </div>
           <% end %>
@@ -272,6 +278,12 @@
                 <a href="#" phx-click="add-event" phx-value-player_id={player.id} phx-value-type="sub_in" class="text-green-500">
                   <%= "<-" %>
                 </a>
+              <% else %>
+                <%= if @match.state in [:upcoming] do %>
+                  <a href="#" phx-click="start-player" phx-value-player_id={player.id} class="text-green-500">
+                    <%= "start" %>
+                  </a>
+                <% end %>
               <% end %>
               <%= live_redirect to: Routes.player_show_path(@socket, :show, player) do %>
                 <%= "#{if player.captain do

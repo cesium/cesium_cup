@@ -142,7 +142,8 @@ defmodule CesiumCup.Teams do
     )
     |> Repo.all()
     |> Enum.filter(
-      &(get_player_sub_in_match(&1.id, match_id) > get_player_sub_out_match(&1.id, match_id))
+      &(get_player_start_match(&1.id, match_id) + get_player_sub_in_match(&1.id, match_id) >
+          get_player_sub_out_match(&1.id, match_id))
     )
   end
 
@@ -160,8 +161,16 @@ defmodule CesiumCup.Teams do
     )
     |> Repo.all()
     |> Enum.filter(
-      &(get_player_sub_in_match(&1.id, match_id) <= get_player_sub_out_match(&1.id, match_id))
+      &(get_player_start_match(&1.id, match_id) + get_player_sub_in_match(&1.id, match_id) <=
+          get_player_sub_out_match(&1.id, match_id))
     )
+  end
+
+  def get_player_start_match(player_id, match_id) do
+    from(e in Event,
+      where: e.player_id == ^player_id and e.match_id == ^match_id and e.type == :start
+    )
+    |> Repo.aggregate(:count)
   end
 
   def get_player_sub_in_match(player_id, match_id) do

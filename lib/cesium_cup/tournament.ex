@@ -655,6 +655,18 @@ defmodule CesiumCup.Tournament do
     |> Repo.one()
   end
 
+  def start_player(match_id, player_id) do
+    %Event{}
+    |> Event.changeset(%{
+      match_id: match_id,
+      player_id: player_id,
+      type: :start,
+      half: :first_half
+    })
+    |> Repo.insert()
+    |> broadcast(:update_match)
+  end
+
   def add_event(match_id, player_id, type, half) do
     %Event{}
     |> Event.changeset(%{
