@@ -16,7 +16,7 @@ defmodule CesiumCupWeb.TeamLive.Show do
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
      |> assign(:matches, list_matches(id))
-     |> assign(:team, Teams.get_team!(id, preloads: [:players]))}
+     |> assign(:team, Teams.get_team!(id, preloads: [:players, :group]))}
   end
 
   defp list_matches(id) do
