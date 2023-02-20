@@ -60,6 +60,10 @@ defmodule CesiumCupWeb.MatchLive.Show do
     Tournament.get_away_team_score(match_id)
   end
 
+  defp get_player_events(match_id, player_id) do
+    Tournament.list_events(where: [match_id: match_id, player_id: player_id])
+  end
+
   @impl true
   def handle_event("focus-player", %{"player_id" => player_id}, socket) do
     {:noreply,
