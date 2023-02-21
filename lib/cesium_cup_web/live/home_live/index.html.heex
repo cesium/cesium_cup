@@ -1,4 +1,4 @@
-<div class="pt-10 px-60">
+<div class="pt-10 px-4">
   <div class="flex gap-x-2">
     <%= for match <- @matches do %>
       <%= live_redirect to: Routes.match_show_path(@socket, :show, match), class: "w-72 rounded-xl bg-[#F9FAFB] hover:bg-quinary" do %>

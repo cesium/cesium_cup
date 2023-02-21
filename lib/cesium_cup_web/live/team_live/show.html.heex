@@ -1,5 +1,5 @@
-<div class="relative flex min-h-full flex-col justify-center overflow-hidden">
-  <div class="relative bg-white mt-16 text-secondary sm:mx-auto max-w-5xl lg:rounded-lg sm:px-10">
+<div class="sm:px-4">
+  <div class="relative bg-white mt-16 text-secondary sm:mx-auto  sm:rounded-lg sm:px-10">
     <%= if @live_action in [:edit] do %>
       <.modal return_to={Routes.team_show_path(@socket, :show, @team)}>
         <.live_component module={CesiumCupWeb.TeamLive.FormComponent} id={@team.id} title={@page_title} action={@live_action} team={@team} return_to={Routes.team_show_path(@socket, :show, @team)} />

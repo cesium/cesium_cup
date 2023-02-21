@@ -4,25 +4,14 @@
   </.modal>
 <% end %>
 
-<div class="pt-10 pb-20 lg:px-60">
-  <div class="mt-5 bg-[#F9FAFB] rounded-lg w-full px-10 py-5">
-    <div class="border-b border-quinary">
-      <div>
-        <div>
-          <nav class="-mb-px flex justify-between space-x-1 pb-2 text-xs" aria-label="Tabs">
-            <div>
-              <span href="#" class=" text-gray-500 hover:text-gray-700 whitespace-nowrap font-small" aria-current="page"><%= live_patch("CeSIUM Cup", to: Routes.home_index_path(@socket, :index)) %></span>
-              <a class="text-gray-500 whitespace-nowrap font-small">></a>
-              <span class="border-transparent text-gray-500 hover:text-gray-700 whitespace-nowrap border-b-4 font-small"><%= live_redirect("", to: Routes.match_index_path(@socket, :index)) %></span>
-            </div>
-
-            <div>
-              <span class="border-transparent text-indigo-300 hover:text-indigo-400 whitespace-nowrap border-b-4 font-small"><%= live_patch("Editar partida", to: Routes.match_show_path(@socket, :edit, @match), class: "button") %></span>
-            </div>
-          </nav>
+<div class="">
+  <div class="relative bg-white mt-16 text-secondary sm:mx-auto  sm:rounded-lg sm:px-10">
+        <div class="py-4 px-4 font-medium text-xs divide-x-4">
+          <p>CeSIUM Cup 2023 > <%= @match.home_team.name %> vs <%= @match.away_team.name %></p>
         </div>
-      </div>
-    </div>
+
+        <div class="mx-2 pt-[1px] bg-[rgb(230,230,230)]"></div>
+
     <div class="pb-10 border-b">
       <div class="flex flex-row justify-around items-center gap-x-4 pt-8">
         <div>

@@ -1,5 +1,5 @@
-<div class="relative flex min-h-full flex-col justify-center overflow-hidden">
-  <div class="relative bg-white mt-16 text-secondary sm:mx-auto max-w-5xl sm:rounded-lg sm:px-10">
+<div class="sm:m-4">
+  <div class="relative bg-white mt-16 text-secondary sm:mx-auto max-w-3xl sm:rounded-lg sm:px-10">
     <%= if @live_action in [:edit] do %>
       <.modal return_to={Routes.player_show_path(@socket, :show, @player)}>
         <.live_component module={CesiumCupWeb.PlayerLive.FormComponent} id={@player.id} title={@page_title} action={@live_action} player={@player} return_to={Routes.player_show_path(@socket, :show, @player)} />
@@ -10,7 +10,7 @@
       <p>CeSIUM Cup 2023 > <%= @player.team.name %> > <%= @player.name %></p>
     </div>
 
-    <div class="mx-2" style="padding-top:1px; background-color:rgb(230,230,230)"></div>
+    <div class="mx-2 pt-[1px] bg-[rgb(230,230,230)]"></div>
 
     <div class="px-11 my-8">
       <div class="grid sm:grid-cols-2 gap-0">
@@ -32,12 +32,14 @@
               <p>Birthdate</p>
               <p>Height</p>
               <p>Weight</p>
+              <p>Course</p>
             </div>
             <div class="font-semibold">
               <p><%= @player.position %></p>
               <p><%= @player.date_of_birth %></p>
               <p><%= @player.height %> CM</p>
               <p><%= @player.weight %> KG</p>
+              <p><%= @player.course %></p>
             </div>
           </div>
         </div>
