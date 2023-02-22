@@ -1,13 +1,14 @@
 <div class="m-4">
-  <div class="relative bg-white mt-16 text-secondary sm:mx-auto max-w-3xl rounded-lg sm:px-10">
+  <div class="relative pb-4 bg-white mt-16 text-secondary sm:mx-auto max-w-3xl rounded-lg sm:px-10">
     <%= if @live_action in [:edit] do %>
       <.modal return_to={Routes.player_show_path(@socket, :show, @player)}>
         <.live_component module={CesiumCupWeb.PlayerLive.FormComponent} id={@player.id} title={@page_title} action={@live_action} player={@player} return_to={Routes.player_show_path(@socket, :show, @player)} />
       </.modal>
     <% end %>
 
-    <div class="py-4 px-4 font-medium text-xs divide-x-4">
+    <div class="py-4 px-4 flex font-medium text-xs divide-x-4">
       <p>CeSIUM Cup 2023 > <%= @player.team.name %> > <%= @player.name %></p>
+      <span class="border-transparent ml-auto mr-4 text-indigo-300 hover:text-indigo-400 whitespace-nowrap border-b-4 font-small"><%= live_patch("Edit player", to: Routes.player_show_path(@socket, :edit, @player), class: "button") %></span>
     </div>
 
     <div class="mx-2 pt-[1px] bg-[rgb(230,230,230)]"></div>
@@ -110,7 +111,5 @@
         </div>
       </div>
     </div>
-
-    <span><%= live_patch("Edit", to: Routes.player_show_path(@socket, :edit, @player), class: "button") %></span> | <span><%= live_redirect("Back", to: Routes.player_index_path(@socket, :index)) %></span>
   </div>
 </div>
