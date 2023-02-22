@@ -14,5 +14,5 @@
     </li>
   </ul>
 
-  <span><%= live_patch("Edit", to: Routes.elimination_round_show_path(@socket, :edit, @elimination_round), class: "button") %></span> | <span><%= live_redirect("Back", to: Routes.elimination_round_index_path(@socket, :index)) %></span>
+  <span><%= live_redirect("Edit", to: Routes.elimination_round_show_path(@socket, :edit, @elimination_round), class: "button") %></span> | <span><%= live_redirect("Back", to: Routes.elimination_round_index_path(@socket, :index)) %></span>
 </div>

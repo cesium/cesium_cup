@@ -30,7 +30,7 @@
 
           <td>
             <span><%= live_redirect("Show", to: Routes.player_show_path(@socket, :show, player)) %></span>
-            <span><%= live_patch("Edit", to: Routes.player_index_path(@socket, :edit, player)) %></span>
+            <span><%= live_redirect("Edit", to: Routes.player_index_path(@socket, :edit, player)) %></span>
             <span><%= link("Delete", to: "#", phx_click: "delete", phx_value_id: player.id, data: [confirm: "Are you sure?"]) %></span>
           </td>
         </tr>
@@ -38,5 +38,5 @@
     </tbody>
   </table>
 
-  <span><%= live_patch("New Player", to: Routes.player_index_path(@socket, :new)) %></span>
+  <span><%= live_redirect("New Player", to: Routes.player_index_path(@socket, :new)) %></span>
 </div>

@@ -57,7 +57,7 @@
                   </td>
                   <td>
                     <span><%= live_redirect("Show", to: Routes.match_show_path(@socket, :show, match), class: "text-gray-900") %></span>
-                    <span><%= live_patch("Edit", to: Routes.match_index_path(@socket, :edit, match), class: "text-gray-900") %></span>
+                    <span><%= live_redirect("Edit", to: Routes.match_index_path(@socket, :edit, match), class: "text-gray-900") %></span>
                     <span><%= link("Delete", to: "#", phx_click: "delete", phx_value_id: match.id, data: [confirm: "Are you sure?"], class: "text-gray-900") %></span>
                   </td>
                 </tr>
@@ -69,5 +69,5 @@
     </div>
   </div>
 
-  <span><%= live_patch("New Match", to: Routes.match_index_path(@socket, :new)) %></span>
+  <span><%= live_redirect("New Match", to: Routes.match_index_path(@socket, :new)) %></span>
 </div>

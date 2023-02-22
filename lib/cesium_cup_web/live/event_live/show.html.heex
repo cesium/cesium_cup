@@ -13,5 +13,5 @@
   </li>
 </ul>
 
-<span><%= live_patch("Edit", to: Routes.event_show_path(@socket, :edit, @event), class: "button") %></span> |
+<span><%= live_redirect("Edit", to: Routes.event_show_path(@socket, :edit, @event), class: "button") %></span> |
 <span><%= live_redirect("Back", to: Routes.event_index_path(@socket, :index)) %></span>

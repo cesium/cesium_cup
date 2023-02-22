@@ -6,11 +6,11 @@
       </.modal>
     <% end %>
     <div class="py-4 px-4 flex font-medium text-xs divide-x-4">
-      <span href="#" class="border-transparent hover:text-gray-700 whitespace-nowrap font-small" aria-current="page"><%= live_patch("CeSIUM Cup", to: Routes.home_index_path(@socket, :index)) %></span>
+      <span href="#" class="border-transparent hover:text-gray-700 whitespace-nowrap font-small" aria-current="page"><%= live_redirect("CeSIUM Cup", to: Routes.home_index_path(@socket, :index)) %></span>
       <a class="border-transparent whitespace-nowrap font-small">></a>
       <%= if @match.group_id do %>
         <% group = get_group(@match.group_id) %>
-        <span href="#" class="border-transparent hover:text-gray-700 whitespace-nowrap font-small" aria-current="page"><%= live_patch("Group #{group.name}", to: Routes.group_show_path(@socket, :show, group)) %></span>
+        <span href="#" class="border-transparent hover:text-gray-700 whitespace-nowrap font-small" aria-current="page"><%= live_redirect("Group #{group.name}", to: Routes.group_show_path(@socket, :show, group)) %></span>
         <a class="border-transparent whitespace-nowrap font-small">></a>
       <% end %>
       <%= if @match.elimination_round_id do %>
@@ -21,7 +21,7 @@
       <%= if not (is_nil(@match.home_team_id) or is_nil(@match.away_team_id)) do %>
         <span class="border-transparent hover:text-gray-700 whitespace-nowrap border-b-4 font-small"><%= live_redirect("#{@match.home_team.name} vs #{@match.away_team.name}", to: Routes.match_show_path(@socket, :show, @match)) %></span>
       <% end %>
-      <span class="border-transparent ml-auto mr-4 text-indigo-300 hover:text-indigo-400 whitespace-nowrap border-b-4 font-small"><%= live_patch("Edit match", to: Routes.match_show_path(@socket, :edit, @match), class: "button") %></span>
+      <span class="border-transparent ml-auto mr-4 text-indigo-300 hover:text-indigo-400 whitespace-nowrap border-b-4 font-small"><%= live_redirect("Edit match", to: Routes.match_show_path(@socket, :edit, @match), class: "button") %></span>
     </div>
 
     <div class="mx-2 pt-[1px] bg-[rgb(230,230,230)]"></div>
