@@ -6,7 +6,8 @@
       </.modal>
     <% end %>
     <div class="py-4 px-4 flex font-medium text-xs divide-x-4">
-      <p>CeSIUM Cup 2023 > </p>
+      <span href="#" class="border-transparent hover:text-gray-700 whitespace-nowrap font-small" aria-current="page"><%= live_patch("CeSIUM Cup", to: Routes.home_index_path(@socket, :index)) %></span>
+      <a class="border-transparent whitespace-nowrap font-small">></a>
       <%= if @match.group_id do %>
         <% group = get_group(@match.group_id) %>
         <span href="#" class="border-transparent hover:text-gray-700 whitespace-nowrap font-small" aria-current="page"><%= live_patch("Group #{group.name}", to: Routes.group_show_path(@socket, :show, group)) %></span>

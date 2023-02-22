@@ -7,7 +7,9 @@
     <% end %>
 
     <div class="py-4 flex px-4 font-medium text-xs divide-x-4">
-      <p>CeSIUM Cup 2023 > <%= @team.name %></p>
+      <span href="#" class="border-transparent hover:text-gray-700 whitespace-nowrap font-small" aria-current="page"><%= live_patch("CeSIUM Cup", to: Routes.home_index_path(@socket, :index)) %></span>
+      <a class="border-transparent whitespace-nowrap font-small">></a>
+      <span href="#" class="border-transparent hover:text-gray-700 whitespace-nowrap font-small" aria-current="page"><%= live_patch(@team.name, to: Routes.team_show_path(@socket, :show, @team)) %></span>
       <span class="border-transparent ml-auto mr-4 text-indigo-300 hover:text-indigo-400 whitespace-nowrap border-b-4 font-small"><%= live_patch("Edit team", to: Routes.team_show_path(@socket, :edit, @team), class: "button") %></span>
     </div>
 

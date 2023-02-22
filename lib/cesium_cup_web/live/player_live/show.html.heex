@@ -7,7 +7,11 @@
     <% end %>
 
     <div class="py-4 px-4 flex font-medium text-xs divide-x-4">
-      <p>CeSIUM Cup 2023 > <%= @player.team.name %> > <%= @player.name %></p>
+      <span href="#" class="border-transparent hover:text-gray-700 whitespace-nowrap font-small" aria-current="page"><%= live_patch("CeSIUM Cup", to: Routes.home_index_path(@socket, :index)) %></span>
+      <a class="border-transparent whitespace-nowrap font-small">></a>
+      <span href="#" class="border-transparent hover:text-gray-700 whitespace-nowrap font-small" aria-current="page"><%= live_patch(@player.team.name, to: Routes.team_show_path(@socket, :show, @player.team), class: "button") %></span>
+      <a class="border-transparent whitespace-nowrap font-small">></a>
+      <span href="#" class="border-transparent hover:text-gray-700 whitespace-nowrap font-small" aria-current="page"><%= live_patch(@player.name, to: Routes.player_show_path(@socket, :show, @player), class: "button") %></span>
       <span class="border-transparent ml-auto mr-4 text-indigo-300 hover:text-indigo-400 whitespace-nowrap border-b-4 font-small"><%= live_patch("Edit player", to: Routes.player_show_path(@socket, :edit, @player), class: "button") %></span>
     </div>
 
