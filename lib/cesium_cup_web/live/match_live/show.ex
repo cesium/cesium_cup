@@ -34,7 +34,10 @@ defmodule CesiumCupWeb.MatchLive.Show do
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
      |> assign(:focused_player, nil)
-     |> assign(:event_types, ~w(goal assist injury foul yellow_card red_card sub_in sub_out)a)
+     |> assign(
+       :event_types,
+       ~w(goal assist injury foul yellow_card red_card start sub_in sub_out)a
+     )
      |> assign(:first_half_events, first_half_events)
      |> assign(:second_half_events, second_half_events)
      |> assign(:home_team_first_half_score, Tournament.get_home_team_first_half_score(id))
@@ -60,6 +63,14 @@ defmodule CesiumCupWeb.MatchLive.Show do
     Tournament.get_away_team_score(match_id)
   end
 
+  def get_group(group_id) do
+    Tournament.get_group!(group_id)
+  end
+
+  def get_elimination_round(elimination_round_id) do
+    Tournament.get_elimination_round!(elimination_round_id)
+  end
+
   defp get_player_events(match_id, player_id) do
     Tournament.list_events(where: [match_id: match_id, player_id: player_id])
   end
@@ -69,6 +80,21 @@ defmodule CesiumCupWeb.MatchLive.Show do
     {:noreply,
      socket
      |> assign(:focused_player, Teams.get_player!(player_id))}
+  end
+
+  @impl true
+  def handle_event("start-player", %{"player_id" => player_id}, socket) do
+    match = socket.assigns.match
+
+    if match.state in [:upcoming] do
+      case Tournament.start_player(match.id, player_id) do
+        {:ok, _} ->
+          {:noreply, socket}
+
+        {:error, _} ->
+          {:noreply, socket}
+      end
+    end
   end
 
   @impl true

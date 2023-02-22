@@ -6,7 +6,20 @@
       </.modal>
     <% end %>
     <div class="py-4 px-4 flex font-medium text-xs divide-x-4">
-      <p>CeSIUM Cup 2023 > <%= @match.home_team.name %> vs <%= @match.away_team.name %></p>
+      <p>CeSIUM Cup 2023 > </p>
+      <%= if @match.group_id do %>
+        <% group = get_group(@match.group_id) %>
+        <span href="#" class="border-transparent hover:text-gray-700 whitespace-nowrap font-small" aria-current="page"><%= live_patch("Group #{group.name}", to: Routes.group_show_path(@socket, :show, group)) %></span>
+        <a class="border-transparent whitespace-nowrap font-small">></a>
+      <% end %>
+      <%= if @match.elimination_round_id do %>
+        <% elimination_round = get_elimination_round(@match.elimination_round_id) %>
+        <span href="#" class="border-transparent hover:text-gray-700 whitespace-nowrap font-small" aria-current="page"><%= elimination_round.name %></span>
+        <a class="border-transparent whitespace-nowrap font-small"> > </a>
+      <% end %>
+      <%= if not (is_nil(@match.home_team_id) or is_nil(@match.away_team_id)) do %>
+        <span class="border-transparent hover:text-gray-700 whitespace-nowrap border-b-4 font-small"><%= live_redirect("#{@match.home_team.name} vs #{@match.away_team.name}", to: Routes.match_show_path(@socket, :show, @match)) %></span>
+      <% end %>
       <span class="border-transparent ml-auto mr-4 text-indigo-300 hover:text-indigo-400 whitespace-nowrap border-b-4 font-small"><%= live_patch("Edit match", to: Routes.match_show_path(@socket, :edit, @match), class: "button") %></span>
     </div>
 
@@ -222,6 +235,12 @@
                 <a href="#" phx-click="add-event" phx-value-player_id={player.id} phx-value-type="sub_in" class="text-green-500">
                   <%= "->" %>
                 </a>
+              <% else %>
+                <%= if @match.state in [:upcoming] do %>
+                  <a href="#" phx-click="start-player" phx-value-player_id={player.id} class="text-green-500">
+                    <%= "start" %>
+                  </a>
+                <% end %>
               <% end %>
             </div>
           <% end %>
@@ -290,6 +309,12 @@
                 <a href="#" phx-click="add-event" phx-value-player_id={player.id} phx-value-type="sub_in" class="text-green-500">
                   <%= "<-" %>
                 </a>
+              <% else %>
+                <%= if @match.state in [:upcoming] do %>
+                  <a href="#" phx-click="start-player" phx-value-player_id={player.id} class="text-green-500">
+                    <%= "start" %>
+                  </a>
+                <% end %>
               <% end %>
               <%= live_redirect to: Routes.player_show_path(@socket, :show, player) do %>
                 <%= "#{if player.captain do
