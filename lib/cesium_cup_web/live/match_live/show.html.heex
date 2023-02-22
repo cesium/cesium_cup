@@ -16,7 +16,7 @@
       <%= if @match.elimination_round_id do %>
         <% elimination_round = get_elimination_round(@match.elimination_round_id) %>
         <span href="#" class="border-transparent hover:text-gray-700 whitespace-nowrap font-small" aria-current="page"><%= elimination_round.name %></span>
-        <a class="border-transparent whitespace-nowrap font-small"> > </a>
+        <a class="border-transparent whitespace-nowrap font-small">></a>
       <% end %>
       <%= if not (is_nil(@match.home_team_id) or is_nil(@match.away_team_id)) do %>
         <span class="border-transparent hover:text-gray-700 whitespace-nowrap border-b-4 font-small"><%= live_redirect("#{@match.home_team.name} vs #{@match.away_team.name}", to: Routes.match_show_path(@socket, :show, @match)) %></span>
@@ -26,8 +26,7 @@
 
     <div class="mx-2 pt-[1px] bg-[rgb(230,230,230)]"></div>
 
-    <div>
-    </div>
+    <div></div>
 
     <div class="pb-10 border-b">
       <div class="flex flex-row justify-around items-center gap-x-4 pt-8">
@@ -203,17 +202,19 @@
                 <%= for event <- get_player_events(@match.id, player.id) do %>
                   <%= if event.type == :goal do %>
                     <div title={display_time(event.inserted_at)} class="group w-4 self-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M177.1 228.6L207.9 320h96.5l29.62-91.38L256 172.1L177.1 228.6zM255.1 0C114.6 0 .0001 114.6 .0001 256S114.6 512 256 512s255.1-114.6 255.1-255.1S397.4 0 255.1 0zM435.2 361.1l-103.9-1.578l-30.67 99.52C286.2 462.2 271.3 464 256 464s-30.19-1.773-44.56-4.93L180.8 359.6L76.83 361.1c-14.93-25.35-24.79-54.01-27.8-84.72L134.3 216.4L100.7 118.1c19.85-22.34 44.32-40.45 72.04-52.62L256 128l83.29-62.47c27.72 12.17 52.19 30.27 72.04 52.62L377.7 216.4l85.23 59.97C459.1 307.1 450.1 335.8 435.2 361.1z"/></svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                        <path d="M177.1 228.6L207.9 320h96.5l29.62-91.38L256 172.1L177.1 228.6zM255.1 0C114.6 0 .0001 114.6 .0001 256S114.6 512 256 512s255.1-114.6 255.1-255.1S397.4 0 255.1 0zM435.2 361.1l-103.9-1.578l-30.67 99.52C286.2 462.2 271.3 464 256 464s-30.19-1.773-44.56-4.93L180.8 359.6L76.83 361.1c-14.93-25.35-24.79-54.01-27.8-84.72L134.3 216.4L100.7 118.1c19.85-22.34 44.32-40.45 72.04-52.62L256 128l83.29-62.47c27.72 12.17 52.19 30.27 72.04 52.62L377.7 216.4l85.23 59.97C459.1 307.1 450.1 335.8 435.2 361.1z" />
+                      </svg>
                     </div>
                   <% end %>
                   <%= if event.type == :yellow_card do %>
                     <div title={display_time(event.inserted_at)} class="group w-4 self-center fill-yellow-400">
-                      <svg class="rotate-[12deg]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect class="cls-1" width="325" height="492" rx="30"/></svg>
+                      <svg class="rotate-[12deg]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect class="cls-1" width="325" height="492" rx="30" /></svg>
                     </div>
                   <% end %>
                   <%= if event.type == :red_card do %>
                     <div title={display_time(event.inserted_at)} class="group w-4 self-center fill-red-600">
-                      <svg class="rotate-[12deg]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect class="cls-1" width="325" height="492" rx="30"/></svg>
+                      <svg class="rotate-[12deg]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect class="cls-1" width="325" height="492" rx="30" /></svg>
                     </div>
                   <% end %>
                 <% end %>
@@ -264,17 +265,19 @@
                 <%= for event <- get_player_events(@match.id, player.id) do %>
                   <%= if event.type == :goal do %>
                     <div title={display_time(event.inserted_at)} class="group w-4 self-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M177.1 228.6L207.9 320h96.5l29.62-91.38L256 172.1L177.1 228.6zM255.1 0C114.6 0 .0001 114.6 .0001 256S114.6 512 256 512s255.1-114.6 255.1-255.1S397.4 0 255.1 0zM435.2 361.1l-103.9-1.578l-30.67 99.52C286.2 462.2 271.3 464 256 464s-30.19-1.773-44.56-4.93L180.8 359.6L76.83 361.1c-14.93-25.35-24.79-54.01-27.8-84.72L134.3 216.4L100.7 118.1c19.85-22.34 44.32-40.45 72.04-52.62L256 128l83.29-62.47c27.72 12.17 52.19 30.27 72.04 52.62L377.7 216.4l85.23 59.97C459.1 307.1 450.1 335.8 435.2 361.1z"/></svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                        <path d="M177.1 228.6L207.9 320h96.5l29.62-91.38L256 172.1L177.1 228.6zM255.1 0C114.6 0 .0001 114.6 .0001 256S114.6 512 256 512s255.1-114.6 255.1-255.1S397.4 0 255.1 0zM435.2 361.1l-103.9-1.578l-30.67 99.52C286.2 462.2 271.3 464 256 464s-30.19-1.773-44.56-4.93L180.8 359.6L76.83 361.1c-14.93-25.35-24.79-54.01-27.8-84.72L134.3 216.4L100.7 118.1c19.85-22.34 44.32-40.45 72.04-52.62L256 128l83.29-62.47c27.72 12.17 52.19 30.27 72.04 52.62L377.7 216.4l85.23 59.97C459.1 307.1 450.1 335.8 435.2 361.1z" />
+                      </svg>
                     </div>
                   <% end %>
                   <%= if event.type == :yellow_card do %>
                     <div title={display_time(event.inserted_at)} class="group w-4 self-center fill-yellow-400">
-                      <svg class="rotate-[12deg]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect class="cls-1" width="325" height="492" rx="30"/></svg>
+                      <svg class="rotate-[12deg]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect class="cls-1" width="325" height="492" rx="30" /></svg>
                     </div>
                   <% end %>
                   <%= if event.type == :red_card do %>
                     <div title={display_time(event.inserted_at)} class="group w-4 self-center fill-red-600">
-                      <svg class="rotate-[12deg]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect class="cls-1" width="325" height="492" rx="30"/></svg>
+                      <svg class="rotate-[12deg]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect class="cls-1" width="325" height="492" rx="30" /></svg>
                     </div>
                   <% end %>
                 <% end %>

@@ -13,13 +13,12 @@
       <span class="border-transparent ml-auto mr-4 text-indigo-300 hover:text-indigo-400 whitespace-nowrap border-b-4 font-small"><%= live_redirect("Edit team", to: Routes.team_show_path(@socket, :edit, @team), class: "button") %></span>
     </div>
 
-
     <div class="mx-2 pt-[1px] bg-[rgb(230,230,230)]"></div>
 
     <div class="px-11 my-8">
-        <div class="text-center overflow-hidden mx-auto table lg:block">
-          <img class="object-cover h-40 sm:object-center" src={Routes.static_path(@socket, "/images/teams/portugal.png")} />
-        </div>
+      <div class="text-center overflow-hidden mx-auto table lg:block">
+        <img class="object-cover h-40 sm:object-center" src={Routes.static_path(@socket, "/images/teams/portugal.png")} />
+      </div>
 
       <div class="uppercase mt-4 flex flex-col items-center lg:block">
         <div class="text-4xl font-bold">
@@ -36,19 +35,19 @@
         <div class="grid w-[85%] gap-4 grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 lg:w-full">
           <%= for player <- @team.players do %>
             <%= live_redirect to: Routes.player_show_path(@socket, :show, player), class: "overflow-hidden relative w-full h-auto group my-1 rounded-lg" do %>
-            <div class="transition duration-200 ease-in hover:scale-110">
-              <div class="absolute inset-0 z-40 bg-gradient-to-b from-transparent opacity-40 transition duration-200 ease-in group-hover:translate-y-20 via-[#254E9F] to-[#254E9F] group-hover:rounded-t-[50px]" />
-              <img class="w-full max-h-48 object-cover" src={Routes.static_path(@socket, "/images/players/ronaldo.png")} />
-              <p class="text-left	mx-4 absolute inset-x-0 top-6 z-40 text-l font-large bg-clip-text uppercase text-transparent block duration-150 ease-in sm:bottom-10 text-lg font-bold md:text-xl group-hover:text-white">
-                <%= player.name %>
-              </p>
-              <p class="break-words mx-4 text-right block absolute inset-x-0 bottom-6 z-40 text-sm font-medium uppercase text-transparent duration-150 ease-in sm:bottom-4 group-hover:text-white">
-                <%= player.course %>
-              </p>
-            </div>
+              <div class="transition duration-200 ease-in hover:scale-110">
+                <div class="absolute inset-0 z-40 bg-gradient-to-b from-transparent opacity-40 transition duration-200 ease-in group-hover:translate-y-20 via-[#254E9F] to-[#254E9F] group-hover:rounded-t-[50px]" />
+                <img class="w-full max-h-48 object-cover" src={Routes.static_path(@socket, "/images/players/ronaldo.png")} />
+                <p class="text-left	mx-4 absolute inset-x-0 top-6 z-40 text-l font-large bg-clip-text uppercase text-transparent block duration-150 ease-in sm:bottom-10 text-lg font-bold md:text-xl group-hover:text-white">
+                  <%= player.name %>
+                </p>
+                <p class="break-words mx-4 text-right block absolute inset-x-0 bottom-6 z-40 text-sm font-medium uppercase text-transparent duration-150 ease-in sm:bottom-4 group-hover:text-white">
+                  <%= player.course %>
+                </p>
+              </div>
             <% end %>
           <% end %>
-          </div>
+        </div>
       </div>
     </div>
     <div class="mt-8 mx-4">

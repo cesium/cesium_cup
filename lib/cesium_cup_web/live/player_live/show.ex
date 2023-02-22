@@ -14,11 +14,12 @@ defmodule CesiumCupWeb.PlayerLive.Show do
   def handle_params(%{"id" => id}, _, socket) do
     player = Teams.get_player!(id, preloads: [:team, :events])
     matches = list_matches(player.team.id)
+
     {:noreply,
-    socket
-    |> assign(:page_title, page_title(socket.assigns.live_action))
-    |> assign(:player, player)
-    |> assign(:matches, matches)}
+     socket
+     |> assign(:page_title, page_title(socket.assigns.live_action))
+     |> assign(:player, player)
+     |> assign(:matches, matches)}
   end
 
   defp list_matches(id) do
