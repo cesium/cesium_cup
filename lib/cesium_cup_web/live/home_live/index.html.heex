@@ -1,8 +1,8 @@
 <div class="pt-10 px-4">
-  <div class="flex gap-x-2">
+  <div class="flex mx-auto flex-row overflow-scroll no-scrollbar gap-x-2">
     <%= for match <- @matches do %>
-      <%= live_redirect to: Routes.match_show_path(@socket, :show, match), class: "w-72 rounded-xl bg-[#F9FAFB] hover:bg-quinary" do %>
-        <div class="px-5 py-5">
+      <%= live_redirect to: Routes.match_show_path(@socket, :show, match), class: "my-2 min-w-fit rounded-xl bg-[#F9FAFB] ring-2 hover:drop-shadow-2xl ease-in duration-200	hover:ring-indigo-400 hover:scale-[1.02]" do %>
+        <div class="px-5 py-5 w-56">
           <div class="flex items-center justify-between text-sm">
             <p class="text-gray-900">
               <%= if match.group_id do %>
@@ -13,7 +13,7 @@
             </p>
 
             <%= if match.state in [:first_half, :halftime, :second_half] do %>
-              <span class="text-white bg-[#FF0046] rounded-lg px-2 font-bold">
+              <span class="text-white animate-pulse bg-[#FF0046] rounded-lg px-2 font-bold">
                 LIVE
               </span>
             <% end %>

@@ -1,4 +1,4 @@
-<div>
+<div class="px-4">
   <div class="relative pb-4 bg-white mt-16 text-secondary sm:mx-auto rounded-lg sm:px-10">
     <%= if @live_action in [:edit] do %>
       <.modal return_to={Routes.match_show_path(@socket, :show, @match)}>
@@ -25,9 +25,6 @@
     </div>
 
     <div class="mx-2 pt-[1px] bg-[rgb(230,230,230)]"></div>
-
-    <div></div>
-
     <div class="pb-10 border-b">
       <div class="flex flex-row justify-around items-center gap-x-4 pt-8">
         <div>
@@ -115,7 +112,6 @@
         </div>
       </div>
     </div>
-
     <div class="pt-10 lg:px-20">
       <nav class="-mb-px space-x-2" aria-label="Tabs">
         <a href="#" class="bg-blue-500 hover:bg-blue-200 text-white py-2 px-4 rounded-full whitespace-nowrap font-medium text-md" aria-current="page">Partida</a>
@@ -141,7 +137,6 @@
         </a>
       </nav>
     </div>
-
     <%= if @focused_player do %>
       <div class="overflow-hidden bg-white shadow sm:rounded-md mt-8 mx-20">
         <div class="flex px-4 py-4 sm:px-6">
