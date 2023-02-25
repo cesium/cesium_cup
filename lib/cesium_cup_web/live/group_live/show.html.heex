@@ -44,9 +44,9 @@
                       <%= if is_team_live_group(team.id, @group.id) do %>
                         <% bg_color =
                           case(team_live_state(team.id)) do
-                            :win -> "bg-green-500"
-                            :loss -> "bg-red-500"
-                            _ -> "bg-yellow-500"
+                            :win -> "bg-win"
+                            :loss -> "bg-loss"
+                            _ -> "bg-draw"
                           end %>
                         <%= live_redirect to: Routes.match_show_path(@socket, :show, get_team_live_match(team.id)), class: "rounded-md #{bg_color} text-white px-1 py-0.5" do %>
                           <%= get_team_live_result(team.id) %>

@@ -17,39 +17,33 @@
 
     <div class="mx-2 pt-[1px] bg-[rgb(230,230,230)]"></div>
 
-    <div class="px-11 my-8">
-      <div class="grid sm:grid-cols-2 gap-0">
-        <div class="text-center rounded-lg h-48  overflow-hidden mx-auto bg-indigo-300">
-          <img class="object-cover h-48 " src={Routes.static_path(@socket, "/images/players/ronaldo.png")} />
+    <div class="px-4 my-8">
+      <div class="flex">
+        <div class="rounded-lg overflow-hidden">
+          <img class="object-cover max-h-40 max-w-36" src={Routes.static_path(@socket, "/images/players/ronaldo.png")} />
         </div>
-        <div class="uppercase mt-4 flex flex-col items-center	sm:mt-0 sm:block">
-          <div class="font-bold text-4xl">
+        <div class="items-center ml-6	mt-0 block">
+          <div class="font-medium text-2xl">
             <p><%= @player.name %></p>
           </div>
-          <div class="font-light text-2xl">
+          <div class="font-medium text-1xl">
             <%= live_redirect to: Routes.team_show_path(@socket, :show, @player.team) do %>
               <%= @player.team.name %>
+              <span class="capitalize font-normal text-[#CFCFCF]"> (<%= @player.position %>) </span>
             <% end %>
           </div>
-          <div class="mt-2 grid-cols-2 gap-10 inline-grid	">
+          <div class="mt-3 inline-grid">
             <div>
-              <p>Position</p>
-              <p>Birthdate</p>
-              <p>Height</p>
-              <p>Weight</p>
-              <p>Course</p>
+              <p><span class="font-medium">Age:</span> <%= @age %></p>
             </div>
-            <div class="font-semibold">
-              <p><%= @player.position %></p>
-              <p><%= @player.date_of_birth %></p>
-              <p><%= @player.height %> CM</p>
-              <p><%= @player.weight %> KG</p>
-              <p><%= @player.course %></p>
-            </div>
+          </div>
+          <div class="mt-1 text-[#A6B2EC]">
+            <p><%= @player.course %></p>
           </div>
         </div>
       </div>
     </div>
+
 
     <div class="mt-8 mx-4">
       <div>
@@ -61,51 +55,91 @@
       </div>
     </div>
 
-    <div class="flex flex-col my-10">
+    <div class="flex flex-col my-10 md:shadow-md">
       <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
           <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-            <table class="min-w-full divide-y divide-gray-300">
+            <table class="min-w-full divide-y table-fixed divide-gray-300">
+              <thead>
+                <tr>
+                  <td class="w-4 whitespace-nowrap py-4 text-xs font-medium px-4 text-black"></td>
+                  <td class="whitespace-nowrap w-6 px-6 py-4 text-sm font-medium text-black"></td>
+                  <td class="whitespace-nowrap px-6 py-4 text-sm text-black font-medium text-center"></td>
+                  <td class="whitespace-nowrap py-4 text-sm font-medium text-black text-center">
+                    <div class="group h-4 w-4 self-center flex m-auto">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                        <path d="M177.1 228.6L207.9 320h96.5l29.62-91.38L256 172.1L177.1 228.6zM255.1 0C114.6 0 .0001 114.6 .0001 256S114.6 512 256 512s255.1-114.6 255.1-255.1S397.4 0 255.1 0zM435.2 361.1l-103.9-1.578l-30.67 99.52C286.2 462.2 271.3 464 256 464s-30.19-1.773-44.56-4.93L180.8 359.6L76.83 361.1c-14.93-25.35-24.79-54.01-27.8-84.72L134.3 216.4L100.7 118.1c19.85-22.34 44.32-40.45 72.04-52.62L256 128l83.29-62.47c27.72 12.17 52.19 30.27 72.04 52.62L377.7 216.4l85.23 59.97C459.1 307.1 450.1 335.8 435.2 361.1z" />
+                      </svg>
+                    </div>
+                  </td>
+                  <td class="whitespace-nowrap py-4 text-sm font-medium text-black text-center">
+                    <div class="group h-4 w-4 self-center flex m-auto fill-draw">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 425.9 504.3"><rect class="cls-1" x="65.27" y="17.59" width="381.46" height="476.82" rx="95.36" transform="translate(-81.63 41.69) rotate(-9.46)"/></svg>
+                    </div>
+                  </td>
+                  <td class="whitespace-nowrap py-4 text-sm font-medium text-black text-center">
+                    <div class="group h-4 w-4 self-center flex m-auto fill-loss">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 425.9 504.3"><rect class="cls-1" x="65.27" y="17.59" width="381.46" height="476.82" rx="95.36" transform="translate(-81.63 41.69) rotate(-9.46)"/></svg>
+                    </div>
+                  </td>
+                </tr>
+              </thead>
               <tbody class="divide-y divide-gray-200 bg-white">
                 <%= for match <- @matches do %>
                   <tr>
-                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-gray-500 sm:pl-6">
+                    <td class="w-4 whitespace-nowrap py-4 text-xs font-medium px-4 text-black">
                       <%= display_date(match.date) %>
                     </td>
-                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-gray-500 sm:pl-6">
-                      <%= if match.group_id do %>
-                        Group <%= get_group(match.group_id).name %>
-                      <% else %>
-                        <%= get_elimination_round(match.elimination_round_id).name %>
-                      <% end %>
-                    </td>
-                    <td class="whitespace-nowrap py-4 pl-20 text-sm font-medium text-gray-900 text-left">
-                      <%= if (get_team(match.home_team_id)) do %>
-                        <%= live_redirect to: Routes.team_show_path(@socket, :show, get_team(match.home_team_id)) do %>
-                          <%= get_team(match.home_team_id).name %>
+                    <td class="whitespace-nowrap w-6 px-6 py-4 text-sm font-medium text-black">
+                      <p>
+                        <%= if (get_team(match.home_team_id)) do %>
+                          <%= live_redirect to: Routes.team_show_path(@socket, :show, get_team(match.home_team_id)) do %>
+                            <%= get_team(match.home_team_id).name %>
+                          <% end %>
                         <% end %>
-                      <% end %>
+                      </p>
+                      <p>
+                        <%= if (get_team(match.away_team_id)) do %>
+                          <%= live_redirect to: Routes.team_show_path(@socket, :show, get_team(match.away_team_id)) do %>
+                            <%= get_team(match.away_team_id).name %>
+                          <% end %>
+                        <% end %>
+                      </p>
                     </td>
-                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-center">
+                    <td class="whitespace-nowrap px-6 py-4 text-sm text-black font-medium text-center">
                       <%= live_redirect to: Routes.match_show_path(@socket, :show, match) do %>
-                        <%= if match.state != :upcoming do %>
-                          <%= get_home_team_score(match.id) %> - <%= get_away_team_score(match.id) %>
-                        <% else %>
-                          <%= display_time(match.date) %>
-                        <% end %>
+                        <p>
+                          <%= get_home_team_score(match.id) %>
+                        </p>
+                        <p>
+                          <%= get_away_team_score(match.id) %>
+                        </p>
                       <% end %>
                     </td>
-                    <td class="whitespace-nowrap py-4 pr-20 text-sm font-medium text-gray-900 text-right">
-                      <%= if (get_team(match.home_team_id)) do %>
-                        <%= live_redirect to: Routes.team_show_path(@socket, :show, get_team(match.away_team_id)) do %>
-                          <%= get_team(match.away_team_id).name %>
-                        <% end %>
-                      <% end %>
+                    <td class="whitespace-nowrap py-4 text-sm font-medium text-black text-center">
+                        <%= get_event_count(match.id, @player.id, :goal) %>
                     </td>
-                    <td>
-                      <span><%= live_redirect("Show", to: Routes.match_show_path(@socket, :show, match), class: "text-gray-900") %></span>
-                      <span><%= live_redirect("Edit", to: Routes.match_index_path(@socket, :edit, match), class: "text-gray-900") %></span>
-                      <span><%= link("Delete", to: "#", phx_click: "delete", phx_value_id: match.id, data: [confirm: "Are you sure?"], class: "text-gray-900") %></span>
+                    <td class="whitespace-nowrap py-4 text-sm font-medium text-black text-center">
+                        <%= get_event_count(match.id, @player.id, :yellow_card) %>
+                    </td>
+                    <td class="whitespace-nowrap py-4 text-sm font-medium text-black text-center">
+                        <%= get_event_count(match.id, @player.id, :red_card) %>
+                    </td>
+                    <td class="whitespace-nowrap py-4 text-sm font-medium text-black text-center">
+                        <%= case (get_team_result(match, @player.team)) do %>
+                          <% :win -> %>
+                            <span title="WIN" class="bg-win inline-flex items-center p-1 mr-2 rounded-full">
+                              <p class="text-white cursor-default w-5 h-5"> W </p>
+                            </span>
+                          <% :loss -> %>
+                            <span title="LOSS" class="bg-loss inline-flex items-center p-1 mr-2 rounded-full">
+                              <p class="text-white cursor-default w-5 h-5"> L </p>
+                            </span>
+                          <% _ -> %>
+                            <span title="DRAW" class="bg-draw inline-flex items-center p-1 mr-2 rounded-full">
+                              <p class="text-white cursor-default w-5 h-5"> D </p>
+                            </span>
+                        <% end %>
                     </td>
                   </tr>
                 <% end %>

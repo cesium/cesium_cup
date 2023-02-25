@@ -415,7 +415,7 @@ defmodule CesiumCup.Tournament do
     end
   end
 
-  defp get_home_team_result(match) do
+  def get_home_team_result(match) do
     cond do
       get_home_team_score(match.id) > get_away_team_score(match.id) -> :win
       get_home_team_score(match.id) < get_away_team_score(match.id) -> :loss
@@ -423,7 +423,7 @@ defmodule CesiumCup.Tournament do
     end
   end
 
-  defp get_away_team_result(match) do
+  def get_away_team_result(match) do
     cond do
       get_home_team_score(match.id) > get_away_team_score(match.id) -> :loss
       get_home_team_score(match.id) < get_away_team_score(match.id) -> :win
