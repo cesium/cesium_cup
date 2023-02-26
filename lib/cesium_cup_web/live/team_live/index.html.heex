@@ -18,10 +18,10 @@
     <div class="flex justify-center w-full mt-10 mb-8">
       <div class="grid w-[85%] gap-4 grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 lg:w-full">
         <%= for team <- @teams do %>
-          <%= live_redirect to: Routes.team_show_path(@socket, :show, team), class: "overflow-hidden border-2 relative w-full h-auto group my-1 rounded-lg transition duration-200 ease-in hover:scale-110 hover:border-secondary" do %>
+          <%= live_redirect to: Routes.team_show_path(@socket, :show, team), class: "overflow-hidden border-2 relative w-full h-auto group my-1 rounded-lg transition duration-200 ease-in hover:border-secondary" do %>
             <div class="p-4">
               <div class="" />
-                <img class="w-40 h-40 mx-auto object-scale-down transition ease-in duration-200 group-hover:opacity-10" src={Routes.static_path(@socket, "/images/teams/portugal.png")} />
+                <img class="group-hover:scale-110 w-40 h-40 mx-auto object-scale-down transition ease-in duration-200 group-hover:opacity-10" src={Routes.static_path(@socket, "/images/teams/portugal.png")} />
                 <p class="text-center justify-center break-words items-center flex mx-auto my-auto absolute inset-x-0 top-6 font-extrabold z-40 bg-clip-text uppercase text-transparent duration-150 ease-in sm:bottom-10 text-3xl group-hover:text-secondary">
                   <%= team.name %>
                 </p>

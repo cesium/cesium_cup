@@ -34,7 +34,7 @@
       <div class="flex justify-center w-full mt-10">
         <div class="grid w-[85%] gap-4 grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 lg:w-full">
           <%= for player <- @team.players do %>
-            <%= live_redirect to: Routes.player_show_path(@socket, :show, player), class: "overflow-hidden relative w-full h-auto group my-1 rounded-lg" do %>
+            <%= live_redirect to: Routes.player_show_path(@socket, :show, player), class: "overflow-hidden relative w-full h-auto group my-1 rounded-lg border-2 transition duration-200 ease-in hover:border-secondary" do %>
               <div class="transition duration-200 ease-in hover:scale-110">
                 <div class="absolute inset-0 z-40 bg-gradient-to-b from-transparent opacity-40 transition duration-200 ease-in group-hover:translate-y-20 via-[#254E9F] to-[#254E9F] group-hover:rounded-t-[50px]" />
                 <img class="w-full max-h-48 object-cover" src={Routes.static_path(@socket, "/images/players/ronaldo.png")} />
