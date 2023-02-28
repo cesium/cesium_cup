@@ -1,34 +1,33 @@
-<div class="pt-10 px-60">
-  <h1>Listing Elimination Rounds</h1>
+<div class="pt-10 px-64">
+  <div class="mt-5 bg-[#F9FAFB] rounded-lg w-full px-10 pb-10 text-secondary">
+    <div class="py-4 px-4 flex text-secondary font-medium text-xs divide-x-4">
+      <span href="#" class="border-transparent hover:text-gray-700 whitespace-nowrap font-small" aria-current="page"><%= live_redirect("CeSIUM Cup", to: Routes.home_index_path(@socket, :index)) %></span>
+      <a class="border-transparent whitespace-nowrap font-small">></a>
+      <span href="#" class="border-transparent hover:text-gray-700 whitespace-nowrap font-small" aria-current="page"><%= live_redirect("Rounds", to: Routes.elimination_round_index_path(@socket, :index), class: "button") %></span>
+      <span class="border-transparent ml-auto mr-4 text-indigo-300 hover:text-indigo-400 whitespace-nowrap border-b-4 font-small"><%= live_redirect("New Elimination round", to: Routes.elimination_round_index_path(@socket, :new)) %></span>
+    </div>
 
-  <%= if @live_action in [:new, :edit] do %>
-    <.modal return_to={Routes.elimination_round_index_path(@socket, :index)}>
-      <.live_component module={CesiumCupWeb.EliminationRoundLive.FormComponent} id={@elimination_round.id || :new} title={@page_title} action={@live_action} elimination_round={@elimination_round} return_to={Routes.elimination_round_index_path(@socket, :index)} />
-    </.modal>
-  <% end %>
+    <div class="mx-2 pt-[1px] bg-[rgb(230,230,230)]"></div>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
+    <%= if @live_action in [:new, :edit] do %>
+      <.modal return_to={Routes.elimination_round_index_path(@socket, :index)}>
+        <.live_component module={CesiumCupWeb.EliminationRoundLive.FormComponent} id={@elimination_round.id || :new} title={@page_title} action={@live_action} elimination_round={@elimination_round} return_to={Routes.elimination_round_index_path(@socket, :index)} />
+      </.modal>
+    <% end %>
 
-        <th></th>
-      </tr>
-    </thead>
-    <tbody id="elimination_rounds">
-      <%= for elimination_round <- @elimination_rounds do %>
-        <tr id={"elimination_round-#{elimination_round.id}"}>
-          <td><%= elimination_round.name %></td>
-
-          <td>
-            <span><%= live_redirect("Show", to: Routes.elimination_round_show_path(@socket, :show, elimination_round)) %></span>
-            <span><%= live_redirect("Edit", to: Routes.elimination_round_index_path(@socket, :edit, elimination_round)) %></span>
-            <span><%= link("Delete", to: "#", phx_click: "delete", phx_value_id: elimination_round.id, data: [confirm: "Are you sure?"]) %></span>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-
-  <span><%= live_redirect("New Elimination round", to: Routes.elimination_round_index_path(@socket, :new)) %></span>
+    <table class="flex mx-4 my-10">
+      <tbody id="elimination_rounds">
+        <%= for elimination_round <- @elimination_rounds do %>
+          <tr id={"elimination_round-#{elimination_round.id}"}>
+            <td class="font-bold text-lg"><%= elimination_round.name %></td>
+            <td>
+              <span class="mx-2"><%= live_redirect("Show", to: Routes.elimination_round_show_path(@socket, :show, elimination_round)) %></span>
+              <span class="mx-2"><%= live_redirect("Edit", to: Routes.elimination_round_index_path(@socket, :edit, elimination_round)) %></span>
+              <span class="mx-2"><%= link("Delete", to: "#", phx_click: "delete", phx_value_id: elimination_round.id, data: [confirm: "Are you sure?"]) %></span>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
