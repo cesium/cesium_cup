@@ -30,7 +30,6 @@ defmodule CesiumCupWeb.HomeLive.Index do
     |> Enum.sort(
       &(Date.diff(&1.date, DateTime.utc_now()) < Date.diff(&2.date, DateTime.utc_now()))
     )
-    |> Enum.take(6)
   end
 
   defp list_group_round_matches(group_round) do
