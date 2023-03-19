@@ -1,22 +1,31 @@
 <div class="m-4">
-  <div class="relative pb-4 bg-white mt-16 text-secondary sm:mx-auto max-w-3xl rounded-lg sm:px-10">
-    <%= if @live_action in [:edit] do %>
-      <.modal return_to={Routes.player_show_path(@socket, :show, @player)}>
-        <.live_component module={CesiumCupWeb.PlayerLive.FormComponent} id={@player.id} title={@page_title} action={@live_action} player={@player} return_to={Routes.player_show_path(@socket, :show, @player)} />
-      </.modal>
-    <% end %>
-
+  <div class="relative pb-4 bg-gray-50 mt-16 text-secondary sm:mx-auto max-w-3xl rounded-lg sm:px-10">
     <div class="py-4 px-4 flex font-medium text-xs divide-x-4">
       <span href="#" class="border-transparent hover:text-gray-700 whitespace-nowrap font-small" aria-current="page"><%= live_redirect("CeSIUM Cup", to: Routes.home_index_path(@socket, :index)) %></span>
       <a class="border-transparent whitespace-nowrap font-small">></a>
       <span href="#" class="border-transparent hover:text-gray-700 whitespace-nowrap font-small" aria-current="page"><%= live_redirect(@player.team.name, to: Routes.team_show_path(@socket, :show, @player.team), class: "button") %></span>
       <a class="border-transparent whitespace-nowrap font-small">></a>
       <span href="#" class="border-transparent hover:text-gray-700 whitespace-nowrap font-small" aria-current="page"><%= live_redirect(@player.name, to: Routes.player_show_path(@socket, :show, @player), class: "button") %></span>
-      <span class="border-transparent ml-auto mr-4 text-indigo-300 hover:text-indigo-400 whitespace-nowrap border-b-4 font-small"><%= live_redirect("Edit player", to: Routes.player_show_path(@socket, :edit, @player), class: "button") %></span>
+      <%= if @live_action not in [:edit] do %>
+        <span class="border-transparent ml-auto mr-4 text-indigo-300 hover:text-indigo-400 whitespace-nowrap border-b-4 font-small"><%= live_redirect("Edit player", to: Routes.player_show_path(@socket, :edit, @player), class: "button") %></span>
+      <% else %>
+        <span class="border-transparent ml-auto mr-4 text-indigo-300 hover:text-indigo-400 whitespace-nowrap font-small">
+          <%= live_redirect(to: Routes.player_show_path(@socket, :show, @player)) do %>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          <% end %>
+        </span>
+      <% end %>
     </div>
 
     <div class="mx-2 pt-[1px] bg-[rgb(230,230,230)]"></div>
 
+    <%= if @live_action in [:edit] do %>
+      <.modal return_to={Routes.player_show_path(@socket, :show, @player)}>
+        <.live_component module={CesiumCupWeb.PlayerLive.FormComponent} id={@player.id} title={@page_title} action={@live_action} player={@player} return_to={Routes.player_show_path(@socket, :show, @player)} />
+      </.modal>
+    <% else %>
     <div class="px-4 my-8">
       <div class="flex">
         <div class="rounded-lg overflow-hidden">
@@ -154,6 +163,7 @@
       <div class="my-6 mx-auto text-center w-full">
         <p> No games played yet. </p>
       </div>
+    <% end %>
     <% end %>
   </div>
 </div>
