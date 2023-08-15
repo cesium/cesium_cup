@@ -11,7 +11,7 @@ defmodule CesiumCup.Tournament.Match do
 
   @required_fields ~w(date)a
 
-  @optional_fields ~w(home_team_id away_team_id group_id elimination_round_id state group_round)a
+  @optional_fields ~w(home_team_id away_team_id group_id elimination_round_index elimination_round_id state group_round)a
 
   @states ~w(upcoming first_half halftime second_half finished)a
 
@@ -27,6 +27,7 @@ defmodule CesiumCup.Tournament.Match do
 
     field :group_round, :integer
 
+    field :elimination_round_index, :integer
     belongs_to :elimination_round, EliminationRound
 
     has_many :events, Event

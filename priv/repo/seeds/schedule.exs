@@ -221,36 +221,43 @@ defmodule CesiumCup.Repo.Seeds.Schedule do
           %{
             date: ~N[2023-12-02 15:00:00],
             state: :upcoming,
+            elimination_round_index: 3,
             elimination_round_id: get_elimination_round_id("Quarter-Finals")
           },
           %{
             date: ~N[2023-12-03 15:00:00],
             state: :upcoming,
+            elimination_round_index: 4,
             elimination_round_id: get_elimination_round_id("Quarter-Finals")
           },
           %{
             date: ~N[2023-12-04 15:00:00],
             state: :upcoming,
+            elimination_round_index: 5,
             elimination_round_id: get_elimination_round_id("Quarter-Finals")
           },
           %{
             date: ~N[2023-12-05 15:00:00],
             state: :upcoming,
+            elimination_round_index: 6,
             elimination_round_id: get_elimination_round_id("Quarter-Finals")
           },
           %{
             date: ~N[2023-12-06 16:00:00],
             state: :upcoming,
+            elimination_round_index: 1,
             elimination_round_id: get_elimination_round_id("Semi-Finals")
           },
           %{
             date: ~N[2023-12-07 16:00:00],
             state: :upcoming,
+            elimination_round_index: 2,
             elimination_round_id: get_elimination_round_id("Semi-Finals")
           },
           %{
             date: ~N[2023-12-10 20:00:00],
             state: :upcoming,
+            elimination_round_index: 0,
             elimination_round_id: get_elimination_round_id("Final")
           }
         ]
