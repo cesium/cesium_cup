@@ -28,6 +28,12 @@
       </li>
 
       <li>
+        <%= label(f, :elimination_round_index) %>
+        <%= number_input(f, :elimination_round_index) %>
+        <%= error_tag(f, :elimination_round_index) %>
+      </li>
+
+      <li>
         <%= label(f, :elimination_round_id) %>
         <%= select(f, :elimination_round_id, Enum.map(@elimination_rounds, &{&1.name, &1.id}), prompt: "Choose a Elimination Round", selected: f.data.group_id) %>
         <%= error_tag(f, :elimination_round_id) %>

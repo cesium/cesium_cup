@@ -12,6 +12,8 @@ defmodule CesiumCup.Repo.Migrations.CreateMatches do
       add :home_team_id, references(:teams, on_delete: :nothing, type: :binary_id)
       add :away_team_id, references(:teams, on_delete: :nothing, type: :binary_id)
 
+      add :elimination_round_index, :integer
+
       add :elimination_round_id,
           references(:elimination_rounds, on_delete: :nothing, type: :binary_id)
 
