@@ -40,6 +40,11 @@ defmodule CesiumCupWeb.HomeLive.Index do
     |> Enum.sort(&(Date.compare(&1.date, &2.date) in [:lt, :eq]))
   end
 
+  defp list_knockout_stage_matches do
+    Tournament.list_matches(preloads: [:home_team, :away_team])
+    |> Enum.filter(&is_nil(&1.group_round))
+  end
+
   defp list_groups do
     Tournament.list_groups(preloads: [:teams])
   end

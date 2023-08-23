@@ -68,12 +68,17 @@
             else
               "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
             end}  whitespace-nowrap py-4 px-1 border-b-4 font-medium text-md") %>
+            <%= live_patch("Knockout Stage", to: "?tab=knockout_stage", class: "#{if @tab == "knockout_stage" do
+              "border-quinary text-gray-900"
+            else
+              "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+            end}  whitespace-nowrap py-4 px-1 border-b-4 font-medium text-md") %>
             <%= for round <- @elimination_rounds do %>
               <%= live_redirect(round.name, to: "?tab=#{round.name}", class: "#{if @tab == round.name do
                 "border-quinary text-gray-900"
               else
                 "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-              end}  whitespace-nowrap py-4 px-1 border-b-4 font-medium text-md") %>
+              end} show lg:hidden whitespace-nowrap py-4 px-1 border-b-4 font-medium text-md") %>
             <% end %>
           </nav>
         </div>
@@ -197,52 +202,58 @@
         </div>
       </div>
     <% else %>
-      <div class="flex flex-col my-10">
-        <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-            <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-              <table class="min-w-full divide-y divide-gray-300">
-                <tbody class="divide-y divide-gray-200 bg-white">
-                  <%= for match <- Enum.sort(@selected_elimination_round.matches, &(Date.compare(&1.date, &2.date) in [:lt, :eq])) do %>
-                    <tr>
-                      <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-gray-500 sm:pl-6">
-                        <%= display_date(match.date) %>
-                      </td>
-                      <td class="whitespace-nowrap py-4 pl-20 text-sm font-medium text-gray-900 text-left">
-                        <%= if match.home_team_id do %>
-                          <%= live_redirect to: Routes.team_show_path(@socket, :show, get_team(match.home_team_id)) do %>
-                            <%= get_team(match.home_team_id).name %>
-                          <% end %>
-                        <% else %>
-                          TBD
-                        <% end %>
-                      </td>
-                      <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-center">
-                        <%= live_redirect to: Routes.match_show_path(@socket, :show, match) do %>
-                          <%= if match.state != :upcoming do %>
-                            <%= get_home_team_score(match.id) %> - <%= get_away_team_score(match.id) %>
+      <%= if @tab != "knockout_stage" do %>
+        <div class="show lg:hidden flex flex-col my-10">
+          <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+              <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                <table class="min-w-full divide-y divide-gray-300">
+                  <tbody class="divide-y divide-gray-200 bg-white">
+                    <%= for match <- Enum.sort(@selected_elimination_round.matches, &(Date.compare(&1.date, &2.date) in [:lt, :eq])) do %>
+                      <tr>
+                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-gray-500 sm:pl-6">
+                          <%= display_date(match.date) %>
+                        </td>
+                        <td class="whitespace-nowrap py-4 pl-20 text-sm font-medium text-gray-900 text-left">
+                          <%= if match.home_team_id do %>
+                            <%= live_redirect to: Routes.team_show_path(@socket, :show, get_team(match.home_team_id)) do %>
+                              <%= get_team(match.home_team_id).name %>
+                            <% end %>
                           <% else %>
-                            <%= display_time(match.date) %>
+                            TBD
                           <% end %>
-                        <% end %>
-                      </td>
-                      <td class="whitespace-nowrap py-4 pr-20 text-sm font-medium text-gray-900 text-right">
-                        <%= if match.away_team_id do %>
-                          <%= live_redirect to: Routes.team_show_path(@socket, :show, get_team(match.away_team_id)) do %>
-                            <%= get_team(match.away_team_id).name %>
+                        </td>
+                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-center">
+                          <%= live_redirect to: Routes.match_show_path(@socket, :show, match) do %>
+                            <%= if match.state != :upcoming do %>
+                              <%= get_home_team_score(match.id) %> - <%= get_away_team_score(match.id) %>
+                            <% else %>
+                              <%= display_time(match.date) %>
+                            <% end %>
                           <% end %>
-                        <% else %>
-                          TBD
-                        <% end %>
-                      </td>
-                    </tr>
-                  <% end %>
-                </tbody>
-              </table>
+                        </td>
+                        <td class="whitespace-nowrap py-4 pr-20 text-sm font-medium text-gray-900 text-right">
+                          <%= if match.away_team_id do %>
+                            <%= live_redirect to: Routes.team_show_path(@socket, :show, get_team(match.away_team_id)) do %>
+                              <%= get_team(match.away_team_id).name %>
+                            <% end %>
+                          <% else %>
+                            TBD
+                          <% end %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      <% else %>
+        <div class="my-4">
+          <.live_component module={CesiumCupWeb.Components.Bracket} id="bracket" index={0} current_round={length(@elimination_rounds)} number_rounds={length(@elimination_rounds)} matches={list_knockout_stage_matches()} />
+        </div>
+      <% end %>
     <% end %>
 
     <div>
