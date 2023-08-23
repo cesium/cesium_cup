@@ -25,7 +25,8 @@
     </div>
 
     <div class="mx-2 pt-[1px] bg-[rgb(230,230,230)]"></div>
-    <div class="pb-10 border-b">w
+    <div class="pb-10 border-b">
+      w
       <div class="flex flex-row justify-around items-center gap-x-4 pt-8">
         <div>
           <%= if @match.home_team_id do %>
@@ -204,12 +205,12 @@
                   <% end %>
                   <%= if event.type == :yellow_card do %>
                     <div title={display_time(event.inserted_at)} class="group h-4 w-4 self-center flex m-auto fill-draw">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 425.9 504.3"><rect class="cls-1" x="65.27" y="17.59" width="381.46" height="476.82" rx="95.36" transform="translate(-81.63 41.69) rotate(-9.46)"/></svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 425.9 504.3"><rect class="cls-1" x="65.27" y="17.59" width="381.46" height="476.82" rx="95.36" transform="translate(-81.63 41.69) rotate(-9.46)" /></svg>
                     </div>
                   <% end %>
                   <%= if event.type == :red_card do %>
                     <div title={display_time(event.inserted_at)} class="group h-4 w-4 self-center flex m-auto fill-loss">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 425.9 504.3"><rect class="cls-1" x="65.27" y="17.59" width="381.46" height="476.82" rx="95.36" transform="translate(-81.63 41.69) rotate(-9.46)"/></svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 425.9 504.3"><rect class="cls-1" x="65.27" y="17.59" width="381.46" height="476.82" rx="95.36" transform="translate(-81.63 41.69) rotate(-9.46)" /></svg>
                     </div>
                   <% end %>
                 <% end %>
