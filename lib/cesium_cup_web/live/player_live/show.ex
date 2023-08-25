@@ -20,7 +20,7 @@ defmodule CesiumCupWeb.PlayerLive.Show do
      |> assign(:page_title, page_title(socket.assigns.live_action))
      |> assign(:player, player)
      |> assign(:matches, matches)
-     |> assign(:age, get_age_string(player.date_of_birth))}
+     |> assign(:age, CesiumCupWeb.ViewUtils.get_age_string(player.date_of_birth))}
   end
 
   defp list_matches(id) do
@@ -34,13 +34,6 @@ defmodule CesiumCupWeb.PlayerLive.Show do
         preloads: [:home_team, :away_team, :events]
       )
     )
-  end
-
-  defp get_age_string(birthday) do
-    today = Date.utc_today()
-    age = Timex.diff(today, birthday, :year)
-    birthday_string = display_date(birthday)
-    "#{age} (#{birthday_string})"
   end
 
   defp get_team(id) do

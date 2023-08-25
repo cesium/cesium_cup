@@ -64,4 +64,11 @@ defmodule CesiumCupWeb.ViewUtils do
     date
     |> Timex.format!("{h24}:{m}")
   end
+
+  def get_age_string(birthday) do
+    today = Date.utc_today()
+    age = Timex.diff(today, birthday, :year)
+    birthday_string = display_date(birthday)
+    "#{age} (#{birthday_string})"
+  end
 end
