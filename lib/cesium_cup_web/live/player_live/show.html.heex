@@ -1,45 +1,168 @@
-<div class="pt-10 px-60">
-  <h1>Show Player</h1>
-
-  <%= if @live_action in [:edit] do %>
-    <.modal return_to={Routes.player_show_path(@socket, :show, @player)}>
-      <.live_component module={CesiumCupWeb.PlayerLive.FormComponent} id={@player.id} title={@page_title} action={@live_action} player={@player} return_to={Routes.player_show_path(@socket, :show, @player)} />
-    </.modal>
-  <% end %>
-
-  <ul>
-    <li>
-      <strong>Name:</strong>
-      <%= @player.name %>
-    </li>
-
-    <li>
-      <strong>Date of birth:</strong>
-      <%= @player.date_of_birth %>
-    </li>
-
-    <li>
-      <strong>Position:</strong>
-      <%= @player.position %>
-    </li>
-
-    <li>
-      <strong>Height:</strong>
-      <%= @player.height %>
-    </li>
-
-    <li>
-      <strong>Weight:</strong>
-      <%= @player.weight %>
-    </li>
-
-    <li>
-      <strong>Team:</strong>
-      <%= live_redirect to: Routes.team_show_path(@socket, :show, @player.team) do %>
-        <%= @player.team.name %>
+<div class="m-4">
+  <div class="relative pb-4 bg-gray-50 mt-16 text-secondary sm:mx-auto max-w-3xl rounded-lg sm:px-10">
+    <div class="py-4 px-4 flex font-medium text-xs divide-x-4">
+      <span href="#" class="border-transparent hover:text-gray-700 whitespace-nowrap font-small" aria-current="page"><%= live_redirect("CeSIUM Cup", to: Routes.home_index_path(@socket, :index)) %></span>
+      <a class="border-transparent whitespace-nowrap font-small">></a>
+      <span href="#" class="border-transparent hover:text-gray-700 whitespace-nowrap font-small" aria-current="page"><%= live_redirect(@player.team.name, to: Routes.team_show_path(@socket, :show, @player.team), class: "button") %></span>
+      <a class="border-transparent whitespace-nowrap font-small">></a>
+      <span href="#" class="border-transparent hover:text-gray-700 whitespace-nowrap font-small" aria-current="page"><%= live_redirect(@player.name, to: Routes.player_show_path(@socket, :show, @player), class: "button") %></span>
+      <%= if @live_action not in [:edit] do %>
+        <span class="border-transparent ml-auto mr-4 text-indigo-300 hover:text-indigo-400 whitespace-nowrap border-b-4 font-small"><%= live_redirect("Edit player", to: Routes.player_show_path(@socket, :edit, @player), class: "button") %></span>
+      <% else %>
+        <span class="border-transparent ml-auto mr-4 text-indigo-300 hover:text-indigo-400 whitespace-nowrap font-small">
+          <%= live_redirect(to: Routes.player_show_path(@socket, :show, @player)) do %>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          <% end %>
+        </span>
       <% end %>
-    </li>
-  </ul>
+    </div>
 
-  <span><%= live_patch("Edit", to: Routes.player_show_path(@socket, :edit, @player), class: "button") %></span> | <span><%= live_redirect("Back", to: Routes.player_index_path(@socket, :index)) %></span>
+    <div class="mx-2 pt-[1px] bg-[rgb(230,230,230)]"></div>
+
+    <%= if @live_action in [:edit] do %>
+      <.modal return_to={Routes.player_show_path(@socket, :show, @player)}>
+        <.live_component module={CesiumCupWeb.PlayerLive.FormComponent} id={@player.id} title={@page_title} action={@live_action} player={@player} return_to={Routes.player_show_path(@socket, :show, @player)} />
+      </.modal>
+    <% else %>
+      <div class="px-4 my-8">
+        <div class="flex">
+          <div class="rounded-lg overflow-hidden">
+            <img class="object-cover max-h-40 max-w-36" src={Routes.static_path(@socket, "/images/players/ronaldo.png")} />
+          </div>
+          <div class="items-center ml-6	mt-0 block">
+            <div class="font-medium text-2xl">
+              <p><%= @player.name %></p>
+            </div>
+            <div class="font-medium text-1xl">
+              <%= live_redirect to: Routes.team_show_path(@socket, :show, @player.team) do %>
+                <%= @player.team.name %>
+                <span class="capitalize font-normal text-[#CFCFCF]">(<%= @player.position %>)</span>
+              <% end %>
+            </div>
+            <div class="mt-3 inline-grid">
+              <div>
+                <p><span class="font-medium">Age:</span> <%= @age %></p>
+              </div>
+            </div>
+            <div class="mt-1 text-[#A6B2EC]">
+              <p><%= @player.course %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 mx-4">
+        <div>
+          <div class="border-b border-gray-200">
+            <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+              <a class="border-quinary text-gray-900  whitespace-nowrap py-4 px-1 border-b-4 font-medium text-md">Latest Matches</a>
+            </nav>
+          </div>
+        </div>
+      </div>
+
+      <%= if not Enum.empty?(@matches) do %>
+        <div class="flex flex-col my-10 md:shadow-md">
+          <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+              <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                <table class="min-w-full divide-y table-fixed divide-gray-300">
+                  <thead>
+                    <tr>
+                      <td class="w-4 whitespace-nowrap py-4 text-xs font-medium px-4 text-black"></td>
+                      <td class="whitespace-nowrap w-6 px-6 py-4 text-sm font-medium text-black"></td>
+                      <td class="whitespace-nowrap px-6 py-4 text-sm text-black font-medium text-center"></td>
+                      <td class="whitespace-nowrap py-4 text-sm font-medium text-black text-center">
+                        <div class="group h-4 w-4 self-center flex m-auto">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                            <path d="M177.1 228.6L207.9 320h96.5l29.62-91.38L256 172.1L177.1 228.6zM255.1 0C114.6 0 .0001 114.6 .0001 256S114.6 512 256 512s255.1-114.6 255.1-255.1S397.4 0 255.1 0zM435.2 361.1l-103.9-1.578l-30.67 99.52C286.2 462.2 271.3 464 256 464s-30.19-1.773-44.56-4.93L180.8 359.6L76.83 361.1c-14.93-25.35-24.79-54.01-27.8-84.72L134.3 216.4L100.7 118.1c19.85-22.34 44.32-40.45 72.04-52.62L256 128l83.29-62.47c27.72 12.17 52.19 30.27 72.04 52.62L377.7 216.4l85.23 59.97C459.1 307.1 450.1 335.8 435.2 361.1z" />
+                          </svg>
+                        </div>
+                      </td>
+                      <td class="whitespace-nowrap py-4 text-sm font-medium text-black text-center">
+                        <div class="group h-4 w-4 self-center flex m-auto fill-draw">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 425.9 504.3"><rect class="cls-1" x="65.27" y="17.59" width="381.46" height="476.82" rx="95.36" transform="translate(-81.63 41.69) rotate(-9.46)" /></svg>
+                        </div>
+                      </td>
+                      <td class="whitespace-nowrap py-4 text-sm font-medium text-black text-center">
+                        <div class="group h-4 w-4 self-center flex m-auto fill-loss">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 425.9 504.3"><rect class="cls-1" x="65.27" y="17.59" width="381.46" height="476.82" rx="95.36" transform="translate(-81.63 41.69) rotate(-9.46)" /></svg>
+                        </div>
+                      </td>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-gray-200 bg-white">
+                    <%= for match <- @matches do %>
+                      <tr>
+                        <td class="w-4 whitespace-nowrap py-4 text-xs font-medium px-4 text-black">
+                          <%= display_date(match.date) %>
+                        </td>
+                        <td class="whitespace-nowrap w-6 px-6 py-4 text-sm font-medium text-black">
+                          <p>
+                            <%= if (get_team(match.home_team_id)) do %>
+                              <%= live_redirect to: Routes.team_show_path(@socket, :show, get_team(match.home_team_id)) do %>
+                                <%= get_team(match.home_team_id).name %>
+                              <% end %>
+                            <% end %>
+                          </p>
+                          <p>
+                            <%= if (get_team(match.away_team_id)) do %>
+                              <%= live_redirect to: Routes.team_show_path(@socket, :show, get_team(match.away_team_id)) do %>
+                                <%= get_team(match.away_team_id).name %>
+                              <% end %>
+                            <% end %>
+                          </p>
+                        </td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm text-black font-medium text-center">
+                          <%= live_redirect to: Routes.match_show_path(@socket, :show, match) do %>
+                            <p>
+                              <%= get_home_team_score(match.id) %>
+                            </p>
+                            <p>
+                              <%= get_away_team_score(match.id) %>
+                            </p>
+                          <% end %>
+                        </td>
+                        <td class="whitespace-nowrap py-4 text-sm font-medium text-black text-center">
+                          <%= get_event_count(match.id, @player.id, :goal) %>
+                        </td>
+                        <td class="whitespace-nowrap py-4 text-sm font-medium text-black text-center">
+                          <%= get_event_count(match.id, @player.id, :yellow_card) %>
+                        </td>
+                        <td class="whitespace-nowrap py-4 text-sm font-medium text-black text-center">
+                          <%= get_event_count(match.id, @player.id, :red_card) %>
+                        </td>
+                        <td class="whitespace-nowrap py-4 text-sm font-medium text-black text-center">
+                          <%= case (get_team_result(match, @player.team)) do %>
+                            <% :win -> %>
+                              <span title="WIN" class="bg-win inline-flex items-center p-1 mr-2 rounded-full">
+                                <p class="text-white cursor-default w-5 h-5">W</p>
+                              </span>
+                            <% :loss -> %>
+                              <span title="LOSS" class="bg-loss inline-flex items-center p-1 mr-2 rounded-full">
+                                <p class="text-white cursor-default w-5 h-5">L</p>
+                              </span>
+                            <% _ -> %>
+                              <span title="DRAW" class="bg-draw inline-flex items-center p-1 mr-2 rounded-full">
+                                <p class="text-white cursor-default w-5 h-5">D</p>
+                              </span>
+                          <% end %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% else %>
+        <div class="my-6 mx-auto text-center w-full">
+          <p>No games played yet.</p>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
 </div>

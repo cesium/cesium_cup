@@ -1,28 +1,18 @@
-<div class="pt-10 px-60">
-  <%= if @live_action in [:edit] do %>
-    <.modal return_to={Routes.group_show_path(@socket, :show, @group)}>
-      <.live_component module={CesiumCupWeb.GroupLive.FormComponent} id={@group.id} title={@page_title} action={@live_action} group={@group} return_to={Routes.group_show_path(@socket, :show, @group)} />
-    </.modal>
-  <% end %>
-
-  <div class="mt-5 bg-[#F9FAFB] rounded-lg w-full px-10 py-5 pb-10">
-    <div class="border-b border-quinary">
-      <div>
-        <div>
-          <nav class="-mb-px flex justify-between space-x-1 pb-2 text-xs" aria-label="Tabs">
-            <div>
-              <span href="#" class=" text-gray-500 hover:text-gray-700 whitespace-nowrap font-small" aria-current="page"><%= live_patch("CeSIUM Cup", to: Routes.home_index_path(@socket, :index)) %></span>
-              <a class="text-gray-500 whitespace-nowrap font-small">></a>
-              <span href="#" class=" text-gray-500 hover:text-gray-700 whitespace-nowrap font-small" aria-current="page"><%= live_patch("Group #{@group.name}", to: Routes.group_show_path(@socket, :show, @group)) %></span>
-            </div>
-
-            <div>
-              <span class="border-transparent text-indigo-300 hover:text-indigo-400 whitespace-nowrap border-b-4 font-small"><%= live_patch("Edit group", to: Routes.group_show_path(@socket, :edit, @group), class: "button") %></span>
-            </div>
-          </nav>
-        </div>
-      </div>
+<div class="pt-10 px-4">
+  <div class="mt-5 bg-[#F9FAFB] rounded-lg w-full px-10 pb-10">
+    <%= if @live_action in [:edit] do %>
+      <.modal return_to={Routes.group_show_path(@socket, :show, @group)}>
+        <.live_component module={CesiumCupWeb.GroupLive.FormComponent} id={@group.id} title={@page_title} action={@live_action} group={@group} return_to={Routes.group_show_path(@socket, :show, @group)} />
+      </.modal>
+    <% end %>
+    <div class="py-4 px-4 flex text-secondary font-medium text-xs divide-x-4">
+      <span href="#" class="border-transparent hover:text-gray-700 whitespace-nowrap font-small" aria-current="page"><%= live_redirect("CeSIUM Cup", to: Routes.home_index_path(@socket, :index)) %></span>
+      <a class="border-transparent whitespace-nowrap font-small">></a>
+      <span href="#" class="border-transparent hover:text-gray-700 whitespace-nowrap font-small" aria-current="page"><%= live_redirect("Group #{@group.name}", to: Routes.group_show_path(@socket, :edit, @group), class: "button") %></span>
+      <span class="border-transparent ml-auto mr-4 text-indigo-300 hover:text-indigo-400 whitespace-nowrap border-b-4 font-small"><%= live_redirect("Edit group", to: Routes.group_show_path(@socket, :show, @group), class: "button") %></span>
     </div>
+
+    <div class="mx-2 pt-[1px] bg-[rgb(230,230,230)]"></div>
 
     <div class="flex flex-col my-10">
       <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -54,9 +44,9 @@
                       <%= if is_team_live_group(team.id, @group.id) do %>
                         <% bg_color =
                           case(team_live_state(team.id)) do
-                            :win -> "bg-green-500"
-                            :loss -> "bg-red-500"
-                            _ -> "bg-yellow-500"
+                            :win -> "bg-win"
+                            :loss -> "bg-loss"
+                            _ -> "bg-draw"
                           end %>
                         <%= live_redirect to: Routes.match_show_path(@socket, :show, get_team_live_match(team.id)), class: "rounded-md #{bg_color} text-white px-1 py-0.5" do %>
                           <%= get_team_live_result(team.id) %>

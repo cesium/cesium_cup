@@ -15,6 +15,9 @@ module.exports = {
           success: "#008F05",
           failure: "#FF4444",
           warning: "#E09200",
+          win: "#5EFA5B",
+          loss: "#FF0046",
+          draw: "#E8EB53"
         },
         fontFamily: {
           montserrat: ["Montserrat"],

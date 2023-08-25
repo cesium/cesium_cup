@@ -1,26 +1,24 @@
-<div class="pt-10 text-black">
-  <h2><%= @title %></h2>
-
+<div class="my-4 text-black">
   <.form let={f} for={@changeset} id="player-form" phx-target={@myself} phx-change="validate" phx-submit="save">
-    <div class="px-4 mx-auto sm:px-6 lg:px-8">
-      <div class="-mt-12 sm:flex sm:items-end sm:-mt-16 sm:space-x-5">
-        <div>
+    <div class="mx-auto px-5 md:px-2">
+      <div class="sm:flex mb-6 mt-6 self-right sm:items-end sm:space-x-5">
+        <div class="">
           <%= live_file_input(@uploads.picture, class: "hidden") %>
           <a onclick={"document.getElementById('#{@uploads.picture.ref}').click()"}>
             <div class={"#{if length(@uploads.picture.entries) != 0 do
                 "hidden"
-              end} relative w-24 h-24 ring-4 ring-white rounded-full cursor-pointer bg-secondary sm:w-32 group sm:h-32 hover:bg-tertiary"}>
-              <div class="flex absolute justify-center items-center w-full h-full"></div>
+              end} ring-4 ring-white rounded-lg cursor-pointer bg-secondary sm:w-24 group sm:h-24 transition-color duration-200 ease-in hover:bg-tertiary"}>
+              <div class="flex justify-center items-center w-full h-full"></div>
             </div>
             <section>
               <%= for entry <- @uploads.picture.entries do %>
                 <%= for err <- upload_errors(@uploads.picture, entry) do %>
                   <p class="alert alert-danger"><%= Phoenix.Naming.humanize(err) %></p>
                 <% end %>
-                <article class="flex relative items-center w-24 h-24 bg-white rounded-full cursor-pointer sm:w-32 sm:h-32 upload-entry group">
-                  <div class="flex absolute z-10 justify-center items-center w-full h-full rounded-full"></div>
-                  <figure class="flex justify-center items-center w-full h-full rounded-full group-hover:opacity-80">
-                    <%= live_img_preview(entry, class: "object-cover object-center rounded-full w-24 h-24 sm:w-32 sm:h-32 border-4 border-white") %>
+                <article class="flex relative items-center w-24 h-24 rounded-lg cursor-pointer sm:w-32 sm:h-32 upload-entry group">
+                  <div class="flex absolute z-10 justify-center items-center w-full h-full rounded-lg"></div>
+                  <figure class="flex justify-center items-center w-full h-full rounded-lg group-hover:opacity-80">
+                    <%= live_img_preview(entry, class: "object-cover object-center rounded-lg w-24 h-24 sm:w-32 sm:h-32 border-4 border-white") %>
                   </figure>
                 </article>
               <% end %>
@@ -28,42 +26,60 @@
           </a>
         </div>
       </div>
-    </div>
 
-    <%= label(f, :name) %>
-    <%= text_input(f, :name) %>
-    <%= error_tag(f, :name) %>
+      <div class="flex flex-col gap-1">
+        <div class="mb-4">
+          <label for="name" class="block mb-1 text-sm font-medium text-gray-900">Name</label>
+          <%= text_input(f, :name, class: "bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5") %>
+          <%= error_tag(f, :name) %>
+        </div>
 
-    <%= label(f, :course) %>
-    <%= text_input(f, :course) %>
-    <%= error_tag(f, :course) %>
+        <div class="mb-4">
+          <label for="course" class="block mb-1 text-sm font-medium text-gray-900">Course</label>
+          <%= text_input(f, :course, class: "bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5") %>
+          <%= error_tag(f, :course) %>
+        </div>
 
-    <%= label(f, :date_of_birth) %>
-    <%= date_select(f, :date_of_birth) %>
-    <%= error_tag(f, :date_of_birth) %>
+        <div class="mb-4">
+          <label for="date_of_birth" class="block mb-1 text-sm font-medium text-gray-900">Date of birth</label>
+          <%= date_input(f, :date_of_birth, class: "bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ") %>
+          <%= error_tag(f, :date_of_birth) %>
+        </div>
 
-    <%= label(f, :position) %>
-    <%= text_input(f, :position) %>
-    <%= error_tag(f, :position) %>
+        <div class="mb-4">
+          <label for="position" class="block mb-1 text-sm font-medium text-gray-900">Position</label>
+          <%= text_input(f, :position, class: "bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5") %>
+          <%= error_tag(f, :position) %>
+        </div>
 
-    <%= label(f, :height) %>
-    <%= number_input(f, :height, step: "any") %>
-    <%= error_tag(f, :height) %>
+        <div class="mb-4">
+          <label for="height" class="block mb-1 text-sm font-medium text-gray-900">Height</label>
+          <%= number_input(f, :height, step: "any", class: "bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5") %>
+          <%= error_tag(f, :height) %>
+        </div>
 
-    <%= label(f, :weight) %>
-    <%= number_input(f, :weight, step: "any") %>
-    <%= error_tag(f, :weight) %>
+        <div class="mb-4">
+          <label for="height" class="block mb-1 text-sm font-medium text-gray-900">Weight</label>
+          <%= number_input(f, :weight, step: "any", class: "bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5") %>
+          <%= error_tag(f, :weight) %>
+        </div>
 
-    <%= label(f, :team_id) %>
-    <%= select(f, :team_id, Enum.map(@teams, &{&1.name, &1.id}), prompt: "Choose a Team", selected: f.data.team_id, required: true) %>
-    <%= error_tag(f, :team_id) %>
+        <div class="mb-4">
+          <label for="team" class="block mb-1 text-sm font-medium text-gray-900">Team</label>
+          <%= select(f, :team_id, Enum.map(@teams, &{&1.name, &1.id}), prompt: "Choose a Team", selected: f.data.team_id, required: true, class: "cursor-pointer bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5") %>
+          <%= error_tag(f, :team_id) %>
+        </div>
 
-    <%= label(f, :captain) %>
-    <%= checkbox(f, :captain, id: f.data.id) %>
-    <%= error_tag(f, :captain) %>
+        <div class="mb-4 flex">
+          <label for="captain" class="block mb-1 mr-4 text-sm font-medium text-gray-900">Captain</label>
+          <%= checkbox(f, :captain, id: f.data.id, class: "cursor-pointer self-center bg-white border ring-0.5 border-gray-200 text-[#254E9F] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2") %>
+          <%= error_tag(f, :captain) %>
+        </div>
 
-    <div>
-      <%= submit("Save", phx_disable_with: "Saving...") %>
+        <div class="self-end">
+          <%= submit("Save", phx_disable_with: "Saving...", class: "p-2 right-0 px-10 w-min self-end bg-[#254E9F] transition-color duration-200 cursor-pointer ease-in hover:bg-tertiary text-white rounded-3xl") %>
+        </div>
+      </div>
     </div>
   </.form>
 </div>

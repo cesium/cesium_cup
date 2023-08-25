@@ -2,25 +2,46 @@
   <p class="text-black" role="alert" phx-click="lv:clear-flash" phx-value-key="info"><%= live_flash(@flash, :info) %></p>
 
   <p class="text-black" role="alert" phx-click="lv:clear-flash" phx-value-key="error"><%= live_flash(@flash, :error) %></p>
-
-  <div class="min-h-screen bg-gradient-to-b from-tertiary to-primary">
-    <div class="pt-10 px-60 flex justify-between items-center">
-      <%= live_redirect to: Routes.home_index_path(@socket, :index) do %>
-        <img class="h-auto w-14" src={Routes.static_path(@socket, "/images/logo.svg")} />
-      <% end %>
-      <div class="flex gap-x-4 font-bold text-white text-lg">
-        <%= live_redirect("Players", to: Routes.player_index_path(@socket, :index), class: "opacity-80 hover:opacity-100 cursor-pointer") %>
-        <%= live_redirect("Teams", to: Routes.team_index_path(@socket, :index), class: "opacity-80 hover:opacity-100 cursor-pointer") %>
-        <%= live_redirect("Matches", to: Routes.match_index_path(@socket, :index), class: "opacity-80 hover:opacity-100 cursor-pointer") %>
-        <%= live_redirect("Groups", to: Routes.group_index_path(@socket, :index), class: "opacity-80 hover:opacity-100 cursor-pointer") %>
-        <%= live_redirect("Rounds", to: Routes.elimination_round_index_path(@socket, :index), class: "opacity-80 hover:opacity-100 cursor-pointer") %>
-        <%= link("Register", to: Routes.user_registration_path(@socket, :new), class: "opacity-80 hover:opacity-100 cursor-pointer") %>
-        <%= link("Log in", to: Routes.user_session_path(@socket, :new), class: "opacity-80 hover:opacity-100 cursor-pointer") %>
+  <div class="bg-gradient-to-b from-tertiary to-primary">
+    <div class="min-h-screen max-w-7xl sm:mx-auto ">
+      <div class="relative pt-10 max-w-7xl flex justify-between items-center px-12 sm:mx-auto">
+        <%= live_redirect to: Routes.home_index_path(@socket, :index) do %>
+          <img class="h-auto w-14" src={Routes.static_path(@socket, "/images/logo.svg")} />
+        <% end %>
+        <div class="hidden gap-x-12 font-bold text-white text-lg md:flex">
+          <%= live_redirect("Players", to: Routes.player_index_path(@socket, :index), class: "opacity-80 hover:opacity-100 cursor-pointer") %>
+          <%= live_redirect("Teams", to: Routes.team_index_path(@socket, :index), class: "opacity-80 hover:opacity-100 cursor-pointer") %>
+          <%= live_redirect("Matches", to: Routes.match_index_path(@socket, :index), class: "opacity-80 hover:opacity-100 cursor-pointer") %>
+          <%= live_redirect("Groups", to: Routes.group_index_path(@socket, :index), class: "opacity-80 hover:opacity-100 cursor-pointer") %>
+          <%= live_redirect("Rounds", to: Routes.elimination_round_index_path(@socket, :index), class: "opacity-80 hover:opacity-100 cursor-pointer") %>
+          <%= link("Register", to: Routes.user_registration_path(@socket, :new), class: "opacity-80 hover:opacity-100 cursor-pointer") %>
+          <%= link("Log in", to: Routes.user_session_path(@socket, :new), class: "opacity-80 hover:opacity-100 cursor-pointer") %>
+        </div>
+        <div class="h-auto w-8 stroke-white md:hidden">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 11"><line class="cls-1" x1="20" y1="0.5" y2="0.5" /><line class="cls-1" x1="20" y1="5.5" y2="5.5" /><line class="cls-1" x1="20" y1="10.5" y2="10.5" /></svg>
+        </div>
       </div>
+
+      <%= @inner_content %>
+
+      <footer class="relative pt-16 max-w-7xl block justify-between items-center px-12 sm:mx-auto">
+        <div class="flex">
+          <%= live_redirect to: Routes.home_index_path(@socket, :index), class: "flex min-w-fit mr-4" do %>
+            <img class="h-auto w-10" src={Routes.static_path(@socket, "/images/logo.svg")} />
+            <p class="self-center ml-4 font-normal">CeSIUM Cup</p>
+          <% end %>
+          <div class="mx-2 pt-[1px] bg-[rgb(230,230,230)] w-full h-0 self-center"></div>
+        </div>
+        <div class="flex mt-10 gap-x-4 w-full text-sm sm:ml-12 sm:gap-x-12">
+          <%= live_redirect("About", to: Routes.home_index_path(@socket, :index), class: "opacity-80 hover:opacity-100 cursor-pointer") %>
+          <%= live_redirect("Rules", to: Routes.home_index_path(@socket, :index), class: "opacity-80 hover:opacity-100 cursor-pointer") %>
+          <%= live_redirect("Teams", to: Routes.team_index_path(@socket, :index), class: "opacity-80 hover:opacity-100 cursor-pointer") %>
+          <%= live_redirect("Players", to: Routes.player_index_path(@socket, :index), class: "opacity-80 hover:opacity-100 cursor-pointer") %>
+        </div>
+        <div class="mt-14 pb-14 flex w-full">
+          <p class="w-full text-center">made with love by CeSIUM</p>
+        </div>
+      </footer>
     </div>
-
-    <%= @inner_content %>
-
-    <footer class="h-10"></footer>
   </div>
 </main>

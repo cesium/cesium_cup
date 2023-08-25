@@ -1,42 +1,80 @@
-<div class="pt-10 px-60">
-  <h1>Listing Players</h1>
+<div class="pt-10 px-4">
+  <div class="mt-5 bg-[#F9FAFB] rounded-lg w-full px-10 pb-10 text-secondary">
+    <div class="py-4 px-4 flex text-secondary font-medium text-xs divide-x-4">
+      <span href="#" class="border-transparent hover:text-gray-700 whitespace-nowrap font-small" aria-current="page"><%= live_redirect("CeSIUM Cup", to: Routes.home_index_path(@socket, :index)) %></span>
+      <a class="border-transparent whitespace-nowrap font-small">></a>
+      <span href="#" class="border-transparent hover:text-gray-700 whitespace-nowrap font-small" aria-current="page"><%= live_redirect("Players", to: Routes.player_index_path(@socket, :index), class: "button") %></span>
+      <span class="border-transparent ml-auto mr-4 text-indigo-300 hover:text-indigo-400 whitespace-nowrap border-b-4 font-small"><%= live_redirect("Add player", to: Routes.player_index_path(@socket, :new)) %></span>
+    </div>
 
-  <%= if @live_action in [:new, :edit] do %>
-    <.modal return_to={Routes.player_index_path(@socket, :index)}>
-      <.live_component module={CesiumCupWeb.PlayerLive.FormComponent} id={@player.id || :new} title={@page_title} action={@live_action} player={@player} return_to={Routes.player_index_path(@socket, :index)} />
-    </.modal>
-  <% end %>
+    <div class="mx-2 pt-[1px] bg-[rgb(230,230,230)]"></div>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Date of birth</th>
-        <th>Position</th>
-        <th>Height</th>
-        <th>Weight</th>
+    <%= if @live_action in [:new, :edit] do %>
+      <.modal return_to={Routes.player_index_path(@socket, :index)}>
+        <.live_component module={CesiumCupWeb.PlayerLive.FormComponent} id={@player.id || :new} title={@page_title} action={@live_action} player={@player} return_to={Routes.player_index_path(@socket, :index)} />
+      </.modal>
+    <% end %>
 
-        <th></th>
-      </tr>
-    </thead>
-    <tbody id="players">
-      <%= for player <- @players do %>
-        <tr id={"player-#{player.id}"}>
-          <td><%= player.name %></td>
-          <td><%= player.date_of_birth %></td>
-          <td><%= player.position %></td>
-          <td><%= player.height %></td>
-          <td><%= player.weight %></td>
-
-          <td>
-            <span><%= live_redirect("Show", to: Routes.player_show_path(@socket, :show, player)) %></span>
-            <span><%= live_patch("Edit", to: Routes.player_index_path(@socket, :edit, player)) %></span>
-            <span><%= link("Delete", to: "#", phx_click: "delete", phx_value_id: player.id, data: [confirm: "Are you sure?"]) %></span>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-
-  <span><%= live_patch("New Player", to: Routes.player_index_path(@socket, :new)) %></span>
+    <div class="flex flex-col my-10">
+      <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+          <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+            <table class="min-w-full divide-y divide-gray-300">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-6">
+                    Player
+                  </th>
+                  <th scope="col" class="px-3 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500">Team</th>
+                  <th scope="col" class="px-3 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500">Position</th>
+                  <th scope="col" class="px-3 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500">Birthdate</th>
+                  <th scope="col" class="px-3 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500">Height</th>
+                  <th scope="col" class="px-3 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500">Weight</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200 bg-white">
+                <%= for player <- @players do %>
+                  <tr id={"player-#{player.id}"}>
+                    <td class="flex justify-between items-center whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                      <%= live_redirect to: Routes.player_show_path(@socket, :show, player) do %>
+                        <div class="flex space-x-4 ">
+                          <div class="relative">
+                            <img class="w-8 h-8 rounded-full object-cover mr-2 ring-2 ring-gray-300" src={Routes.static_path(@socket, "/images/players/ronaldo.png")} alt="Rounded avatar" />
+                            <%= if player.captain do %>
+                              <span title="Captain" class="top-0 left-7 absolute w-3.5 h-3.5 bg-blue-300 border-2 border-white rounded-full"></span>
+                            <% end %>
+                          </div>
+                          <p class="self-center hover:text-gray-700  ease-in duration-300"><%= player.name %></p>
+                        </div>
+                      <% end %>
+                    </td>
+                    <td class="whitespace-nowrap justify-between items-center pr-3  py-4 text-sm font-medium text-gray-900">
+                      <%= live_redirect to: Routes.team_show_path(@socket, :show, player.team) do %>
+                        <div class="flex justify-center">
+                          <img class="w-5 h-5 object-contain mr-2" src={Routes.static_path(@socket, "/images/teams/portugal.png")} alt="Rounded avatar" />
+                          <p class="self-center hover:text-gray-700  ease-in duration-100"><%= player.team.name %></p>
+                        </div>
+                      <% end %>
+                    </td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-500">
+                      <p class="self-center capitalize"><%= player.position %></p>
+                    </td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-500">
+                      <p class="self-center"><%= player.date_of_birth %></p>
+                    </td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-500">
+                      <p class="self-center"><%= player.height %> cm</p>
+                    </td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-500">
+                      <p class="self-center"><%= player.weight %> kg</p>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

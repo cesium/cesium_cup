@@ -43,11 +43,11 @@ defmodule CesiumCupWeb.ViewUtils do
   def display_date(date) when is_binary(date) do
     date
     |> Timex.parse!("%FT%H:%M", :strftime)
-    |> Timex.format!("{0D}-{0M}-{YYYY}")
+    |> Timex.format!("{0D}.{0M}.{YYYY}")
   end
 
   def display_date(date) do
-    Timex.format!(date, "{0D}-{0M}-{YYYY}")
+    Timex.format!(date, "{0D}.{0M}.{YYYY}")
   end
 
   def display_time(nil), do: ""
@@ -63,5 +63,12 @@ defmodule CesiumCupWeb.ViewUtils do
   def display_time(date) do
     date
     |> Timex.format!("{h24}:{m}")
+  end
+
+  def get_age_string(birthday) do
+    today = Date.utc_today()
+    age = Timex.diff(today, birthday, :year)
+    birthday_string = display_date(birthday)
+    "#{age} (#{birthday_string})"
   end
 end
