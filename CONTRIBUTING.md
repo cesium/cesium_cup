@@ -10,7 +10,7 @@ local machine for development and testing purposes.
 The following software is required to be installed on your system:
 
 - [Erlang 25+](https://www.erlang.org/downloads)
-- [Elixir 1.13+](https://elixir-lang.org/install.html)
+- [Elixir 1.14+](https://elixir-lang.org/install.html)
 
 We recommend using [asdf version manager][asdf-vm] to install and manage all
 the programming languages' requirements.

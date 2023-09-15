@@ -5,9 +5,11 @@
         <div class="">
           <%= live_file_input(@uploads.picture, class: "hidden") %>
           <a onclick={"document.getElementById('#{@uploads.picture.ref}').click()"}>
-            <div class={"#{if length(@uploads.picture.entries) != 0 do
+            <div class={
+              "#{if length(@uploads.picture.entries) != 0 do
                 "hidden"
-              end} ring-4 ring-white rounded-lg cursor-pointer bg-secondary sm:w-24 group sm:h-24 transition-color duration-200 ease-in hover:bg-tertiary"}>
+              end} ring-4 ring-white rounded-lg cursor-pointer bg-secondary sm:w-24 group sm:h-24 transition-color duration-200 ease-in hover:bg-tertiary"
+            }>
               <div class="flex justify-center items-center w-full h-full"></div>
             </div>
             <section>
@@ -35,6 +37,12 @@
         </div>
 
         <div class="mb-4">
+          <label for="name" class="block mb-1 text-sm font-medium text-gray-900">Nationality</label>
+          <%= select(f, :nationality, @nationalities, prompt: "Choose a Nationality", class: "bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5") %>
+          <%= error_tag(f, :nationality) %>
+        </div>
+
+        <div class="mb-4">
           <label for="course" class="block mb-1 text-sm font-medium text-gray-900">Course</label>
           <%= text_input(f, :course, class: "bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5") %>
           <%= error_tag(f, :course) %>
@@ -48,7 +56,7 @@
 
         <div class="mb-4">
           <label for="position" class="block mb-1 text-sm font-medium text-gray-900">Position</label>
-          <%= text_input(f, :position, class: "bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5") %>
+          <%= select(f, :position, @positions, prompt: "Choose a position", class: "bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5") %>
           <%= error_tag(f, :position) %>
         </div>
 

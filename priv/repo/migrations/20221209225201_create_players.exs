@@ -5,7 +5,8 @@ defmodule CesiumCup.Repo.Migrations.CreatePlayers do
     create table(:players, primary_key: false) do
       add :id, :binary_id, primary_key: true
 
-      add :name, :string
+      add :name, :string, null: false
+      add :nationality, :string, null: false
       add :course, :string
       add :date_of_birth, :date
       add :position, :string

@@ -9,7 +9,7 @@ defmodule CesiumCup.Teams.Player do
 
   alias CesiumCup.Uploaders
 
-  @required_fields ~w(date_of_birth name course position height weight team_id captain)a
+  @required_fields ~w(date_of_birth name nationality course position height weight team_id captain)a
 
   @optional_fields []
 
@@ -19,6 +19,7 @@ defmodule CesiumCup.Teams.Player do
     field :date_of_birth, :date
     field :name, :string
     field :course, :string
+    field :nationality, :string
     field :height, :decimal
     field :weight, :decimal
     field :captain, :boolean, default: false

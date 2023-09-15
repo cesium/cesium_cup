@@ -36,6 +36,7 @@ defmodule CesiumCup.TeamsFixtures do
         position: "some position",
         weight: "120.5",
         course: "abc",
+        nationality: "Portuguese",
         team_id: team_fixture().id,
         group_id: TournamentFixtures.group_fixture().id
       })

@@ -6,6 +6,7 @@ defmodule CesiumCup.Repo.Seeds.Tournament do
   alias CesiumCup.Tournament.Group
 
   @courses File.read!("priv/fake/uminho_courses.txt") |> String.split("\n")
+  @nationalities File.read!("priv/fake/nationalities.txt") |> String.split("\n")
 
   def run do
     seed_teams()
@@ -2275,6 +2276,8 @@ defmodule CesiumCup.Repo.Seeds.Tournament do
   end
 
   def insert_player(data) do
+    data = Map.put(data, :nationality, Enum.random(@nationalities))
+
     %Player{}
     |> Player.changeset(data)
     |> Repo.insert!()

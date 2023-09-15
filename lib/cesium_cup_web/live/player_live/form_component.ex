@@ -5,6 +5,8 @@ defmodule CesiumCupWeb.PlayerLive.FormComponent do
   alias CesiumCup.Teams
 
   @extensions_whitelist ~w(.jpg .jpeg .gif .png)
+  @nationalities File.read!("priv/fake/nationalities.txt") |> String.split("\n")
+  @positions ~w(goalkeeper fixed wing target)a
 
   @impl true
   def mount(socket) do
@@ -23,6 +25,8 @@ defmodule CesiumCupWeb.PlayerLive.FormComponent do
      socket
      |> assign(assigns)
      |> assign(:teams, teams)
+     |> assign(:nationalities, @nationalities)
+     |> assign(:positions, @positions)
      |> assign(:changeset, changeset)}
   end
 

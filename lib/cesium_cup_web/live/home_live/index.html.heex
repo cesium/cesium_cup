@@ -63,22 +63,34 @@
       <div>
         <div class="border-b border-gray-200">
           <nav class="-mb-px flex space-x-8" aria-label="Tabs">
-            <%= live_redirect("Group Stage", to: "?tab=group", class: "#{if @tab == "group" do
-              "border-quinary text-gray-900"
-            else
-              "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-            end}  whitespace-nowrap py-4 px-1 border-b-4 font-medium text-md") %>
-            <%= live_patch("Knockout Stage", to: "?tab=knockout_stage", class: "#{if @tab == "knockout_stage" do
-              "border-quinary text-gray-900"
-            else
-              "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-            end}  whitespace-nowrap py-4 px-1 border-b-4 font-medium text-md") %>
+            <%= live_redirect("Group Stage",
+              to: "?tab=group",
+              class:
+                "#{if @tab == "group" do
+                  "border-quinary text-gray-900"
+                else
+                  "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                end}  whitespace-nowrap py-4 px-1 border-b-4 font-medium text-md"
+            ) %>
+            <%= live_patch("Knockout Stage",
+              to: "?tab=knockout_stage",
+              class:
+                "#{if @tab == "knockout_stage" do
+                  "border-quinary text-gray-900"
+                else
+                  "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                end}  whitespace-nowrap py-4 px-1 border-b-4 font-medium text-md"
+            ) %>
             <%= for round <- @elimination_rounds do %>
-              <%= live_redirect(round.name, to: "?tab=#{round.name}", class: "#{if @tab == round.name do
-                "border-quinary text-gray-900"
-              else
-                "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-              end} show lg:hidden whitespace-nowrap py-4 px-1 border-b-4 font-medium text-md") %>
+              <%= live_redirect(round.name,
+                to: "?tab=#{round.name}",
+                class:
+                  "#{if @tab == round.name do
+                    "border-quinary text-gray-900"
+                  else
+                    "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                  end} show lg:hidden whitespace-nowrap py-4 px-1 border-b-4 font-medium text-md"
+              ) %>
             <% end %>
           </nav>
         </div>
